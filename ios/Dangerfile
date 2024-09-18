@@ -1,0 +1,4 @@
+# Perform swiftlint and comment violations inline
+swiftlint.config_file = '.swiftlint.yml'
+swiftlint.verbose = true
+swiftlint.lint_files inline_mode: true

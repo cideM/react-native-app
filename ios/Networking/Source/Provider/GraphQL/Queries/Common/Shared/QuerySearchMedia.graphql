@@ -1,0 +1,35 @@
+query SearchMediaResults($query: String!, $filters: SearchFiltersMediaInput, $first: Int!, $after: String) {
+    searchMediaResults(query: $query, filters: $filters, first: $first, after: $after) {
+        pageInfo {
+            hasNextPage
+            endCursor
+        }
+        edges {
+            node {
+                _trackingUuid
+                metadata
+                title
+                mediaType {
+                    category
+                    label
+                }
+                target {
+                    mediaEid
+                    assetUrl
+                    externalAdditionType
+                    externalAdditionUrl
+                    _trackingUuid
+                }
+            }
+        }
+        totalCount
+        filters {
+          mediaType {
+            value
+            label
+            matchingCount
+            isActive
+          }
+        }
+    }
+}

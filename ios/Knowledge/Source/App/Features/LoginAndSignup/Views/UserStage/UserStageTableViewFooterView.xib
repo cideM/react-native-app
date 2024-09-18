@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserStageTableViewFooterView" customModule="Knowledge_DE" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UserStageTableViewFooterView" customModule="Knowledge_DE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="154"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="1cB-E4-cXQ">
+                    <rect key="frame" x="16" y="40" width="382" height="80"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="SQ1-Ye-3iP">
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="40"/>
+                            <subviews>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UnL-Pv-zBD">
+                                    <rect key="frame" x="0.0" y="0.0" width="51" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="49" id="IQp-dj-XiW"/>
+                                    </constraints>
+                                    <connections>
+                                        <action selector="agreementsAcceptanceSwitchValueChanged:" destination="iN0-l3-epB" eventType="touchUpInside" id="Mjv-Rv-v0V"/>
+                                    </connections>
+                                </switch>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="I accept the Disclaimer, Legal Notice, Privacy Policy and the Limitation of Liability." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PM1-nj-aoR" customClass="LinkAwareLabel" customModule="Knowledge_DE" customModuleProvider="target">
+                                    <rect key="frame" x="65" y="0.0" width="317" height="40"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="92X-17-7O6" customClass="PrimaryButton" customModule="DesignSystem">
+                            <rect key="frame" x="0.0" y="80" width="382" height="0.0"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="by3-Ty-j2R"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="1cB-E4-cXQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="HAm-vf-ozg"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1cB-E4-cXQ" secondAttribute="bottom" id="JNv-h3-hJg"/>
+                <constraint firstItem="1cB-E4-cXQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="PIn-ry-Wom"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="1cB-E4-cXQ" secondAttribute="trailing" constant="16" id="eIj-a9-FRx"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="agreementsAcceptanceSwitch" destination="UnL-Pv-zBD" id="WhQ-Wf-plF"/>
+                <outlet property="agreementsLabel" destination="PM1-nj-aoR" id="QF1-Ll-oLx"/>
+                <outlet property="agreementsStackView" destination="SQ1-Ye-3iP" id="KSy-97-Owv"/>
+                <outlet property="mainStackView" destination="1cB-E4-cXQ" id="GeF-aD-mv3"/>
+                <outlet property="mainStackViewTopConstraint" destination="HAm-vf-ozg" id="UoA-FK-8P9"/>
+                <outlet property="primaryButton" destination="92X-17-7O6" id="eYy-fC-wme"/>
+            </connections>
+            <point key="canvasLocation" x="279.71014492753625" y="130.58035714285714"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

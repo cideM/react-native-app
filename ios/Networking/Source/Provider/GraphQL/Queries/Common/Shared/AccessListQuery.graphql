@@ -1,0 +1,16 @@
+query AccessList{
+  currentUser {
+    mobileAccessList{
+      ... on MobileAccessError{
+        __typename
+        target
+        errorCode
+      }
+      ... on MobileAccess{
+        __typename
+        target
+        offlineExpiryDate
+      }
+    }
+  }
+}

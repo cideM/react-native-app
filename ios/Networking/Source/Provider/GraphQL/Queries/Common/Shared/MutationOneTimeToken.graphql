@@ -1,0 +1,5 @@
+mutation IssueOneTimeToken {
+  issueOneTimeToken{
+    token
+  }
+}

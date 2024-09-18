@@ -1,0 +1,16 @@
+query CurrentUserSessions($first: Int!) {
+    currentUserQuestionSessions(first:$first) {
+        edges {
+            node {
+                eid
+                title
+                createdAt
+                questionCount
+                sessionPerformance{
+                    totalQuestions
+                    completedQuestions
+                }
+            }
+        }
+    }
+}

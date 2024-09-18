@@ -1,0 +1,8 @@
+mutation updateTermsAndConditions($userProfile: UserProfileInput!) {
+    updateCurrentUserProfile(userProfile: $userProfile) {
+        ... on User {
+            termsAndConditionsId
+            shouldUpdateTnC
+        }
+    }
+}

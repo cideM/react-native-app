@@ -1,0 +1,27 @@
+query SearchSuggestions($queryParam: String!, $limit: Int!, $types: [SearchResultType]) {
+    searchSuggestions(query: $queryParam, limit: $limit, types: $types) {
+        text
+        value
+        ... on SearchSuggestionQuery {
+            metadata
+        }
+        
+        ...on SearchSuggestionInstantResult {
+            metadata
+            target {
+                ...on SearchTargetArticle {
+                    articleEid
+                    particleEid
+                    anchorId
+                }
+                ...on SearchTargetPharmaAgent {
+                    pharmaAgentId
+                    drugId
+                }
+                ...on SearchTargetPharmaMonograph {
+                    pharmaMonographId
+                }
+            }
+        }
+    }
+}

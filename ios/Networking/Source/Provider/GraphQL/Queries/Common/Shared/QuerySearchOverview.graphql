@@ -1,0 +1,169 @@
+query SearchOverviewResults($query: String!, $filters: SearchFiltersMediaInput, $first: Int!) {
+
+  # Phrasionary
+  searchPhrasionary(query: $query) {
+    __typename
+    title
+    body
+    etymology
+    synonyms
+    _trackingUuid
+    secondaryTargets {
+      title
+      target {
+         ... on SearchTargetArticle {
+           __typename
+           articleEid
+           particleEid
+           anchorId
+           _trackingUuid
+         }
+       }
+     }
+   }
+ 
+   # Articles
+    searchArticleContentTree(
+        query: $query
+        first: $first
+        compact: true
+    ) {
+        totalCount
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+        edges {
+            cursor
+            node {
+                ...articleNodeFields
+                children {
+                    ...articleNodeFields
+                    children {
+                        ...articleNodeFields
+                        children {
+                            ...articleNodeFields
+                        }
+                    }
+                }
+            }
+        }
+    }
+ 
+   # Pharma
+   searchPharmaAgentResults(query: $query, first: $first) {
+    pageInfo {
+        hasNextPage
+        endCursor
+    }
+     edges {
+       node {
+         metadata
+         title
+         details
+         body
+         _trackingUuid
+         target {
+           pharmaAgentId
+           drugId
+           _trackingUuid
+         }
+       }
+     }
+     totalCount
+   }
+   
+   # Monographs
+   searchAmbossSubstanceResults(query: $query, first: $first, compact: true) {
+    totalCount
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+
+    edges {
+      cursor
+      node {
+        ...ambossSubstanceNodeFields
+        children {
+          ...ambossSubstanceNodeFields
+          children {
+            ...ambossSubstanceNodeFields
+                children {
+                    ...ambossSubstanceNodeFields
+                }
+          }
+        }
+      }
+    }
+  }
+    
+    # Guidelines
+    searchGuidelineResults(query: $query, first: $first) {
+      pageInfo {
+       hasNextPage
+       endCursor
+      }
+      edges {
+       node {
+         metadata
+         title
+         details
+         body
+         labels
+         _trackingUuid
+         target {
+           externalUrl
+           _trackingUuid
+         }
+       }
+     }
+    totalCount
+   }
+   
+    # Media
+    searchMediaResults(query: $query, filters: $filters, first: $first) {
+    pageInfo {
+        hasNextPage
+        endCursor
+    }
+    edges {
+      node {
+        metadata
+        title
+        _trackingUuid
+        mediaType {
+            category
+            label
+        }
+        target {
+          mediaEid
+          assetUrl
+          externalAdditionType
+          externalAdditionUrl
+          _trackingUuid
+        }
+      }
+    }
+    totalCount
+    filters {
+        mediaType {
+            value
+            label
+            matchingCount
+            isActive
+        }
+    }
+  }
+
+  searchInfo(query: $query) {
+    overviewSectionOrder
+    resultInfo {
+        targetView
+    }
+    queryInfo {
+        processedQuery
+        wasAutocorrected
+    }
+  }
+}

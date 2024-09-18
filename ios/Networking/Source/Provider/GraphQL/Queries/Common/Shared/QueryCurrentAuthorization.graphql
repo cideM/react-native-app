@@ -1,0 +1,15 @@
+query CurrentAuthorization {
+    currentAuthorization{
+        isAuthorized
+        token {
+            issued
+            token
+            deviceId
+        }
+        user {
+            eid
+            firstName
+            lastName
+        }
+    }
+}

@@ -1,0 +1,14 @@
+mutation ApplyProductKey($productKey: String!) {
+    applyProductKey(productKey: $productKey) {
+        __typename
+        ... on ApplyProductKeyResult {
+            __typename
+            productKey
+        }
+        ... on ProductKeyError {
+            __typename
+            errorCode
+            message
+        }
+    }
+}

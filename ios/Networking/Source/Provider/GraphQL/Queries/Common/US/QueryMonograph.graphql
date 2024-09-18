@@ -1,0 +1,23 @@
+query monograph($monographId: ID!) {
+  ambossSubstance(id: $monographId) {
+    __typename
+    id
+    monograph {
+      __typename
+      id
+      title
+      brandNames
+      generic
+      publishedAt
+      html
+      classification {
+        __typename
+        ahfsCode
+        ahfsTitle
+        atcCode
+        atcTitle
+      }
+    }
+  }
+}
+

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Account Settings View Controller-->
+        <scene sceneID="cMA-fg-02x">
+            <objects>
+                <tableViewController storyboardIdentifier="AccountSettingsViewController" id="L2z-L9-WmT" customClass="AccountSettingsViewController" customModule="Knowledge_DE" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="k67-gC-9YT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.9489260316" green="0.96612638240000004" blue="0.97955638170000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.9489260316" green="0.96612638240000004" blue="0.97955638170000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="K3W-He-TXp">
+                            <rect key="frame" x="0.0" y="117" width="414" height="700"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="Qhe-zf-nUX">
+                                    <rect key="frame" x="16" y="22" width="382" height="88"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZ4-EG-kWo" customClass="BigButton" customModule="Common">
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="48"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="48" id="2wR-07-kcG"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="logoutButtonTapped:" destination="L2z-L9-WmT" eventType="touchUpInside" id="JBC-RU-dXM"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2N-9E-E8T" customClass="BigButton" customModule="Common">
+                                            <rect key="frame" x="0.0" y="72" width="382" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="cdu-Vg-36x"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="deleteAccountButtonTapped:" destination="L2z-L9-WmT" eventType="touchUpInside" id="DzH-ac-eUM"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <viewLayoutGuide key="safeArea" id="eVI-nq-Qpf"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="eVI-nq-Qpf" firstAttribute="trailing" secondItem="Qhe-zf-nUX" secondAttribute="trailing" constant="16" id="BUJ-oP-M1A"/>
+                                <constraint firstItem="Qhe-zf-nUX" firstAttribute="leading" secondItem="eVI-nq-Qpf" secondAttribute="leading" constant="16" id="Ywx-9Q-mrw"/>
+                                <constraint firstItem="Qhe-zf-nUX" firstAttribute="top" secondItem="K3W-He-TXp" secondAttribute="top" constant="22" id="i3R-kj-idg"/>
+                            </constraints>
+                        </view>
+                        <sections>
+                            <tableViewSection headerTitle="Account" id="hI8-hV-Rnr">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="J28-c9-lFk" customClass="ColorThemeAwareUITableViewCell" customModule="Knowledge_DE" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="J28-c9-lFk" id="vyr-de-46u">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyn-zD-o5G">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asm@amboss.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bt1-zY-88H">
+                                                            <rect key="frame" x="16" y="0.0" width="382" height="46"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="bt1-zY-88H" firstAttribute="leading" secondItem="pyn-zD-o5G" secondAttribute="leading" constant="16" id="Ira-eJ-oDw"/>
+                                                        <constraint firstAttribute="height" constant="46" id="NXF-p2-f2M"/>
+                                                        <constraint firstAttribute="bottom" secondItem="bt1-zY-88H" secondAttribute="bottom" id="RZa-fd-p8x"/>
+                                                        <constraint firstAttribute="trailing" secondItem="bt1-zY-88H" secondAttribute="trailing" constant="16" id="kfb-10-x3A"/>
+                                                        <constraint firstItem="bt1-zY-88H" firstAttribute="top" secondItem="pyn-zD-o5G" secondAttribute="top" id="qVU-aB-eEe"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="pyn-zD-o5G" firstAttribute="leading" secondItem="vyr-de-46u" secondAttribute="leading" id="LX7-Wj-SSz"/>
+                                                <constraint firstAttribute="trailing" secondItem="pyn-zD-o5G" secondAttribute="trailing" id="beQ-BI-XKe"/>
+                                                <constraint firstItem="pyn-zD-o5G" firstAttribute="top" secondItem="vyr-de-46u" secondAttribute="top" id="snN-6F-lLj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="L2z-L9-WmT" id="Ke8-Tl-9jQ"/>
+                            <outlet property="delegate" destination="L2z-L9-WmT" id="XM8-EL-NPn"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="deleteAccountButton" destination="F2N-9E-E8T" id="j2J-TJ-Kk6"/>
+                        <outlet property="emailLabel" destination="bt1-zY-88H" id="YBf-9Z-Qjf"/>
+                        <outlet property="logoutButton" destination="QZ4-EG-kWo" id="cfe-eM-bNY"/>
+                        <outlet property="tableViewCell" destination="J28-c9-lFk" id="k0c-Qy-fGD"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WxJ-aL-sup" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-343.47826086956525" y="-208.25892857142856"/>
+        </scene>
+    </scenes>
+</document>

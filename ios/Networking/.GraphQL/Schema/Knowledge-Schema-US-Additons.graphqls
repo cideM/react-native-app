@@ -1,0 +1,10852 @@
+"""
+A directive used by the Apollo iOS client to annotate operations or fragments that should be used exclusively for generating local cache mutations instead of as standard operations.
+"""
+directive @apollo_client_ios_localCacheMutation on QUERY | MUTATION | SUBSCRIPTION | FRAGMENT_DEFINITION
+
+"""
+A directive used by the Apollo iOS code generation engine to generate custom import statements in operation or fragment definition files. An import statement to import a module with the name provided in the `module` argument will be added to the generated definition file.
+"""
+directive @import(
+  """The name of the module to import."""
+  module: String!
+) repeatable on QUERY | MUTATION | SUBSCRIPTION | FRAGMENT_DEFINITION
+
+""""""
+interface Access {
+  """target of this access"""
+  target: AccessTarget!
+}
+
+""""""
+type AccessDenied {
+  """"""
+  target: AccessTarget!
+
+  """"""
+  quotaExceeded: Boolean!
+}
+
+""""""
+type AccessOverview {
+  """"""
+  accessReason: [AccessReason!]!
+
+  """"""
+  accesses: [Access!]!
+}
+
+"""
+This type represents other then subscription reasons to have access:
+- trial,
+- support access,
+- previously purchased products,
+- product keys
+"""
+type AccessReason {
+  """The string that identifies type of a license, localized"""
+  type: AccessReasonType!
+
+  """The date when subscription will either expire or renew (if renewable)"""
+  endDate: String!
+}
+
+""""""
+enum AccessReasonType {
+  """Legacy trial access"""
+  trial
+
+  """Legacy product key access"""
+  productKey
+
+  """Access granted by support"""
+  support
+
+  """Legacy one-time product purchased"""
+  legacyPurchase
+
+  """Free access for employees, ambasadors, etc"""
+  teamAccess
+}
+
+""""""
+enum AccessTarget {
+  """"""
+  question
+
+  """"""
+  learningCard
+
+  """"""
+  meditricksAll
+
+  """"""
+  meditricksPreClinic
+
+  """"""
+  smartzoom
+
+  """"""
+  effigos
+}
+
+"""
+Pharma: ActiveIngredient should actually be called Agent. Represents exactly that
+"""
+type ActiveIngredient {
+  """"""
+  eid: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  prescription: PrescriptionStatus
+
+  """"""
+  prescriptions: [PrescriptionStatus!]!
+
+  """"""
+  basedOn: String
+
+  """"""
+  atcLabel: String
+
+  """"""
+  dosageForms: [String!]!
+
+  """"""
+  drugGroups: [DrugGroup!]
+
+  """sections specific to the agent"""
+  sections: [PharmaSection!]
+
+  """"""
+  indicationText: String
+
+  """"""
+  dosageText: String
+
+  """"""
+  contraindicationText: String
+
+  """"""
+  treatmentNotesText: String
+
+  """"""
+  sideEffectsText: String
+
+  """"""
+  applicationFormText: String
+
+  """"""
+  breastfeedingText: String
+
+  """"""
+  pregnancyText: String
+
+  """"""
+  warningsText: String
+
+  """"""
+  drivingFitnessText: String
+
+  """URL providing a pdf to download containing 'Fachinformationen'"""
+  prescribingInformationUrl: String
+
+  """URL providing a pdf to download containing 'Beipackzettel'"""
+  patientPackageInsertUrl: String
+
+  """"""
+  publishedAt: Date
+
+  """"""
+  embryotox: Embryotox!
+
+  """"""
+  rotehand: [Rotehand!]
+}
+
+""""""
+enum AdditionType {
+  """"""
+  meditricks
+
+  """"""
+  meditricksNeuroanatomy
+
+  """"""
+  smartzoom
+
+  """"""
+  calculator
+
+  """"""
+  webContent
+
+  """"""
+  auditor
+
+  """"""
+  threeDModel
+
+  """"""
+  patientInformation
+
+  """"""
+  easyradiology
+
+  """"""
+  video
+}
+
+""""""
+type AdyenPaymentError implements Error {
+  """
+  for more information please refer to https://docs.adyen.com/development-resources/refusal-reasons
+  """
+  refusalReason: String
+
+  """"""
+  message: String!
+}
+
+""""""
+type AdyenPaymentMethodData {
+  """Adyen payment methods encoded as json"""
+  raw: String!
+}
+
+""""""
+type AdyenPaymentMethodError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+union AdyenPaymentMethodResult = AdyenPaymentMethodData | AdyenPaymentMethodError
+
+""""""
+type AmbossSubstance {
+  """"""
+  id: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  dosages: [Dosage!]!
+
+  """"""
+  drugs: [PharmaDrug!]!
+
+  """"""
+  monograph: PharmaMonograph
+
+  """"""
+  createdAt: DateTime!
+
+  """"""
+  updatedAt: DateTime!
+}
+
+""""""
+type AmbossSubstanceLink {
+  """"""
+  ambossSubstance: AmbossSubstance!
+
+  """"""
+  monograph: PharmaMonograph
+
+  """"""
+  drug: PharmaDrug!
+}
+
+""""""
+type Answer implements Typed {
+  """"""
+  entityType: String!
+
+  """the eid is inherited from the question (i.e. it is the very same!)"""
+  eid: String!
+
+  """
+  the answer's text as provided by IMPP or editors in case of self-written questions
+  """
+  content: String!
+
+  """the associated letter to this multiple choice question's answer"""
+  letter: String!
+
+  """"""
+  isCorrect: Boolean!
+
+  "\tpercentage for this answer to be selected as alleged correct answer;\n\twill return **null** if total given answers count sum is too small (below 11)"
+  rate: Int
+
+  """ml official calculated exam rate for this answer"""
+  officialExamRate: Int
+
+  """
+  the potentially linked learning card; use this to retrieve title and eid
+  """
+  linkedArticle: Article
+
+  """
+  the potentially linked section's learning card id; also consider querying linkedArticle
+  """
+  linkedArticleEid: String
+
+  """the potentially linked section id"""
+  linkedParticleEid: String
+
+  """image id of the answer's linked image (if any)"""
+  imageEid: String
+
+  """image of the answer's linked image (if any)"""
+  media: MediaAsset
+
+  """
+  answer's primary explanation (a.k.a. Specific commentary); this should not be null for published questions! (expect this to be non-nullable in the future)
+  """
+  explanationWhy: String
+
+  """
+  additional explanation why your wrong answer was not too bad after all (a.k.a. Extended commentary)
+  """
+  explanationBut: String
+
+  """
+  JSON of data the Qbank app is using to map autolinks to phraseGroup ids (see the nestled eids)
+  """
+  explanationMetadata: String
+}
+
+""""""
+input AnswerResultInput {
+  """"""
+  correct: Int!
+
+  """"""
+  correctWithHelp: Int!
+
+  """"""
+  wrong: Int!
+
+  """"""
+  hasGivenUp: Int!
+}
+
+""""""
+type AnswerStatus {
+  """"""
+  questionId: EncodedId!
+
+  """"""
+  status: QuestionAnsweredStatus!
+}
+
+""""""
+type AnswerStatusConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [AnswerStatusEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type AnswerStatusEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: AnswerStatus!
+}
+
+""""""
+union AnswerStatusesResult = AnswerStatusConnection | BeforeResetStatsError
+
+""""""
+type AnthologyReference {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  subtitle: String!
+
+  """"""
+  author: String!
+
+  """"""
+  editor: String!
+
+  """"""
+  publisher: String!
+
+  """"""
+  city: String
+
+  """"""
+  issue: String
+
+  """"""
+  versionYear: Int
+}
+
+""""""
+union ApplePayPaymentMethodResult = PaymentMethodApplePay | PaymentMethodUpdateError
+
+""""""
+union AppliedDiscount = ForeverDiscount | OneTimeDiscount | TemporaryDiscount
+
+""""""
+union ApplyCouponResult = Subscription | CouponNotApplicableError | CouponNotFoundError | CouponExpiredError
+
+""""""
+type ApplyProductKeyResult {
+  """Product key that was applied"""
+  productKey: String!
+}
+
+""""""
+union ApplyProductKeyResultUnion = ApplyProductKeyResult | ProductKeyError
+
+"""
+Enum to represent the possible status values that Library Archives can have.
+"""
+enum ArchiveLibraryUpdateMode {
+  """
+  This status indicates that the library must be updated. The reason might be that it's faulty and it must be updated.
+  """
+  must
+
+  """This status indicates that the library archive is +7 weeks older"""
+  should
+
+  """
+  This status indicates that the library archive is not older than 7 weeks.
+  """
+  can
+}
+
+"""Previously known as **learning cards**"""
+type Article implements Node {
+  """"""
+  id: ID!
+
+  """"""
+  entityType: String!
+
+  """"""
+  eid: String!
+
+  """"""
+  title: String!
+
+  """Preview images for article"""
+  titleMedia: [MediaAsset!]!
+
+  """list of synonyms of article title"""
+  synonyms: [String]
+
+  """Description"""
+  abstract: String
+
+  """Represents the Further Reading column in Learning card"""
+  tipsAndLinks: [TipAndLink!]!
+
+  """"""
+  knowledgeCategory: String
+
+  """"""
+  knowledgeScope: String
+
+  """"""
+  stage: Stage
+
+  """"""
+  stages: [Stage!]!
+
+  """"""
+  titleAnchor: String
+
+  """
+  Date according to ISO 8601 when this article was last updated by an editor.
+  """
+  updatedDate: String!
+
+  """Should article be shown in public?"""
+  isPublic: Boolean!
+
+  """Should the article always be freely readable?"""
+  isAlwaysFree: Boolean!
+
+  """Unified slug for public access or null if not public"""
+  slug: String
+
+  "\tList of particles\n\tCan throw access.no_valid_access client error"
+  content: [Particle!]!
+
+  "\tList of directly linked references. This should contain all inline references, but can contain additional ones\n\tCan throw access.no_valid_access client error"
+  references: [Reference!]!
+
+  """The Eid of a patient note of an article"""
+  patientNoteEid: ID
+}
+
+""""""
+type ArticleChangelog {
+  """"""
+  changelogArticleId: EncodedId!
+
+  """"""
+  titleMedia: MediaAsset
+
+  """"""
+  articles: [Article!]!
+}
+
+""""""
+type ArticleConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [ArticleEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+"""Destination of a search result item pointing at an article"""
+type ArticleDestination implements DestinationInterface {
+  """"""
+  articleEid: ID!
+
+  """"""
+  articleTitle: String!
+
+  """"""
+  particleEid: ID
+
+  """"""
+  particleTitle: String
+
+  """
+  Destination's (markup·y) anchor id. Temporary field for AB test compatibility.
+  """
+  anchorHash: String
+
+  """
+  Destination's anchored term. Temporary field for AB test compatibility.
+  """
+  anchorTerm: String
+}
+
+""""""
+type ArticleEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: Article!
+}
+
+""""""
+type ArticleInteraction {
+  """"""
+  eid: ID!
+
+  """"""
+  type: ArticleInteractionType!
+
+  """"""
+  articleEid: ID!
+
+  """"""
+  active: Boolean!
+
+  """ISO formated Date. Example: 2022-02-15T00:00:00+0000"""
+  updatedAt: String!
+}
+
+""""""
+type ArticleInteractionConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [ArticleInteractionEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type ArticleInteractionEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: ArticleInteraction!
+}
+
+""""""
+enum ArticleInteractionType {
+  """"""
+  learned
+
+  """"""
+  favorite
+}
+
+""""""
+interface ArticleList {
+  """"""
+  titleMedia: MediaAsset
+
+  """"""
+  articles: [Article!]!
+}
+
+"""limited type for building lists"""
+type ArticleOption {
+  """"""
+  eid: String!
+
+  """"""
+  title: String!
+
+  """
+  NOTE that examScope concept is insufficient and will be replaced in the future - avoid using it if possible
+  """
+  examScope: String
+}
+
+""""""
+union ArticlePreviewResult = Article | NoPreviewAccess | PreviewPending | PreviewNotTriggered
+
+""""""
+input ArticleReadingCollectionInput {
+  """"""
+  articleReadings: [ArticleReadingInput]!
+
+  """"""
+  referrer: ArticleReferrer!
+}
+
+""""""
+input ArticleReadingInput {
+  """"""
+  articleEid: EncodedId!
+
+  """"""
+  createdAt: DateTime
+
+  """Seconds spent in the reading"""
+  timeSpent: Int
+}
+
+""""""
+input ArticleRecommendationCriteria {
+  """"""
+  speciality: ID
+
+  """"""
+  studyObjective: ID
+}
+
+""""""
+type ArticleRecommendations {
+  """"""
+  titleMedia: MediaAsset
+
+  """"""
+  articles: [Article!]!
+}
+
+""""""
+type ArticleReference {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  pages: String
+
+  """"""
+  author: String!
+
+  """"""
+  journal: String!
+
+  """"""
+  volume: String
+
+  """"""
+  issue: String
+
+  """"""
+  doi: String
+
+  """"""
+  pmid: String
+
+  """"""
+  url: String
+
+  """"""
+  versionYear: Int
+}
+
+""""""
+enum ArticleReferrer {
+  """"""
+  walk
+
+  """"""
+  library
+
+  """"""
+  mobile
+}
+
+""""""
+type ArticleScoring implements LearningRecommendation {
+  """"""
+  recommendationTypeEid: String!
+
+  """"""
+  recommendationType: String!
+
+  """"""
+  label: String!
+
+  """"""
+  article: Article
+
+  """Percentile / Bar position / DE-style: Success rate"""
+  successScore: Float!
+
+  """
+  Confidence / Bar width / DE-style: Progress rate: answered / unanswered
+  """
+  progressScore: Float!
+
+  """"""
+  answeredRight: Int!
+
+  """"""
+  answeredWithHelp: Int!
+
+  """"""
+  answeredWrong: Int!
+
+  """"""
+  percentileScore: Float!
+
+  """"""
+  priorityScore: Float!
+
+  """"""
+  totalQuestionCount: Int!
+
+  """"""
+  questionsCompleted: Int!
+
+  """"""
+  percentageAnsweredRightFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRight: Float!
+
+  """"""
+  percentageAnsweredRightWithHelpFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRightWithHelp: Float!
+
+  """"""
+  percentageAnsweredWrongFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredWrong: Float!
+
+  """"""
+  percentageUnseen: Float!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: LearningRecommendationRelevance
+}
+
+"""Auth token - get it from backend and use to access secured endpoints"""
+type AuthToken {
+  """Token string. Add it to Authorization http header"""
+  token: String!
+
+  """Device id for the token"""
+  deviceId: String!
+
+  """Date issued in database format"""
+  issued: String!
+
+  """User linked to the token"""
+  user: User!
+
+  """User EID linked to the token"""
+  userEid: EncodedId!
+}
+
+"""Represents current user authorization"""
+type Authorization {
+  """false if user is not authorized"""
+  isAuthorized: Boolean!
+
+  """null if user is not authorized"""
+  token: AuthToken
+
+  """null if user is not authorized"""
+  user: User
+}
+
+""""""
+type BeforeResetStatsError {
+  """"""
+  statsResetAt: DateTime!
+}
+
+""""""
+type BillingAddress {
+  """"""
+  firstName: String!
+
+  """"""
+  lastName: String!
+
+  """"""
+  address1: String
+
+  """"""
+  address2: String
+
+  """"""
+  zip: String
+
+  """"""
+  city: String
+
+  """"""
+  state: String
+
+  """ISO 3166-2 state/province code"""
+  stateCode: String
+
+  """ISO 3166-1 ALPHA-2 country code"""
+  country: String
+}
+
+""""""
+input BillingAddressInput {
+  """"""
+  firstName: String!
+
+  """"""
+  lastName: String!
+
+  """"""
+  address1: String
+
+  """"""
+  address2: String
+
+  """"""
+  zip: String
+
+  """"""
+  city: String
+
+  """"""
+  state: String
+
+  """ISO 3166-2 state/province code"""
+  stateCode: String
+
+  """ISO 3166-1 ALPHA-2 country code"""
+  country: String!
+}
+
+""""""
+type BillingAddressInputValidationError {
+  """"""
+  globalErrors: [InputTypeViolation!]!
+
+  """"""
+  address1Errors: [InputFieldViolation!]!
+
+  """"""
+  zipErrors: [InputFieldViolation!]!
+
+  """"""
+  cityErrors: [InputFieldViolation!]!
+
+  """"""
+  stateErrors: [InputFieldViolation!]!
+
+  """"""
+  countryErrors: [InputFieldViolation!]!
+}
+
+""""""
+union BillingAddressResult = BillingAddress | BillingAddressInputValidationError
+
+""""""
+enum BillingCycleUnit {
+  """"""
+  day
+
+  """"""
+  month
+
+  """"""
+  year
+}
+
+""""""
+type BlockedExternalAddition {
+  """"""
+  type: AdditionType!
+}
+
+""""""
+type BookReference {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  pages: String
+
+  """"""
+  author: String!
+
+  """"""
+  publisher: String!
+
+  """"""
+  city: String
+
+  """"""
+  volume: String
+
+  """"""
+  issue: String
+
+  """"""
+  isbn: String!
+
+  """"""
+  versionYear: Int
+}
+
+""""""
+type Bundle {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  subtitle: String!
+
+  """"""
+  isCertified: Boolean!
+
+  """"""
+  articleEids: [ID!]
+
+  """"""
+  targets: [BundleDestination!]
+
+  """"""
+  cases: [Case!]!
+
+  """"""
+  sessionTemplate: SessionTemplate
+
+  """"""
+  course: Course!
+}
+
+""""""
+type BundleDestination {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  articleEid: ID!
+
+  """"""
+  articleTitle: String!
+
+  """"""
+  anchorEid: ID
+
+  """"""
+  anchorTitle: String
+}
+
+""""""
+type Case {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  title: String!
+
+  """"""
+  steps: [CaseStep!]!
+}
+
+""""""
+type CaseAnswer {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  title: String!
+
+  """"""
+  content: String!
+
+  """
+  list of editorial styles to apply on the full particle - usually content scaling styles
+  """
+  globalStyles: [String!]!
+
+  """"""
+  media: [MediaAsset!]
+}
+
+""""""
+type CaseQuestion {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  title: String!
+
+  """"""
+  content: String!
+
+  """
+  list of editorial styles to apply on the full particle - usually content scaling styles
+  """
+  globalStyles: [String!]!
+
+  """"""
+  media: [MediaAsset!]
+
+  """"""
+  answer: CaseAnswer!
+}
+
+""""""
+type CaseStep {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  title: String!
+
+  """"""
+  content: String!
+
+  """
+  list of editorial styles to apply on the full particle - usually content scaling styles
+  """
+  globalStyles: [String!]!
+
+  """"""
+  media: [MediaAsset!]
+
+  """"""
+  questions: [CaseQuestion!]!
+}
+
+""""""
+input CertificateInput {
+  """"""
+  courseEid: EncodedId!
+
+  """"""
+  firstName: String!
+
+  """"""
+  lastName: String!
+
+  """"""
+  dateOfBirth: Date
+
+  """"""
+  placeOfBirth: String
+
+  """"""
+  efnNumber: String
+}
+
+""""""
+type ChargebeePurchaseInvoice {
+  """"""
+  id: String!
+
+  """"""
+  name: String!
+
+  """"""
+  dateFrom: DateTime!
+
+  """"""
+  dateTo: DateTime!
+
+  """"""
+  price: Price!
+}
+
+""""""
+type ChargebeePurchaseInvoicePDFDownloadLink {
+  """"""
+  url: String!
+
+  """"""
+  validUntil: DateTime!
+}
+
+""""""
+union ChargeebeeInvoiceDownloadResult = ChargebeePurchaseInvoicePDFDownloadLink | InvoiceNotFoundError | MissingBillingAddressError
+
+""""""
+type Clinic {
+  """"""
+  eid: ID!
+
+  """"""
+  label: String!
+
+  """ISO 3166-1 alpha-2 code"""
+  countryId: String!
+}
+
+"""Only one of two fields can be provided"""
+input ClinicInput {
+  """The Id of the clinic"""
+  id: ID
+
+  """Free-text option to be used only when clinic is not found in the list"""
+  text: String
+}
+
+"""The possible types of a user cme number (for CME credits)"""
+enum CmeType {
+  """"""
+  efn
+}
+
+""""""
+type CmeUserNumber {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  createdAt: DateTime!
+
+  """"""
+  number: String!
+
+  """"""
+  type: CmeType!
+}
+
+""""""
+input CmeUserNumberInput {
+  """"""
+  number: String
+
+  """"""
+  type: CmeType
+}
+
+""""""
+enum Color {
+  """"""
+  default
+}
+
+""""""
+enum ComparisonPeerGroup {
+  """"""
+  all
+
+  """"""
+  top100
+}
+
+""""""
+enum ComparisonTopic {
+  """"""
+  subject
+
+  """"""
+  chapter
+
+  """"""
+  organSystem
+}
+
+"""Copyright information for display"""
+type Copyright implements Typed {
+  """"""
+  eid: String!
+
+  """"""
+  entityType: String!
+
+  """"""
+  html: String
+}
+
+""""""
+type Country {
+  """"""
+  code: ID!
+
+  """"""
+  name: String!
+
+  """decideds which flow is used in the initialization of user profile"""
+  onboardingFlow: String!
+}
+
+""""""
+type Coupon {
+  """"""
+  shopHeader: String!
+
+  """"""
+  validTill: DateTime
+
+  """"""
+  name: String!
+
+  """"""
+  layout: ShopLayout!
+}
+
+""""""
+enum CouponDurationType {
+  """"""
+  one_time
+
+  """"""
+  forever
+
+  """"""
+  limited_period
+}
+
+"""
+This error means either coupon already reached its maximum redemptions limit or is expired by date
+"""
+type CouponExpiredError {
+  """The code that was applied"""
+  code: String!
+}
+
+""""""
+input CouponInput {
+  """"""
+  groupDiscountCoupon: GroupDiscountCouponInput
+
+  """"""
+  scholarshipCoupon: ScholarshipCouponInput
+}
+
+""""""
+type CouponNotApplicableError {
+  """The code that was applied"""
+  code: String!
+}
+
+""""""
+type CouponNotFoundError {
+  """The code that was applied"""
+  code: String!
+}
+
+""""""
+union CouponResult = Coupon | CouponExpiredError | CouponNotFoundError
+
+""""""
+type Course {
+  """"""
+  eid: ID!
+
+  """"""
+  identifier: String!
+
+  """"""
+  title: String!
+
+  """"""
+  category: CourseCategory!
+
+  """"""
+  subtitle: String!
+
+  """"""
+  certificateInformation: CourseCertificateInformation
+
+  """"""
+  bundles: [Bundle!]!
+
+  """"""
+  area: CourseArea!
+
+  """"""
+  isPaid: Boolean!
+
+  """"""
+  documentUrl: String
+
+  """"""
+  logoUrl: String
+
+  """"""
+  messages: [CourseMessage!]
+
+  """"""
+  exams: [EncodedId!]!
+
+  """"""
+  publishingStatus: CoursePublishingStatus!
+}
+
+""""""
+enum CourseArea {
+  """"""
+  boardExam
+
+  """"""
+  bonus
+
+  """"""
+  clinicalClerkship
+
+  """"""
+  clinicalSubspeciality
+
+  """"""
+  cmeIntensive
+
+  """"""
+  cmeRefresher
+
+  """"""
+  general
+
+  """"""
+  hidden
+
+  """"""
+  m1
+
+  """"""
+  m2
+
+  """"""
+  m3
+
+  """"""
+  medicalSpecialist
+
+  """"""
+  other
+}
+
+""""""
+enum CourseCategory {
+  """"""
+  certification
+
+  """"""
+  exam
+
+  """"""
+  learningPlan
+
+  """"""
+  physician
+
+  """"""
+  selfAssessment
+
+  """"""
+  university
+}
+
+""""""
+type CourseCertificateInformation {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  course: Course
+
+  """"""
+  certificateType: CourseCertificateType!
+
+  """"""
+  percentToPass: Float!
+
+  """"""
+  title: String!
+
+  """"""
+  subtitle: String
+
+  """"""
+  message: String
+
+  """"""
+  cmePoints: Int!
+
+  """"""
+  signature: String!
+
+  """"""
+  signerName: String!
+
+  """"""
+  signerRole: String!
+
+  """"""
+  placeOfSignature: String!
+}
+
+""""""
+enum CourseCertificateType {
+  """"""
+  aekno
+
+  """"""
+  cme
+
+  """"""
+  premium
+}
+
+""""""
+type CourseMessage {
+  """"""
+  type: String!
+
+  """"""
+  body: String!
+
+  """"""
+  style: String
+}
+
+""""""
+type CoursePromotion {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  title: String!
+
+  """"""
+  subtitle: String!
+
+  """"""
+  benefit: String
+
+  """"""
+  certificateBadgeUrl: String
+
+  """"""
+  targetUrl: String!
+}
+
+""""""
+enum CoursePromotionGroupCriteria {
+  """"""
+  physician
+
+  """"""
+  student
+}
+
+""""""
+enum CoursePublishingStatus {
+  """"""
+  new
+
+  """"""
+  published
+
+  """"""
+  unpublished
+}
+
+""""""
+union CreateLectureSessionResult = QuestionSession | LectureSessionUniversityMissmatchError | LectureSessionNotAccessibleError
+
+""""""
+input CreateParticleHighlightInput {
+  """"""
+  particleEid: ID!
+
+  """"""
+  starts: [Int!]!
+
+  """"""
+  ends: [Int!]!
+
+  """"""
+  text: String!
+
+  """"""
+  color: Color!
+
+  """"""
+  stampId: Int!
+}
+
+"""general error if creation of subscription failed"""
+type CreateSubscriptionError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+union CreateSubscriptionResult = SubscriptionWithUpgrade | CreateSubscriptionError | PaypalPaymentError | AdyenPaymentError | StripePaymentError | DestinationAddressError
+
+"""general error if creation of subscription failed"""
+type CreateUpgradeError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+union CreateUpgradeResult = SubscriptionUpgrade | CreateUpgradeError | PaypalPaymentError | AdyenPaymentError | StripePaymentError | DestinationAddressError
+
+""""""
+type CreateUserAlreadyExistsError implements Error {
+  """"""
+  message: String!
+
+  """if false the account still needs email verification"""
+  isActive: Boolean!
+}
+
+""""""
+enum CreateUserChannel {
+  """"""
+  shop
+
+  """"""
+  passwordSignup
+
+  """"""
+  sso
+
+  """"""
+  oidc
+
+  """"""
+  passwordSignupWithDelayedEmailVerification
+}
+
+""""""
+input CreateUserInput {
+  """"""
+  channel: CreateUserChannel
+
+  """"""
+  email: String!
+
+  """"""
+  password: String
+}
+
+""""""
+type CreateUserInputValidationError implements Error {
+  """"""
+  message: String!
+
+  """"""
+  emailErrors: [InputFieldViolation!]!
+
+  """"""
+  passwordErrors: [InputFieldViolation!]!
+}
+
+""""""
+union CreateUserResult = AuthToken | CreateUserAlreadyExistsError | CreateUserInputValidationError | CreateUserSendConfirmEmailGuzzleExceptionError
+
+""""""
+type CreateUserSendConfirmEmailGuzzleExceptionError implements Error {
+  """"""
+  message: String!
+
+  """if false the account still needs email verification"""
+  isActive: Boolean!
+}
+
+""""""
+union CreditCardPaymentMethodResult = PaymentMethodCard | PaymentMethodUpdateError
+
+"""Currency represent the accepted currencies within the shop"""
+enum Currency {
+  """"""
+  usd
+
+  """"""
+  eur
+}
+
+""""""
+type CustomStudyDay {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  studyDate: Date!
+
+  """"""
+  sessionEid: EncodedId
+
+  """"""
+  sessionPerformance: QuestionSetPerformance
+
+  """"""
+  questionCount: Int!
+
+  """"""
+  customStudyPlan: CustomStudyPlan!
+}
+
+""""""
+type CustomStudyPlan {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  title: String!
+
+  """"""
+  endDate: Date!
+
+  """"""
+  accessedAt: DateTime
+
+  """"""
+  isArchived: Boolean
+
+  """"""
+  studyDays: [CustomStudyDay!]!
+
+  """"""
+  performance: CustomStudyPlanPerformance!
+
+  """"""
+  studyObjective: StudyObjective
+}
+
+""""""
+input CustomStudyPlanInput {
+  """"""
+  studySchedule: CustomStudyScheduleInput!
+
+  """"""
+  questionCriteria: SessionQuestionCriteria!
+}
+
+""""""
+type CustomStudyPlanPerformance implements QuestionSetPerformanceInterface {
+  """
+  This is a list of student's progress in completing questions belonging to each subject in their CSP
+  """
+  subjectProgress: [SubjectProgress!]!
+
+  """
+  This is the average time a user spents answering questions in the custom study plan
+  """
+  averageTimePerAnswer: Float
+
+  """The total number of questions in the custom study plan"""
+  totalQuestions: Int!
+
+  """The total number of completed questions in the custom study plan"""
+  completedQuestions: Int!
+
+  """Total time spent on giving answers"""
+  totalTime: Int!
+}
+
+""""""
+type CustomStudySchedule {
+  """"""
+  startDate: Date!
+
+  """"""
+  endDate: Date!
+
+  """"""
+  learningDays: [Weekday!]!
+
+  """"""
+  numberOfPossibleQuestions: Int!
+
+  """"""
+  actualNumberOfQuestions: Int!
+
+  """"""
+  dailyLearningDuration: Int!
+}
+
+""""""
+input CustomStudyScheduleInput {
+  """"""
+  startDate: Date!
+
+  """"""
+  endDate: Date!
+
+  """"""
+  desiredNumberOfQuestions: Int!
+
+  """"""
+  learningDays: [Weekday!]
+
+  """"""
+  dailyLearningDuration: Int
+}
+
+"""
+Represent date in ISO-8601 (YYYY-MM-DDT00:00:00+00:00) format"
+"""
+scalar Date
+
+"""
+Represent date and time in ISO-8601 (YYYY-MM-DDThh:mm:ss+00:00) format"
+"""
+scalar DateTime
+
+""""""
+input DeleteParticleHighlightInput {
+  """"""
+  particleEid: ID!
+
+  """"""
+  stampId: Int!
+}
+
+"""
+DEPRECATED & UNUSED – intended to be a placehoder until DestinationInterface is renamed
+"""
+interface Destination {
+  """Destination's article id"""
+  articleEid: ID!
+}
+
+""""""
+type DestinationAddressError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+interface DestinationInterface {
+  """"""
+  articleEid: ID!
+
+  """"""
+  articleTitle: String!
+
+  """"""
+  particleEid: ID
+
+  """"""
+  particleTitle: String
+}
+
+"""difficulty0 is very easy, difficulty4 is very difficult"""
+enum Difficulty {
+  """"""
+  difficulty0
+
+  """"""
+  difficulty1
+
+  """"""
+  difficulty2
+
+  """"""
+  difficulty3
+
+  """"""
+  difficulty4
+}
+
+""""""
+interface Discount {
+  """"""
+  originalPrice: Price!
+
+  """"""
+  value: DiscountValue!
+}
+
+""""""
+type DiscountAmount {
+  """"""
+  price: Price!
+}
+
+""""""
+type DiscountPercentage {
+  """"""
+  percentage: Float!
+}
+
+""""""
+union DiscountValue = DiscountPercentage | DiscountAmount
+
+""""""
+type Dosage {
+  """"""
+  id: ID!
+
+  """"""
+  content: DosageContent!
+
+  """"""
+  ambossSubstanceLink: AmbossSubstanceLink
+
+  """"""
+  createdAt: DateTime!
+
+  """"""
+  updatedAt: DateTime!
+
+  """"""
+  text: String!
+
+  """"""
+  ambossSubstanceId: Int!
+
+  """"""
+  ambossSubstanceName: String!
+}
+
+""""""
+type DosageContent {
+  """"""
+  markdown: String!
+
+  """"""
+  html: String!
+
+  """"""
+  richtext: String!
+}
+
+"""Pharma: represents a drug"""
+type Drug {
+  """"""
+  eid: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  shortName: String!
+
+  """position of drug in the group"""
+  position: Int
+
+  """"""
+  prescriptions: [PrescriptionStatus!]
+
+  """"""
+  dosageForms: [String!]
+
+  """sections specific to the drug"""
+  sections: [PharmaSection!]
+
+  """URL providing a pdf to download containing 'Fachinformationen'"""
+  prescribingInformationUrl: String
+
+  """URL providing a pdf to download containing 'Beipackzettel'"""
+  patientPackageInsertUrl: String
+
+  """"""
+  publishedAt: Date
+
+  """"""
+  embryotox: Embryotox!
+}
+
+"""Pharma: represents a group of drugs with equal properties"""
+type DrugGroup {
+  """"""
+  eid: ID!
+
+  """"""
+  agentEid: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  agentName: String!
+
+  """"""
+  vendor: String
+
+  """"""
+  atcLabel: String
+
+  """"""
+  drugs: [Drug!]!
+
+  """common sections of all drugs in this group"""
+  sections: [PharmaSection!]
+}
+
+""""""
+union EditorialLink = EditorialUrl | ForbiddenLink
+
+""""""
+type EditorialUrl {
+  """"""
+  url: String!
+}
+
+""""""
+enum EmailVerificationStatus {
+  """"""
+  verified
+
+  """"""
+  unverified
+
+  """"""
+  delayed
+}
+
+"""Pharma: represents embryotox data"""
+type Embryotox {
+  """"""
+  label: String
+
+  """"""
+  link: String
+}
+
+"""
+Represent eid as known in mozart"
+"""
+scalar EncodedId
+
+""""""
+interface Error {
+  """
+  Don't expose to the customer directly. message describing the error in more detail for logging
+  """
+  message: String!
+}
+
+""""""
+enum ErrorText {
+  """"""
+  invalid_email
+
+  """"""
+  email_already_blacklisted
+
+  """"""
+  unexpected
+}
+
+""""""
+type ExamBlockedAnswer {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  officialExamRate: Int
+}
+
+""""""
+type ExamBlockedQuestion {
+  """"""
+  eid: String!
+
+  """"""
+  stage: Stage!
+
+  """"""
+  contentPreview: String!
+
+  """"""
+  difficultyIndex: Int!
+
+  """"""
+  answers: [ExamBlockedAnswer!]!
+}
+
+""""""
+type ExternalAddition {
+  """"""
+  type: AdditionType!
+
+  """"""
+  url: String!
+
+  """"""
+  isFreebie: Boolean!
+
+  """"""
+  fallbackUrl: String
+}
+
+""""""
+union ExternalAdditionResult = ExternalAddition | BlockedExternalAddition
+
+""""""
+union ExternalIdentityProvider = OAuthExternalIdentityProvider | SAMLExternalIdentityProvider
+
+""""""
+type ExternalIdentityProviderFetchingError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+interface ExternalIdentityProviderInterface {
+  """"""
+  eid: String!
+
+  """"""
+  name: String!
+}
+
+""""""
+type ExternalIdentityProviderResult {
+  """"""
+  externalIdentityProviders: [ExternalIdentityProvider!]!
+}
+
+""""""
+union ExternalIdentityProviderResultUnion = ExternalIdentityProviderResult | ExternalIdentityProviderFetchingError
+
+""""""
+type Feed {
+  """"""
+  feedUrl: String
+
+  """"""
+  rawJson: String
+
+  """"""
+  entries: [FeedEntry!]
+}
+
+""""""
+type FeedEntry {
+  """"""
+  id: ID
+
+  """"""
+  title: String
+
+  """
+  published date milliseconds after 1970 (this should be an integer, and is only served as string due to php limitation)
+  """
+  epochMillisPublished: String
+
+  """"""
+  postUrl: String
+
+  """"""
+  content: String
+
+  """"""
+  assetUrl: String
+
+  """"""
+  authorName: String
+
+  """"""
+  authorAvatarUrl: String
+}
+
+""""""
+input FeedbackInput {
+  """"""
+  message: String!
+
+  """
+  User-based pre-categorization – either intention OR type needs to be present
+  """
+  intention: FeedbackIntentionType
+
+  """Feedback quality/mood – use intention instead and expect deprecation"""
+  type: FeedbackType
+
+  """"""
+  source: FeedbackSource!
+
+  """"""
+  mobileInfo: FeedbackMobileInfo
+}
+
+""""""
+enum FeedbackIntentionType {
+  """Language issue"""
+  language_issue
+
+  """Incorrect content"""
+  incorrect_content
+
+  """Missing content"""
+  missing_content
+
+  """Technical issue"""
+  technical_issue
+
+  """Media feedback"""
+  media
+
+  """Content improvement"""
+  content_improvement
+
+  """AMBOSS Search results"""
+  search_results
+
+  """Praise"""
+  praise
+
+  """DEPRECATED: General feedback"""
+  product_feedback
+
+  """DEPRECATED: Language issue"""
+  spelling_grammar
+
+  """DEPRECATED: Incorrect content"""
+  outdated_information
+
+  """DEPRECATED: Missing content"""
+  improvement
+}
+
+""""""
+input FeedbackMobileInfo {
+  """"""
+  appPlatform: MobilePlatform!
+
+  """"""
+  appName: MobileAppName!
+
+  """"""
+  appVersion: String!
+
+  """"""
+  archiveVersion: Int!
+}
+
+""""""
+input FeedbackSource {
+  """"""
+  type: FeedbackSourceType!
+
+  """"""
+  id: String
+
+  """"""
+  version: Int
+}
+
+""""""
+enum FeedbackSourceType {
+  """"""
+  question
+
+  """"""
+  answer
+
+  """"""
+  particle
+}
+
+""""""
+type FeedbackSubmissionResult {
+  """"""
+  success: Boolean!
+}
+
+""""""
+enum FeedbackType {
+  """"""
+  positive
+
+  """"""
+  negative
+
+  """"""
+  neutral
+}
+
+""""""
+type ForbiddenLink {
+  """"""
+  isForbidden: Boolean!
+}
+
+""""""
+type ForeverDiscount implements Discount & SubscriptionDiscount {
+  """"""
+  originalPrice: Price!
+
+  """"""
+  value: DiscountValue!
+}
+
+""""""
+type FutureInvoiceEstimation {
+  """If change will cause proration (amount in cents)"""
+  prorationAmount: Int!
+
+  """The price you will pay for the next invoice"""
+  amountDue: Int!
+
+  """Currency code for all aboumt in this type"""
+  currency: String!
+}
+
+""""""
+type GdMarketingCampaign implements MarketingCampaign {
+  """"""
+  showReferralBanner: Boolean!
+
+  """"""
+  validUntil: DateTime!
+
+  """"""
+  referralId: String
+
+  """Group discount membership coupon"""
+  mc: String
+
+  """Group discount upgrade coupon"""
+  uc: String
+
+  """"""
+  id: String
+}
+
+""""""
+enum Gender {
+  """"""
+  male
+
+  """"""
+  female
+
+  """"""
+  other
+
+  """"""
+  notGiven
+}
+
+""""""
+input GroupDiscountCouponInput {
+  """id of a coupon granting a reduction on chargebee plans"""
+  membershipCouponId: String
+
+  """
+  id of a coupon granting a reduction on chargebee non-recurring addons or student life plan
+  """
+  upgradeCouponId: String
+}
+
+""""""
+type Highlight {
+  """"""
+  stampId: Int!
+
+  """"""
+  eid: String!
+
+  """"""
+  starts: [Int!]!
+
+  """"""
+  ends: [Int!]!
+
+  """"""
+  text: String!
+
+  """"""
+  color: Color!
+
+  """"""
+  updatedAt: String!
+}
+
+""""""
+type HostedPage {
+  """json returned by chargebee"""
+  hostedPageJson: String!
+}
+
+""""""
+type IP {
+  """"""
+  ip: String!
+
+  """"""
+  type: IpType!
+
+  """ISO 3166-1 alpha-2 country code"""
+  country: String!
+}
+
+""""""
+enum InputFieldViolation {
+  """For formatted input format of data provided is wrong"""
+  wrongFormat
+
+  """Value for this field is required (can depend on other fields value)"""
+  isRequired
+
+  """For text values that means exceeding allowed field length"""
+  tooLong
+
+  """Value is below allowed field length"""
+  tooShort
+
+  """
+  When submit value from the dictionary, this means that value is not in the list
+  """
+  notAvailable
+
+  """
+  This field is not available due to some reasons (country, other field values, etc.)
+  """
+  fieldNotAvailable
+
+  """
+  Means that in some input object the fields can be provided in exclusive way, only on or another
+  """
+  exclusiveValue
+
+  """
+  A unique value already exists and cannot be duplicated. E.g. user's email
+  """
+  duplicateNotAllowed
+
+  """Value supplied does not match the expected value"""
+  valueMismatch
+}
+
+""""""
+enum InputTypeViolation {
+  """"""
+  invalid
+}
+
+""""""
+type Instalment {
+  """"""
+  id: String!
+
+  """"""
+  productPrice: SubscriptionPrice!
+}
+
+""""""
+type InstitutionalLicense {
+  """"""
+  institutionName: String!
+
+  """"""
+  verifiedUntil: DateTime!
+
+  """"""
+  verifiedEmail: String
+
+  """"""
+  status: InstitutionalLicenseStatus!
+}
+
+"""Legacy 'campus license' entities"""
+type InstitutionalLicenseConfig {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  name: String!
+
+  """"""
+  startDate: DateTime!
+
+  """"""
+  endDate: DateTime!
+
+  """"""
+  university: University
+
+  """"""
+  providerText: String!
+
+  """"""
+  providerGenetiveText: String!
+
+  """"""
+  renewalLocationText: String!
+
+  """"""
+  benefitText: String!
+
+  """"""
+  isAutoActivatable: Boolean!
+
+  """"""
+  details: String!
+}
+
+""""""
+enum InstitutionalLicenseStatus {
+  """Licence is attached but awaiting confirmation"""
+  pending
+
+  """Licence is confirmed and activated"""
+  active
+
+  """
+  License is valid, but user did not visit AMBOSS in specified period from the institutional organisation network
+  """
+  expiredMembership
+
+  """License is expired"""
+  expiredLicense
+}
+
+"""
+An Institutional license assigned to a user based on their SSO external credentials
+"""
+type InstitutionalSSOLicense {
+  """"""
+  eid: EncodedId!
+
+  """License activation end date for the user"""
+  activeUntil: DateTime
+
+  """"""
+  email: String!
+
+  """"""
+  isReverificationRequired: Boolean!
+
+  """"""
+  lastExtendedAt: DateTime!
+
+  """"""
+  config: InstitutionalSSOLicenseConfig!
+}
+
+""""""
+type InstitutionalSSOLicenseConfig {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  idpProviderId: String!
+
+  """"""
+  name: String!
+
+  """"""
+  grantsQuestion: Int
+
+  """"""
+  grantsLearningCard: Boolean!
+
+  """"""
+  activeFrom: DateTime!
+
+  """"""
+  activeUntil: DateTime
+}
+
+""""""
+type InvoiceNotFoundError implements Error {
+  """"""
+  message: String!
+}
+
+"""Ios Subscription representation"""
+type IosSubscription {
+  """UTC, ISO 8601 (YYYY-MM-DDThh:mm:ss+00:00)"""
+  startDate: DateTime!
+
+  """UTC, ISO 8601 (YYYY-MM-DDThh:mm:ss+00:00)"""
+  renewalDate: DateTime!
+
+  """It returns if the subscription will be renewed or not"""
+  autoRenewStatus: Boolean!
+
+  """Product id defined in the Apple Store"""
+  appleProductId: String!
+
+  """The related product details"""
+  linkedProduct: Product
+}
+
+""""""
+type IosSubscriptionError {
+  """"""
+  code: IosSubscriptionErrorCode!
+}
+
+""""""
+enum IosSubscriptionErrorCode {
+  """
+  Error Type returned when the receipt could not be authorized. Treat this the same as if a purchase was never made.
+  """
+  receiptNotAuthorized
+
+  """
+  Error Type returned when the receipt is valid but the subscription has expired
+  """
+  subscriptionExpired
+
+  """
+  Error Type returned when the receipt server is not currently available.
+  """
+  receiptServerNotAvailable
+
+  """
+  Error Type returned when the receipt could not be authenticated by the IOS App Store
+  """
+  receiptNotAuthenticated
+
+  """Error Type returned when an unexpected error ocurrs"""
+  unexpectedError
+}
+
+""""""
+enum IpType {
+  """"""
+  IPv4
+
+  """"""
+  IPv6
+}
+
+""""""
+type LabValuesSheet implements Typed {
+  """"""
+  entityType: String!
+
+  """"""
+  eid: String!
+
+  """html content consisting of one h1 and a giant table"""
+  content: String!
+}
+
+""""""
+interface LearningRecommendation {
+  """"""
+  recommendationTypeEid: String!
+
+  """"""
+  recommendationType: String!
+
+  """"""
+  label: String!
+
+  """"""
+  successScore: Float!
+
+  """"""
+  progressScore: Float!
+
+  """"""
+  answeredRight: Int!
+
+  """"""
+  answeredWithHelp: Int!
+
+  """"""
+  answeredWrong: Int!
+
+  """
+  percentileScore can be removed once it's removed from SubjectScoring, PreclinicSubjectScoring, ArticleScoring and OrganSystemScoring type
+  """
+  percentileScore: Float!
+
+  """"""
+  priorityScore: Float!
+
+  """"""
+  totalQuestionCount: Int!
+
+  """"""
+  questionsCompleted: Int!
+
+  """"""
+  percentageAnsweredRightFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRight: Float!
+
+  """"""
+  percentageAnsweredRightWithHelpFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRightWithHelp: Float!
+
+  """"""
+  percentageAnsweredWrongFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredWrong: Float!
+
+  """"""
+  percentageUnseen: Float!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: LearningRecommendationRelevance
+}
+
+""""""
+enum LearningRecommendationRelevance {
+  """"""
+  low
+
+  """"""
+  medium
+
+  """"""
+  high
+}
+
+""""""
+type LectureCategory {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  label: String!
+
+  """"""
+  tags: [LectureTag!]
+}
+
+"""Generic error for not accessible lecture sessions"""
+type LectureSessionNotAccessibleError implements Error {
+  """"""
+  message: String!
+}
+
+"""
+Public lecture sessions can only be accessed by students of the same university
+"""
+type LectureSessionUniversityMissmatchError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+type LectureTag {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  label: String!
+}
+
+""""""
+type LegacyMembership {
+  """"""
+  id: ID!
+
+  """Status of this legacy membership true | false"""
+  isActive: Boolean!
+
+  """The related product useful for student life"""
+  linkedProduct: Product
+
+  """"""
+  accessReason: AccessReasonType
+
+  """"""
+  startDate: DateTime
+
+  """null if membership is student life"""
+  endDate: DateTime
+}
+
+""""""
+type LegacySubscription {
+  """
+  The legacy access which is currently running, this will be the oldest active legacy access
+  """
+  currentlyRunning: LegacyMembership
+
+  """All other legacy access that are still active excluding update access"""
+  futureAccesses: [LegacyMembership]
+
+  """"""
+  lastExpiredAccess: LegacyMembership
+}
+
+""""""
+type LibraryArchive {
+  """"""
+  version: Int!
+
+  """"""
+  url: String!
+
+  """"""
+  updateMode: ArchiveLibraryUpdateMode
+
+  """"""
+  size: Int!
+
+  """"""
+  createdAt: String!
+}
+
+""""""
+type LibraryArchiveArticle {
+  """"""
+  eid: ID!
+
+  """"""
+  url: String!
+
+  """"""
+  htmlContent: String!
+}
+
+""""""
+type LibraryArticle implements Typed {
+  """"""
+  entityType: String!
+
+  """"""
+  eid: String!
+
+  """"""
+  chapterNumber: String
+
+  """"""
+  stage: Stage
+
+  """"""
+  title: String!
+
+  """Article that is represented by this Library entity"""
+  article: Article!
+}
+
+""""""
+type License {
+  """Title of this license, e.g. 'Amboss-Zugang'"""
+  title: String!
+
+  """
+  The text that contains all user relevant info about this license, e.g. when does it expire, when does it renew
+  """
+  statusText: String!
+}
+
+""""""
+type LimitedAccess implements Access {
+  """"""
+  target: AccessTarget!
+
+  """quota of this access"""
+  quota: Int!
+
+  """<= quota"""
+  usedQuota: Int!
+
+  """should not be negative"""
+  remainingQuota: Int!
+
+  """when will the used/remaining quota be resetted"""
+  renewalDate: DateTime!
+}
+
+"""Previously known as **library folder**"""
+type List implements Typed {
+  """"""
+  entityType: String!
+
+  """"""
+  eid: String!
+
+  """"""
+  title: String!
+
+  """"""
+  abstract: String
+
+  """"""
+  collection: [ListItem]
+
+  """Returns collection of List and LibraryArticle"""
+  items: [ListItem]
+
+  """"""
+  chapterNumber: String
+
+  """"""
+  articleCount: Int
+
+  """"""
+  stage: Stage
+}
+
+""""""
+union ListItem = List | Article | LibraryArticle
+
+""""""
+interface MarketingCampaign {
+  """"""
+  id: String
+
+  """"""
+  validUntil: DateTime!
+}
+
+""""""
+type MarketingSource {
+  """"""
+  eid: ID!
+
+  """"""
+  label: String!
+}
+
+"""Only one of two fields can be provided"""
+input MarketingSourceInput {
+  """Id from the reference"""
+  id: ID
+
+  """Free-text marketing source info"""
+  text: String
+}
+
+"""Media used in content"""
+type MediaAsset implements Typed {
+  """"""
+  eid: String!
+
+  """"""
+  entityType: String!
+
+  """"""
+  title: String
+
+  """"""
+  description: String
+
+  """"""
+  canonicalAsset: String!
+
+  """"""
+  canonicalUrl: String!
+
+  """"""
+  aspectRatio: Float!
+
+  """"""
+  copyright: Copyright
+
+  """"""
+  externalAddition: ExternalAdditionResult
+
+  """"""
+  externalType: String
+
+  """"""
+  overlayAsset: String
+
+  """"""
+  overlayUrl: String
+
+  """"""
+  multilayerAsset: String
+
+  """"""
+  editorialLink: EditorialLink!
+}
+
+""""""
+union MembershipDetails = Subscription | LegacySubscription | IosSubscription | TeamAccess
+
+""""""
+type MiscReference {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  author: String
+
+  """"""
+  url: String
+
+  """year-month-day"""
+  accessDate: String
+}
+
+""""""
+type MissingBillingAddressError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+type MobileAccess {
+  """"""
+  target: MobileAccessTargetType!
+
+  """"""
+  offlineExpiryDate: DateTime!
+}
+
+""""""
+type MobileAccessError {
+  """"""
+  target: MobileAccessTargetType!
+
+  """"""
+  errorCode: MobileAccessErrorCodeType
+}
+
+""""""
+enum MobileAccessErrorCodeType {
+  """"""
+  access_expired
+
+  """"""
+  access_required
+
+  """"""
+  access_consumed
+
+  """"""
+  campus_license_user_access_expired
+
+  """"""
+  unknown_access_error
+}
+
+""""""
+enum MobileAccessTargetType {
+  """"""
+  learning_card
+
+  """"""
+  question
+
+  """"""
+  question_1
+
+  """"""
+  question_2
+
+  """"""
+  question_3
+
+  """"""
+  smartzoom
+
+  """"""
+  meditricks
+
+  """"""
+  meditricks_neuroanatomy
+
+  """"""
+  effigos
+
+  """"""
+  miamed_calculator
+
+  """"""
+  miamed_web_content
+
+  """"""
+  miamed_auditor
+
+  """"""
+  miamed_patient_information
+
+  """"""
+  miamed_3d_model
+
+  """"""
+  library_archive
+
+  """"""
+  easyradiology
+}
+
+""""""
+union MobileAccessUnion = MobileAccess | MobileAccessError
+
+""""""
+enum MobileAppName {
+  """"""
+  qbank
+
+  """"""
+  knowledge
+
+  """"""
+  kreuzen
+
+  """"""
+  wissen
+}
+
+""""""
+type MobileDeprecation {
+  """"""
+  minVersion: String!
+
+  """"""
+  maxVersion: String!
+
+  """"""
+  deprecationType: MobileDeprecationType!
+
+  """"""
+  mobilePlatform: MobilePlatform!
+
+  """
+  Unique identifier for the respectve mobile app in Apple store or Google Play
+  """
+  mobileIdentifier: String!
+
+  """"""
+  deprecationExplanationUrl: String
+}
+
+""""""
+enum MobileDeprecationType {
+  """"""
+  unsupported
+}
+
+""""""
+enum MobilePlatform {
+  """"""
+  ios
+
+  """"""
+  android
+}
+
+""""""
+type MonographIntroduction {
+  """"""
+  richtext: String!
+}
+
+"""Mutation endpoints"""
+type Mutation {
+  "\tValidates user/password and returns existing or new token  for deviceId\n\tStrict mode enforces the login method that the user is set to (e.g. next API, Keycloak)"
+  login(
+    """"""
+    login: String!
+
+    """"""
+    password: String!
+
+    """"""
+    deviceId: String!
+
+    """"""
+    strictMode: Boolean
+  ): AuthToken
+
+  "\tUser's answer for a question\n\tCan throw access.no_valid_access client error"
+  setQuestionResult(
+    """"""
+    questionSessionEid: String!
+
+    """"""
+    questionEid: String!
+
+    """"""
+    result: QuestionResultInput!
+  ): QuestionResult!
+
+  "\tUser's resets the state of a question result. This means that almost all fields of the questions result are reset to there initial state.\n\tOnly the time spent until now is kept. After executing this, the question result will look like user skipped the question.\n\tCan throw access.no_valid_access client error"
+  resetQuestionResult(
+    """"""
+    questionSessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    timeSpent: Int!
+  ): QuestionResult!
+
+  "\tService that answers a question sessions by receiving a percentage breakdown for the different answer categories\n\tcorrect, correctWithHelp, incorrect and unanswered. This sets automatically the values of the session without\n\tgoing through each question manually"
+  setQuestionSessionAnswers(
+    """"""
+    questionSessionEid: String!
+
+    """"""
+    answerResultInput: AnswerResultInput!
+  ): QuestionSession!
+
+  """Submit user's feedback to a particular piece of content"""
+  submitFeedback(
+    """"""
+    feedback: FeedbackInput!
+  ): FeedbackSubmissionResult!
+
+  """Set question session mode"""
+  setQuestionSessionMode(
+    """"""
+    eid: String!
+
+    """"""
+    mode: QuestionSessionMode!
+  ): QuestionSession!
+
+  "\tCreate custom question session,\n\tCAVE: QuestionSessionMode cannot be null, will be required once GraphQL implementation bug is fixed.\n\tCan throw access.no_valid_access client error"
+  createQuestionSessionCustom(
+    """"""
+    title: String!
+
+    """"""
+    mode: QuestionSessionMode
+
+    """"""
+    criteria: SessionQuestionCriteria!
+  ): QuestionSession!
+
+  "\tCreate custom question session,\n\tCAVE: QuestionSessionMode cannot be null, will be required once GraphQL implementation bug is fixed."
+  createCustomQuestionSession(
+    """"""
+    title: String!
+
+    """"""
+    mode: QuestionSessionMode
+
+    """"""
+    criteria: SessionQuestionCriteria!
+
+    """"""
+    type: QuestionSessionType
+  ): QuestionSessionUnion!
+
+  """
+  Revert all persisted question session creation filter options for the current user
+  """
+  revertQbankFilterPreferences: Boolean!
+
+  """Creates a lecture from a public tray"""
+  createQuestionSessionLecture(
+    """"""
+    title: String!
+
+    """"""
+    trayEid: ID!
+  ): QuestionSession!
+
+  """Creates a lecture qbank session from a tray"""
+  createLectureSession(
+    """"""
+    trayEid: EncodedId!
+  ): CreateLectureSessionResult
+
+  """Delete a given question session"""
+  deleteQuestionSession(
+    """"""
+    eid: String!
+  ): QuestionSessionMutationResult!
+
+  """Update a given question session"""
+  updateQuestionSession(
+    """"""
+    eid: String!
+
+    """"""
+    update: QuestionSessionUpdate!
+  ): QuestionSessionMutationResult!
+
+  """Clone a given question session"""
+  cloneQuestionSession(
+    """"""
+    eid: String!
+  ): QuestionSession!
+
+  """Create a question session from a custom study day"""
+  createStudyDayQuestionSession(
+    """"""
+    title: String!
+
+    """"""
+    studyDayEid: EncodedId
+
+    """"""
+    mode: QuestionSessionMode
+  ): QuestionSession!
+
+  """
+  create a new tray i.e. "question list"
+  """
+  createTray(
+    """"""
+    tray: TrayInput
+
+    """"""
+    questionEids: [String!]
+  ): TrayMutationResult
+
+  """update a given tray specified with it's eid"""
+  updateTray(
+    """"""
+    eid: String!
+
+    """"""
+    tray: TrayInput
+  ): TrayMutationResult
+
+  """deletes a given tray"""
+  deleteTray(
+    """"""
+    eid: String!
+  ): TrayMutationResult
+
+  """adds a question to a list"""
+  addQuestionToTray(
+    """"""
+    trayEid: String!
+
+    """"""
+    questionEid: String!
+  ): Boolean!
+
+  """removes a question from a list"""
+  removeQuestionFromTray(
+    """"""
+    trayEid: String!
+
+    """"""
+    questionEid: String!
+  ): Boolean!
+
+  """dismiss this notification, return null on error"""
+  dismissNotification(
+    """"""
+    uuid: String!
+  ): Notification
+
+  """add a new notification to the user, return null on error"""
+  addNotification(
+    """"""
+    notification: NotificationInput!
+  ): Boolean!
+
+  """Update the current user's configuration"""
+  updateCurrentUserConfig(
+    """"""
+    config: UserConfigInput!
+  ): UserConfig!
+
+  """Update the current user's view preferences"""
+  updateCurrentUserViewPreference(
+    """"""
+    preference: ViewPreferenceInput!
+  ): ViewPreference
+
+  """
+  Set current user study goal, this property is a survey question. If another one will come - it should be refactored to a general approach
+  """
+  updateCurrentStudyGoal(
+    """"""
+    studyGoal: UserStudyGoalInput!
+  ): UserStudyGoal!
+
+  """Set and unset the status of an article"""
+  updateCurrentUserArticle(
+    """"""
+    userArticle: UserArticleInput!
+  ): UserArticle!
+
+  """Set and unset the status of many articles"""
+  updateCurrentUserArticles(
+    """"""
+    userArticles: [UserArticleInput!]!
+  ): [ArticleInteraction!]
+
+  """Adds or updates a user extension for a specific particle"""
+  updateCurrentUserParticleExtension(
+    """"""
+    particleEid: ID!
+
+    """"""
+    text: String!
+
+    """"""
+    offlineUpdatedAt: OfflineUpdatedAtInput
+  ): ParticleExtension!
+
+  """updates the current billing address of the current user"""
+  updateBillingAddress(
+    """"""
+    billingAddress: BillingAddressInput!
+  ): BillingAddressResult!
+
+  """
+  Touch a course Bundle to update accessedAt property and receive detail information
+  """
+  accessCourseBundle(
+    """"""
+    bundleEid: ID!
+  ): UserBundle!
+
+  """Sets the state of a users course to archived"""
+  archiveUserCourse(
+    """"""
+    courseEid: EncodedId!
+  ): UserCourse
+
+  """Sets the state of a users course to active again"""
+  unarchiveUserCourse(
+    """"""
+    courseEid: EncodedId!
+  ): UserCourse
+
+  """
+  Will generate a certificate for the given course, if the course is a certified one and the user passed it
+  """
+  createCourseCertificate(
+    """"""
+    certificateData: CertificateInput!
+  ): UserCourseCertificate
+
+  """Create a trial access for the current user"""
+  activateTrialAccess: Boolean!
+
+  """
+  Create a question session from a Bundle. If mode is not specified, the template default is used
+  """
+  createQuestionSessionBundle(
+    """"""
+    bundleEid: ID!
+
+    """"""
+    mode: QuestionSessionMode
+  ): QuestionSession!
+
+  """
+  Create a question session from a Bundle. If mode is not specified, the template default is used. It is not linked to the bundle. At the moment only possible for timed bundles
+  """
+  createPracticeSessionBundle(
+    """"""
+    bundleEid: EncodedId!
+
+    """"""
+    mode: QuestionSessionMode
+  ): QuestionSession!
+
+  """
+  Cancel the subscription of the current user to the end of the current billing cycle
+  """
+  cancelSubscription(
+    """"""
+    subscriptionId: String!
+  ): Subscription!
+
+  """Create the subscription of the current user"""
+  createSubscription(
+    """"""
+    planId: String!
+
+    """"""
+    addonId: String
+
+    """"""
+    coupon: CouponInput
+
+    """"""
+    campaignId: String
+  ): CreateSubscriptionResult!
+
+  """Create upgrade of the current user"""
+  createUpgrade(
+    """"""
+    addonId: String!
+
+    """"""
+    coupon: CouponInput
+
+    """"""
+    campaignId: String
+  ): CreateUpgradeResult!
+
+  """
+  Reactivate the subscription of the current user (this is only possible on an active but cancelled subscription)
+  """
+  reactivateSubscription(
+    """"""
+    subscriptionId: String!
+  ): Subscription!
+
+  """Change the subscription of the current user"""
+  changeSubscription(
+    """"""
+    subscriptionId: String!
+
+    """"""
+    productId: String!
+  ): Subscription!
+
+  """
+  For the subscription that has scheduled change of product, cancel this change
+  """
+  cancelScheduledChange(
+    """"""
+    subscriptionId: String!
+  ): Subscription!
+
+  """Creates temporary link to hosted page for editing payment methods"""
+  managePaymentMethodPage: HostedPage!
+
+  """"""
+  createPaymentIntent: PaymentIntent!
+
+  """
+  Sets primary payment method to credit card represented by chargebee token. see https://www.chargebee.com/checkout-portal-docs/components-fields.html#overview
+  """
+  setCreditCardAsPrimaryPaymentMethod(
+    """"""
+    paymentIntentId: String!
+  ): CreditCardPaymentMethodResult!
+
+  """creates a paypal payment authorization"""
+  createPaypalPaymentAuthorization(
+    """"""
+    redirectData: RedirectData
+  ): PaypalPaymentAuthorization!
+
+  """token is provided after successful paypal payment authorization"""
+  setPaypalAsPrimaryPaymentMethod(
+    """"""
+    token: String!
+  ): PaypalPaymentMethodResult!
+
+  """token is provided after successful apple pay wallet authorization"""
+  setApplePayAsPrimaryPaymentMethod(
+    """"""
+    token: String!
+  ): ApplePayPaymentMethodResult!
+
+  """Tries to add provided coupon code to the current user's subscription"""
+  applyCouponToCurrentSubscription(
+    """"""
+    code: String!
+  ): ApplyCouponResult!
+
+  """Update user profile"""
+  updateCurrentUserProfile(
+    """"""
+    userProfile: UserProfileInput!
+  ): UserProfileResult!
+
+  "\tCounts an article as »read« in order to populate the »recently read chapters« list\n\tCAVE: Do not confuse with UserArticleInput's »learned« or »favorite«!"
+  loadedArticle(
+    """"""
+    articleEid: ID!
+  ): Boolean!
+
+  """	Counts an article as read and tracks the article's referrer."""
+  readArticle(
+    """"""
+    articleEid: ID!
+
+    """"""
+    referrer: ArticleReferrer
+  ): Boolean!
+
+  """
+  Mutation used to upload a IOS IAP purchase receipt and create UserAccesses
+  """
+  uploadIosIapReceipt(
+    """"""
+    iosReceipt: Upload!
+
+    """"""
+    appIdentifier: String!
+
+    """"""
+    countryCode: String
+  ): UploadReceiptResult!
+
+  """Mutate a tutorial state of a user"""
+  tutorial(
+    """"""
+    tutorial: TutorialInput!
+  ): TutorialMutationResult!
+
+  """Mutate to add stage/study objective and set is_initialized flag true"""
+  currentProfileCompleteInitialization: User!
+
+  """Generates a one time usage token for the current user"""
+  issueOneTimeToken: OneTimeToken
+
+  """Create a new custom study plan for the current user"""
+  createCustomStudyPlan(
+    """"""
+    customStudyPlanInput: CustomStudyPlanInput!
+  ): CustomStudyPlan!
+
+  """
+  Updates the Accessed At property from the custom study plan to now (server Date)
+  """
+  accessCustomStudyPlan(
+    """"""
+    cspEid: EncodedId!
+  ): CustomStudyPlan!
+
+  """Sets the state of a custom study plan to archived"""
+  archiveCustomStudyPlan(
+    """"""
+    cspEid: EncodedId!
+  ): CustomStudyPlan
+
+  """Sets the state of a custom study plan to active again"""
+  unarchiveCustomStudyPlan(
+    """"""
+    cspEid: EncodedId!
+  ): CustomStudyPlan
+
+  """Adds a collection of articleReadings for the current user."""
+  addLearningCardReadings(
+    """"""
+    articleReadingsCollection: ArticleReadingCollectionInput!
+  ): Boolean
+
+  """
+  Grants the current user access to use AMBOSS based on configuration for a course
+  """
+  applyBenefitsByCourse(
+    """"""
+    courseEid: EncodedId!
+  ): Boolean!
+
+  """Set an exam simulation mode question as marked"""
+  markQuestion(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    isMarked: Boolean!
+  ): Boolean
+
+  """
+  Set an exam simulation mode question as marked and returns the updated QuestionUserData
+  """
+  markQuestionReturnResult(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    isMarked: Boolean!
+  ): QuestionUserData
+
+  """Cross out an answer on an exam simulation mode question"""
+  setCrossedOutAnswers(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    answerEids: [EncodedId!]!
+  ): Boolean
+
+  """
+  Cross out an answer on an exam simulation mode question and returns the updated QuestionUserData
+  """
+  setCrossedOutAnswersReturnResult(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    answerEids: [EncodedId!]!
+  ): QuestionUserData
+
+  """
+  Sets highlight in the selection library format, overrides data set with setQuestionHighlights
+  """
+  setQuestionRichHighlights(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    highlights: [RichSelectionInput!]!
+  ): Boolean
+
+  """
+  Sets highlight in the selection library format, overrides data set with setQuestionHighlights and returns the updated QuestionUserData
+  """
+  setQuestionRichHighlightsReturnResult(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    highlights: [RichSelectionInput!]!
+  ): QuestionUserData
+
+  """Save notes on an exam simulation mode question"""
+  saveQuestionNotes(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    notes: String
+  ): Boolean
+
+  """
+  Save notes on an exam simulation mode question and return the QuestionUserData
+  """
+  saveQuestionNotesReturnResult(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionEid: EncodedId!
+
+    """"""
+    notes: String
+  ): QuestionUserData
+
+  """creates an account"""
+  createUser(
+    """"""
+    data: CreateUserInput!
+
+    """"""
+    userAttribution: UserAttribution
+  ): CreateUserResult!
+
+  """
+  Send an email confirmation link if the passed email address belongs to an unconfirmed user and rate limits have not been reached.
+  """
+  sendEmailConfirmation(
+    """"""
+    email: String!
+  ): Boolean!
+
+  """
+  Send a reset password email if the passed email address is valid and belongs to a user.
+  """
+  sendResetPasswordEmail(
+    """"""
+    email: String!
+  ): Boolean!
+
+  """
+  Send a verification email to the current user's pending secondary email address.
+  """
+  sendCurrentUserSecondaryEmailVerificationEmail: Boolean!
+
+  """
+  Updates the status of a user bundle destination. Read or unread article of a course.
+  """
+  updateCurrentUserBundleDestinationStatus(
+    """"""
+    userBundleDestinationStatusInput: UserBundleDestinationStatusInput!
+  ): UserBundleDestination!
+
+  """
+  Reset a course to its initial state, no user course nor user course bundles, no local read articles aka user course Bundle Destinations, no question sessions started.
+  """
+  resetCurrentUserCourse(
+    """"""
+    courseEid: EncodedId!
+  ): UserCourse!
+
+  """
+  Reset a certified bundle within a course without resetting the entire course
+  """
+  resetBundle(
+    """"""
+    bundleEid: EncodedId!
+  ): UserBundle!
+
+  """
+  Reset a course to its initial state and start it, so the user will be able to see it in the courses page
+  """
+  resetAndRestartUserCourse(
+    """"""
+    courseEid: EncodedId!
+  ): UserCourse!
+
+  """"""
+  setPassword(
+    """"""
+    password: String!
+
+    """"""
+    key: String!
+
+    """"""
+    code: String!
+  ): SetPasswordResult!
+
+  """Set the password for the current logged-in user"""
+  initializePassword(
+    """"""
+    password: String!
+  ): PasswordResult!
+
+  """"""
+  editPassword(
+    """"""
+    currentPassword: String!
+
+    """"""
+    newPassword: String!
+  ): PasswordResult!
+
+  """Removes the secondary email address for the current user"""
+  removeCurrentUserSecondaryEmail: RemoveCurrentUserSecondaryEmailResult!
+
+  """Verify the secondary email of the user with the given token"""
+  verifyCurrentUserSecondaryEmail(
+    """"""
+    userXid: String!
+
+    """"""
+    token: String!
+  ): VerifyCurrentUserSecondaryEmailResult!
+
+  """Updates the secondary email address of the current user"""
+  updateCurrentUserSecondaryEmail(
+    """"""
+    email: String!
+  ): UpdateCurrentUserSecondaryEmailResult!
+
+  """Verifies and apply a product key for the current user"""
+  applyProductKey(
+    """"""
+    productKey: String!
+  ): ApplyProductKeyResultUnion!
+
+  """Unsubscribe email from marketing emails"""
+  unsubscribeEmail(
+    """"""
+    email: String!
+  ): UnsubscribeEmailResult!
+
+  """
+  Sets the target exam details and responds with list of all target exams
+  """
+  sasSetTargetExam(
+    """"""
+    targetExamInput: SasTargetExamInput!
+  ): [SasTargetExam!]
+
+  """
+  Updates the practice exams associated to a target exam and responds with list of all practice exams
+  """
+  sasUpdatePracticeExams(
+    """"""
+    targetExamEid: EncodedId!
+
+    """"""
+    practiceExams: [SasPracticeExamResultInput!]
+
+    """"""
+    shelfExamResults: [SasShelfExamResultInput!]
+
+    """"""
+    otherExams: [SasOtherExamResultInput!]
+  ): SasUpdatePracticeExamResult
+
+  """"""
+  addParticleHighlight(
+    """"""
+    input: CreateParticleHighlightInput!
+  ): Highlight!
+
+  """"""
+  deleteParticleHighlight(
+    """"""
+    input: DeleteParticleHighlightInput!
+  ): Highlight!
+}
+
+""""""
+type NoAccess implements Access {
+  """"""
+  target: AccessTarget!
+}
+
+""""""
+type NoHtmlLibraryArchive {
+  """"""
+  version: Int!
+
+  """"""
+  url: String!
+}
+
+""""""
+type NoPreviewAccess {
+  """"""
+  reason: String!
+}
+
+""""""
+interface Node {
+  """"""
+  id: ID!
+}
+
+""""""
+enum NormedPackageSize {
+  """"""
+  N1
+
+  """"""
+  N2
+
+  """"""
+  N3
+
+  """"""
+  KTP
+
+  """"""
+  NotApplicable
+}
+
+""""""
+type Notification {
+  """"""
+  uuid: String!
+
+  """"""
+  class: String!
+
+  """"""
+  payload: String!
+
+  """"""
+  dismissedAt: DateTime
+}
+
+""""""
+input NotificationInput {
+  """"""
+  channel: String!
+
+  """"""
+  class: String!
+
+  """"""
+  payload: String!
+}
+
+""""""
+type OAuthExternalIdentityProvider implements ExternalIdentityProviderInterface {
+  """"""
+  eid: String!
+
+  """Human-readable name of IDP"""
+  name: String!
+
+  """"""
+  oAuthURL: String!
+
+  """"""
+  oAuthRedirectURL: String!
+}
+
+""""""
+type Occupation {
+  """"""
+  eid: ID!
+
+  """"""
+  label: String!
+
+  """"""
+  name: String!
+
+  """Free text description in case of 'Other' option"""
+  text: String
+
+  """use to decide which flow is applicable to the user"""
+  workingPlace: String!
+}
+
+"""Only one of two fields can be provided"""
+input OccupationInput {
+  """Id from the reference"""
+  id: ID
+
+  """Free-text occupation info"""
+  text: String
+}
+
+"""
+Input type used in mutations that need conflict resolution based on updatedAt
+"""
+input OfflineUpdatedAtInput {
+  """Actual moment when this happend"""
+  updatedAt: String!
+
+  """
+  Previous updateAt stored in the client to be used for conflict resolutions
+  """
+  previousUpdatedAt: String
+}
+
+""""""
+enum OnboardingStep {
+  """user needs to complete his profile information"""
+  completeProfile
+
+  """user needs to sign a disclaimer"""
+  physicianDisclaimer
+
+  """user can choose his initial access"""
+  initialAccessChooser
+
+  """
+  show the scholarship banner for users with no access, from certain contries and have not previously closed the banner
+  """
+  scholarshipBanner
+}
+
+""""""
+type OneTimeDiscount implements Discount & SubscriptionDiscount {
+  """"""
+  originalPrice: Price!
+
+  """"""
+  value: DiscountValue!
+}
+
+"""OneTimePrice represent amount and currency for nonrecurring item."""
+type OneTimePrice implements ProductPrice {
+  """"""
+  price: Price!
+
+  """"""
+  appliedDiscount: OneTimeDiscount
+}
+
+""""""
+type OneTimeToken {
+  """"""
+  token: String!
+}
+
+""""""
+type OrganSystemScoring implements LearningRecommendation {
+  """"""
+  recommendationTypeEid: String!
+
+  """"""
+  recommendationType: String!
+
+  """
+  this label is a temporary solution, it should be taxon, but currently taxon is ambigous, so we cannot use it
+  """
+  label: String!
+
+  """Percentile / Bar position / DE-style: Success rate"""
+  successScore: Float!
+
+  """
+  Confidence / Bar width / DE-style: Progress rate: answered / unanswered
+  """
+  progressScore: Float!
+
+  """"""
+  answeredRight: Int!
+
+  """"""
+  answeredWithHelp: Int!
+
+  """"""
+  answeredWrong: Int!
+
+  """"""
+  percentileScore: Float!
+
+  """"""
+  priorityScore: Float!
+
+  """"""
+  totalQuestionCount: Int!
+
+  """"""
+  questionsCompleted: Int!
+
+  """"""
+  percentageAnsweredRightFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRight: Float!
+
+  """"""
+  percentageAnsweredRightWithHelpFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRightWithHelp: Float!
+
+  """"""
+  percentageAnsweredWrongFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredWrong: Float!
+
+  """"""
+  percentageUnseen: Float!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: LearningRecommendationRelevance
+}
+
+""""""
+type PackageToSubscriptionCampaign implements MarketingCampaign {
+  """"""
+  id: String
+
+  """"""
+  validUntil: DateTime!
+
+  """"""
+  bannerText: String
+}
+
+"""basic information about the current page"""
+type PageInfo {
+  """"""
+  endCursor: String
+
+  """"""
+  hasNextPage: Boolean!
+}
+
+"""
+Pagination types and interfaces
+https://graphql.org/learn/pagination/#pagination-and-edges
+"""
+interface PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [PaginationEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+"""an item on the current page"""
+interface PaginationEdge {
+  """"""
+  cursor: String!
+}
+
+"""Previously known as **learning cards section**"""
+type Particle implements Node {
+  """"""
+  id: ID!
+
+  """"""
+  entityType: String!
+
+  """"""
+  eid: String!
+
+  """"""
+  partType: String!
+
+  """"""
+  textType: String!
+
+  """"""
+  title: String!
+
+  """Holds a rendered HTML just for the »inline« references for the section"""
+  titleReferenceMarkup: String
+
+  """"""
+  abstract: String!
+
+  """Article this particle belongs"""
+  article: Article!
+
+  """"""
+  content: String!
+
+  """"""
+  isSubParticle: Boolean!
+
+  """"""
+  isAdditionalContent: Boolean!
+
+  """
+  list of editorial styles to apply on the full particle - usually content scaling styles
+  """
+  globalStyles: [String!]!
+
+  """
+  holds a list of of anchor hashes/ids → supposed to be wrapped around the section's title
+  """
+  titleAnchors: [String!]!
+
+  """
+  probably should rename it to "snippet"
+  """
+  phraseGroups: [PhraseGroup]
+
+  """media used in particle's content"""
+  media: [MediaAsset]
+}
+
+"""user-specific extension for a particle"""
+type ParticleExtension {
+  """"""
+  text: String
+
+  """"""
+  eid: ID!
+
+  """"""
+  ownerName: String!
+
+  """"""
+  particleEid: ID!
+
+  """"""
+  particle: Particle!
+
+  """"""
+  updatedAt: String!
+}
+
+""""""
+type ParticleExtensionConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [ParticleExtensionEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type ParticleExtensionEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: ParticleExtension!
+}
+
+""""""
+type ParticleHighlights {
+  """"""
+  particleEid: ID!
+
+  """"""
+  highlights: [Highlight!]!
+}
+
+""""""
+union PasswordResult = AuthToken | SetPasswordInputError
+
+""""""
+enum PaymentCardBrand {
+  """"""
+  visa
+
+  """"""
+  mastercard
+
+  """"""
+  american_express
+
+  """"""
+  discover
+
+  """"""
+  jcb
+
+  """"""
+  diners_club
+
+  """"""
+  other
+}
+
+""""""
+type PaymentIntent {
+  """json returned by chargebee"""
+  raw: String!
+}
+
+""""""
+interface PaymentMethod {
+  """ID of a payment method"""
+  id: ID!
+
+  """Status of payment method"""
+  status: PaymentMethodStatus!
+}
+
+""""""
+type PaymentMethodApplePay implements PaymentMethod {
+  """ID of a payment method"""
+  id: ID!
+
+  """Status of payment method"""
+  status: PaymentMethodStatus!
+}
+
+""""""
+type PaymentMethodCard implements PaymentMethod {
+  """ID of a payment method"""
+  id: ID!
+
+  """Status of payment method"""
+  status: PaymentMethodStatus!
+
+  """Cardholder first name"""
+  firstName: String
+
+  """Cardholder last name"""
+  lastName: String
+
+  """Last four digits of card"""
+  lastFour: String!
+
+  """
+  Card brand: visa, mastercard, american_express, discover, jcb, diners_club, other
+  """
+  brand: PaymentCardBrand!
+
+  """Expiry date month"""
+  expiryMonth: Int!
+
+  """Expiry date year"""
+  expiryYear: Int!
+}
+
+""""""
+type PaymentMethodPaypal implements PaymentMethod {
+  """ID of a payment method"""
+  id: ID!
+
+  """Status of payment method"""
+  status: PaymentMethodStatus!
+
+  """Email address associated with PayPal Express Checkout"""
+  email: String
+}
+
+""""""
+enum PaymentMethodStatus {
+  """A payment source that is valid and active"""
+  valid
+
+  """
+  A payment source that is expiring (like card's status based on its expiry date)
+  """
+  expiring
+
+  """A payment source that has expired"""
+  expired
+
+  """
+  The billing agreement cannot be used. It might become valid again either automatically or due to customer action
+  """
+  invalid
+
+  """The payment source needs to be verified"""
+  pending_verification
+}
+
+"""wrapper for a general update error"""
+type PaymentMethodUpdateError {
+  """"""
+  message: String!
+}
+
+""""""
+type PaymentStatus {
+  """"""
+  hasUnpaidInvoices: Boolean!
+
+  """"""
+  priceDue: Price
+}
+
+""""""
+type PaypalPaymentAuthorization {
+  """"""
+  redirectUrl: String!
+}
+
+""""""
+type PaypalPaymentError implements Error {
+  """
+  for more information please refer to https://developer.paypal.com/docs/nvp-soap-api/errors/
+  """
+  errorCode: String
+
+  """"""
+  message: String!
+}
+
+""""""
+union PaypalPaymentMethodResult = PaymentMethodPaypal | PaymentMethodUpdateError
+
+""""""
+type Percentile {
+  """user's percentile ranging from 0 to 100; codomain [0,100]"""
+  percentile: Int
+
+  """
+  normalized x coordinate of the plotted normal distribution; codomain: [0,1]
+  """
+  xCoordinate: Float
+}
+
+""""""
+type PharmaAgent {
+  """Amboss substance id"""
+  id: ID!
+
+  """Amboss substance name"""
+  name: String!
+
+  """@deprecated please use the first drug of the drugs list"""
+  basedOn: PharmaDrug!
+
+  """"""
+  atcLabel: String!
+
+  """"""
+  drugs: [PharmaDrug!]!
+
+  """"""
+  sections: [PharmaText!]!
+
+  """URL providing a pdf to download containing 'Fachinformationen'"""
+  prescribingInformationUrl: String
+
+  """URL providing a pdf to download containing 'Beipackzettel'"""
+  patientPackageInsertUrl: String
+
+  """"""
+  publishedAt: DateTime!
+
+  """"""
+  embryotox: [PharmaEmbryotox!]!
+
+  """"""
+  rotehand: [PharmaRotehand!]!
+}
+
+"""
+All possible editorially curated application forms that a pharma drug or agent can have.
+"""
+enum PharmaApplicationForm {
+  """"""
+  other
+
+  """"""
+  parenteral
+
+  """"""
+  topical
+
+  """"""
+  enteral
+
+  """"""
+  ophthalmic
+
+  """"""
+  urogenital
+
+  """"""
+  nasal_spray
+
+  """"""
+  rectal
+
+  """"""
+  inhalation
+
+  """"""
+  bronchial
+}
+
+""""""
+type PharmaDatabase {
+  """"""
+  major: Int!
+
+  """"""
+  minor: Int!
+
+  """"""
+  patch: Int!
+
+  """"""
+  size: Int!
+
+  """"""
+  zippedSize: Int!
+
+  """"""
+  url: String!
+
+  """"""
+  dateCreated: DateTime!
+}
+
+""""""
+type PharmaDrug {
+  """"""
+  id: ID!
+
+  """Amboss substance id"""
+  agentId: ID!
+
+  """"""
+  drugGroupId: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  brandName: String!
+
+  """"""
+  vendor: String!
+
+  """"""
+  publishedAt: DateTime!
+
+  """
+  A list of editorially curated application forms. We convert every unique
+  combination of IFAP application form, location and way to a single list of our
+  own application form strings.
+  """
+  applicationForms: [PharmaApplicationForm!]!
+
+  """"""
+  prescriptions: [PharmaPrescriptionStatus!]!
+
+  """"""
+  dosageForms: [String!]!
+
+  """Sections specific to the drug"""
+  sections: [PharmaText!]!
+
+  """URL for downloading a PDF containing 'Fachinformationen'"""
+  prescribingInformationUrl: String
+
+  """URL for downloading a PDF containing 'Beipackzettel'"""
+  patientPackageInsertUrl: String
+
+  """"""
+  priceAndPackageInfo(
+    """"""
+    sorting: PriceAndPackageSorting!
+  ): [PriceAndPackage!]!
+
+  """drug related atc group label"""
+  atcLabel: String!
+}
+
+"""
+Information about drug toxicity during pregancy that comes from a third party content provider
+"""
+type PharmaEmbryotox {
+  """"""
+  link: String!
+
+  """"""
+  category: PharmaEmbryotoxCategory!
+
+  """"""
+  activeIngredient: String!
+}
+
+""""""
+enum PharmaEmbryotoxCategory {
+  """"""
+  red
+
+  """"""
+  green
+
+  """"""
+  gray
+}
+
+""""""
+type PharmaMGClassification {
+  """"""
+  ahfsCode: String!
+
+  """"""
+  ahfsTitle: String!
+
+  """"""
+  atcCode: String!
+
+  """"""
+  atcTitle: String!
+}
+
+""""""
+type PharmaMGOutline {
+  """"""
+  anchor: String!
+
+  """"""
+  title: String!
+
+  """"""
+  level: Int!
+
+  """"""
+  children: [PharmaMGOutline!]!
+}
+
+"""
+The ID of a monograph section is only unique within a single monograph. Meaning
+multiple monographs will have the same section IDs! If you want to cache
+monograph sections, you must use both the section ID and the monograph ID.
+"""
+type PharmaMGSection {
+  """"""
+  monographId: ID!
+
+  """"""
+  id: String!
+
+  """"""
+  title: String!
+
+  """"""
+  content: String!
+}
+
+"""
+AHFS monographs can be of different types. Most of them will be of type essential, but documentation monographs, such as the User's Guide for example, are of type misc-doc.
+
+We don't have documentation for all types and it seems that sometimes types are assigned without any reason.
+"""
+enum PharmaMGType {
+  """
+  Condensed version of their regular monographs. The overwhelming majority of the monographs we use are of this type.
+  """
+  essential
+
+  """
+  Same as monographs, but seems to be about a medication that was newly released.
+  """
+  firstRelease
+
+  """Documentation monographs, such as the User's Guide."""
+  miscDoc
+
+  """"""
+  mono
+
+  """"""
+  overview
+
+  """A general statement (GS) monograph"""
+  monoGS
+
+  """A general statement (GS) monograph"""
+  gsAntiInfect
+
+  """A general statement (GS) monograph"""
+  gsDisIrregular
+}
+
+""""""
+type PharmaMonograph {
+  """"""
+  id: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  classification: PharmaMGClassification!
+
+  """"""
+  type: PharmaMGType!
+
+  """"""
+  brandNames: [String!]!
+
+  """"""
+  generic: Boolean!
+
+  """"""
+  publishedAt: DateTime!
+
+  """"""
+  sections: [PharmaMGSection!]!
+
+  """"""
+  html: String!
+
+  """"""
+  document: PharmaMonographDocument!
+
+  """"""
+  outline: [PharmaMGOutline!]
+
+  """"""
+  introduction: MonographIntroduction!
+}
+
+""""""
+type PharmaMonographDocument {
+  """"""
+  html: String!
+
+  """"""
+  richtext: String!
+}
+
+"""TODO"""
+enum PharmaPrescriptionStatus {
+  """"""
+  overTheCounter
+
+  """"""
+  pharmacyOnly
+
+  """"""
+  prescriptionOnly
+
+  """"""
+  narcotic
+}
+
+"""
+Drug warnings about certain substances from a third party content provider
+"""
+type PharmaRotehand {
+  """"""
+  title: String!
+
+  """"""
+  link: String!
+
+  """"""
+  date: DateTime!
+
+  """"""
+  substances: [String!]!
+}
+
+""""""
+type PharmaSearchResultConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [PharmaSearchResultEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type PharmaSearchResultEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: PharmaSearchResultItem!
+}
+
+""""""
+type PharmaSearchResultItem {
+  """"""
+  label: String!
+
+  """"""
+  sublabel: String!
+
+  """"""
+  activeIngredientEid: ID!
+}
+
+"""Pharma: represents a section of text"""
+type PharmaSection {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  position: Int!
+
+  """"""
+  text: String!
+}
+
+"""TODO"""
+type PharmaText {
+  """"""
+  id: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  position: Int!
+
+  """"""
+  text: String!
+}
+
+""""""
+type PhraseGroup implements Node {
+  """"""
+  id: ID!
+
+  """"""
+  entityType: String!
+
+  """"""
+  eid: String!
+
+  """the top-ranking *synonym* alias *Primary Lexeme*"""
+  title: String
+
+  """
+  all other *lexemes* (i.e. visible Phrases) but the primary one i.e. title
+  """
+  synonyms: [String!]!
+
+  """alias *description* (or *explanation* in DB)"""
+  abstract: String
+
+  """alias *etymology* (translation in DB)"""
+  translation: String
+
+  """
+  associated media – CAVE: this is not in production yet and beyond feature parity
+  """
+  media: [MediaAsset]
+
+  """"""
+  destinations: [SememeDestination!]!
+
+  """"""
+  editorialLink: EditorialLink!
+}
+
+""""""
+type PreclinicSubjectScoring implements LearningRecommendation {
+  """"""
+  recommendationTypeEid: String!
+
+  """"""
+  recommendationType: String!
+
+  """
+  this label is a temporary solution, it should be taxon, but currently taxon is ambigous, so we cannot use it
+  """
+  label: String!
+
+  """Percentile / Bar position / DE-style: Success rate"""
+  successScore: Float!
+
+  """
+  Confidence / Bar width / DE-style: Progress rate: answered / unanswered
+  """
+  progressScore: Float!
+
+  """"""
+  answeredRight: Int!
+
+  """"""
+  answeredWithHelp: Int!
+
+  """"""
+  answeredWrong: Int!
+
+  """"""
+  percentileScore: Float!
+
+  """"""
+  priorityScore: Float!
+
+  """"""
+  totalQuestionCount: Int!
+
+  """"""
+  questionsCompleted: Int!
+
+  """"""
+  percentageAnsweredRightFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRight: Float!
+
+  """"""
+  percentageAnsweredRightWithHelpFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRightWithHelp: Float!
+
+  """"""
+  percentageAnsweredWrongFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredWrong: Float!
+
+  """"""
+  percentageUnseen: Float!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: LearningRecommendationRelevance
+}
+
+""""""
+enum PrescriptionStatus {
+  """"""
+  overTheCounter
+
+  """"""
+  pharmacyOnly
+
+  """"""
+  prescriptionOnly
+
+  """"""
+  narcotic
+}
+
+""""""
+type PreviewNotTriggered {
+  """Latest version of the article"""
+  latestVersion: Int!
+
+  """
+  The most recent version of an article that was triggered for preview, null if never triggered
+  """
+  triggeredVersion: Int
+}
+
+""""""
+type PreviewPending {
+  """Latest version of the article"""
+  latestVersion: Int!
+
+  """ISO-formatted datetime when the most recent preview was triggered"""
+  triggeredAt: String!
+}
+
+"""Price represent the amount and currency for an item."""
+type Price {
+  """"""
+  amount: Int!
+
+  """"""
+  currency: Currency!
+}
+
+"""
+PriceAndPackage represents a single package size of this branded drug. A branded
+drug will typically have multiple price and package values associated with it.
+"""
+type PriceAndPackage {
+  """
+  IFAP does not always include a package size value, as such this can be empty.
+  """
+  packageSize: NormedPackageSize
+
+  """"""
+  amount: String!
+
+  """"""
+  unit: String!
+
+  """"""
+  pharmacyPrice: String
+
+  """"""
+  recommendedRetailPrice: String
+}
+
+"""
+PriceAndPackageSorting can be used to determine the order in which price and
+package information for a branded drug is returned.
+
+- Ascending: Sorts by package size (N1 first, N2 second, and so on), then by
+pharmacy price and then by recommended retail price.
+- Mixed: Internally, results are put into groups, where each group is unique and
+sorted in the "Ascending" manner. For branded drugs with logs of different price
+and package values, you'll get something like "N1,N2,N3,N1,N2,N3,KTP,KTP" (only
+showing package sizes) where the groups, used by the resolver internally, were
+"[N1,N2,N3],[N1,N2,N3],[KTP],[KTP]"
+"""
+enum PriceAndPackageSorting {
+  """"""
+  Ascending
+
+  """"""
+  Mixed
+}
+
+"""Actual product sold on the shop."""
+type Product {
+  """"""
+  id: String!
+
+  """"""
+  name: String!
+
+  """"""
+  checkoutName: String!
+
+  """"""
+  description: String!
+
+  """"""
+  productPrice: ProductPrice!
+
+  """
+  Shop item fulfilled by represent the source of the item or where the item is hosted / sold
+  """
+  fulfilledBy: ShopItemFulfilledBy!
+
+  """Saving advantage e.g. Save 10%"""
+  promoText: String
+
+  """listed points with more product details"""
+  details: [ProductDetail]
+
+  "\tstudent life product\n\t- can not be reactivated by a customer\n\t- gets an extra layout in the shop"
+  isStudentLife: Boolean!
+
+  "\tone time product\n\t- same as plus packages sold  on squarespace\n\t- can not be reactivated by a customer"
+  isOneTimeProduct: Boolean!
+
+  """"""
+  isUpgradeable: Boolean!
+
+  """Represent the instalment version of this product if available"""
+  instalment: Instalment
+
+  "\tBoards and beyoud product offer\n\t- yearly membership\n\t- boards and beyond access key\n\t- 12 months upgrade"
+  isBoardsAndBeyondProduct: Boolean!
+}
+
+""""""
+type ProductDetail {
+  """"""
+  title: String!
+
+  """"""
+  body: String
+
+  """"""
+  hint: String
+}
+
+""""""
+type ProductKeyError implements Error {
+  """"""
+  errorCode: ProductKeyErrorCode!
+
+  """"""
+  message: String!
+}
+
+""""""
+enum ProductKeyErrorCode {
+  """The format of the key submitted is not valid."""
+  invalidKey
+
+  """The submitted key is expired."""
+  expiredKey
+
+  """
+  The submitted key is a marburger bund key and it should be handled in the marburger section of the account page.
+  """
+  marburgerKey
+
+  """The submitted key has not been found."""
+  keyNotFound
+
+  """The submitted key has reached the maximum amount of users."""
+  maxUserReached
+
+  """The submitted key has been used by the current user."""
+  alreadyRegistered
+
+  """The current user has already the permission group the key would grant."""
+  alreadyGroupMember
+
+  """
+  The current user has an active subscription and cannot apply the submitted key.
+  """
+  activeSubscription
+
+  """
+  The current user has an active subscription and cannot apply the submitted key.
+  """
+  balanceActiveSubscription
+
+  """
+  The current user has an active subscription and cannot apply the submitted key.
+  """
+  activeSubscriptionLongAccess
+
+  """Unexpected error when applying the key."""
+  unexpectedErrorWhenApplyingKey
+}
+
+""""""
+interface ProductPrice {
+  """"""
+  price: Price!
+}
+
+""""""
+enum Profession {
+  """"""
+  doctor
+
+  """"""
+  student
+
+  """"""
+  other
+
+  """"""
+  nurse
+
+  """"""
+  student_nurse
+}
+
+""""""
+type ProfileUseCase {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  label: String!
+
+  """The unique identifier of a profile use case"""
+  code: String!
+
+  """The taxon list that might be associated to it"""
+  taxonList: [Taxon!]
+}
+
+""""""
+input ProfileUseCaseInput {
+  """Id from the reference"""
+  id: EncodedId
+
+  """Free-text use case info"""
+  text: String
+}
+
+"""Custom session creation page filter options by a user"""
+type QbankFilterPreferences {
+  """"""
+  examDays: [Int!]
+
+  """"""
+  exams: [EncodedId!]
+
+  """"""
+  nbmeSystems: [EncodedId!]
+
+  """"""
+  organsystems: [EncodedId!]
+
+  """"""
+  symptoms: [EncodedId!]
+
+  """"""
+  minorSubjects: [EncodedId!]
+
+  """"""
+  articles: [EncodedId!]
+
+  """"""
+  questionLists: [EncodedId!]
+
+  """"""
+  difficulties: [Difficulty!]
+
+  """"""
+  questionTypes: [QuestionType!]
+
+  """"""
+  onlyMarkedQuestions: Boolean
+
+  """"""
+  onlyBasicQuestions: Boolean
+
+  """"""
+  onlyRelevant: Boolean
+
+  """"""
+  hasImages: Boolean
+
+  """"""
+  status: QuestionResultStatus
+
+  """"""
+  order: QuestionOrder
+}
+
+"""Query endpoints"""
+type Query {
+  """"""
+  currentIp: IP
+
+  """"""
+  currentTime: DateTime!
+
+  """Current authorized user"""
+  currentUser: User!
+
+  """anon user"""
+  anonymousUser: User!
+
+  """
+  Current authorization can be called for anonymous user without generating an error
+  """
+  currentAuthorization: Authorization!
+
+  """Fetch list by eid"""
+  list(
+    """"""
+    eid: EncodedId!
+  ): List
+
+  """Fetch the library"""
+  library: [List!]!
+
+  """Pharma: fetch active ingredient by eid"""
+  activeIngredient(
+    """"""
+    eid: ID!
+  ): ActiveIngredient
+
+  """Pharma fetch a drug group by eid"""
+  drugGroup(
+    """"""
+    eid: ID!
+  ): DrugGroup
+
+  """Fetch article by eid"""
+  article(
+    """"""
+    eid: String!
+  ): Article
+
+  """Fetch all articles as options for dropDowns"""
+  articleOptions: [ArticleOption!]!
+
+  """Fetch a list of publicly avaialble articles"""
+  publicArticles(
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): ArticleConnection!
+
+  """
+  Fetch a list of article Eids considered the most important ones for current users
+  """
+  currentUserTopArticles: [ID!]!
+
+  """Fetch recent read articles for User"""
+  currentUserRecentArticles(
+    """"""
+    limit: Int!
+  ): [UserArticle!]!
+
+  """Fetch user specific data related to an article for current User"""
+  currentUserArticle(
+    """"""
+    eid: ID!
+  ): UserArticle
+
+  """Fetch user specific data related to a set of articles for current User"""
+  currentUserArticles(
+    """"""
+    eids: [ID!]!
+  ): [UserArticle!]!
+
+  "\tFetch user-specific article data for the current user according to certain criteria to be used in the library.\n\tNote : The learning card reading table currently holds a limited amount of recent data"
+  currentUserLibraryArticles(
+    """"""
+    criteria: UserArticleCriteria
+
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): UserArticleConnection!
+
+  "\tFetch recent user-specific article data for the current user to be used for the recently viewed articles widget.\n\tA max of 5 recent Article ids is stored per user."
+  currentUserRecentLibraryArticles(
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): UserRecentArticleConnection!
+
+  """
+  List of all Courses available for a user with additional user-specific information
+  """
+  currentUserCourses(
+    """"""
+    stage: Stage
+  ): [UserCourse!]!
+
+  """Retrieve a single user course by eid"""
+  currentUserSingleUserCourse(
+    """"""
+    courseEid: EncodedId!
+  ): UserCourse!
+
+  """
+  List of all Courses and custom study plans available for a user with additional user-specific information
+  """
+  currentUserCoursesAndPlans(
+    """"""
+    stage: Stage
+  ): [UserCourseAndPlan!]!
+
+  """
+  List of all Bundles in a Course available for a user with additional user-specific information
+  """
+  currentUserCourseBundles(
+    """"""
+    courseEid: ID!
+  ): [UserBundle!]!
+
+  """
+  Fetch user-specific data related to a set of bundles for the current User
+  """
+  currentUserBundles(
+    """"""
+    eids: [ID!]!
+  ): [UserBundle!]!
+
+  """Get a user Course Bundle by User Bundle Eid"""
+  currentUserSingleUserCourseBundle(
+    """"""
+    userBundleId: EncodedId!
+  ): UserBundle
+
+  """A list of all course promotion sorted by relevance"""
+  currentUserCoursePromotions: [CoursePromotion!]!
+
+  """A list of all course promotion sorted by relevance within groups"""
+  currentUserCoursePromotionsInGroup(
+    """"""
+    coursePromotionGroupCriteria: CoursePromotionGroupCriteria!
+  ): [CoursePromotion!]!
+
+  """Fetch the configuration for a self assessment"""
+  selfAssessmentConfiguration(
+    """"""
+    selfAssessmentEid: EncodedId!
+  ): SelfAssessmentConfiguration
+
+  """Fetch the certificate by user token"""
+  userCourseCertificate(
+    """"""
+    userToken: String!
+  ): UserCourseCertificate
+
+  """Preview the certificate for a dummy user"""
+  certificatePreview(
+    """"""
+    certificateEid: EncodedId!
+  ): UserCourseCertificate
+
+  """Fetch the data used to pre-fill the certificate forms"""
+  currentUserCertificateData: UserCourseCertificateData
+
+  """Retrieve a single custom study plan by eid"""
+  currentUserSingleCustomStudyPlan(
+    """"""
+    cspEid: EncodedId!
+  ): CustomStudyPlan
+
+  """Retrieve secondary email of a user"""
+  currentUserSecondaryEmail: UserSecondaryEmail
+
+  """Retrieve the percentile value for a custom study plan"""
+  customStudyPlanPercentile(
+    """"""
+    cspEid: EncodedId!
+
+    """"""
+    peerGroup: ComparisonPeerGroup!
+  ): Percentile!
+
+  """Fetch phraseGroup by eid"""
+  phraseGroup(
+    """"""
+    eid: String!
+  ): PhraseGroup
+
+  """Fetch media by list of ids"""
+  mediaAssets(
+    """"""
+    eids: [String!]!
+  ): [MediaAsset!]!
+
+  """Paginated Super Search by query"""
+  superSearch(
+    """"""
+    query: String!
+
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): SearchResultConnection!
+
+  """Paginated search for pharma content"""
+  pharmaSearch(
+    """"""
+    query: String!
+
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): PharmaSearchResultConnection!
+
+  "\tGet suggestions for search terms\n\n\tThe query parameter must contain at least one character.\n\tThe limit parameter must be a positive integer."
+  suggestSearchTerms(
+    """"""
+    query: String!
+
+    """"""
+    limit: Int!
+  ): [String!]!
+
+  """Session of questions, needs user token in request to check permission"""
+  questionSession(
+    """"""
+    eid: String!
+  ): QuestionSession
+
+  """Fetch a question if it belongs to a current user's session"""
+  currentUserQuestionSessionQuestion(
+    """"""
+    sessionEid: EncodedId!
+
+    """"""
+    questionNumber: Int!
+  ): UserQuestionSessionQuestion!
+
+  """Create a minimal shared public session from a question session"""
+  sharedQuestionSessionFromQuestionSession(
+    """"""
+    eid: String!
+  ): SharedQuestionSession
+
+  """Create a minimal shared public session from a question list"""
+  sharedQuestionSessionFromQuestionList(
+    """"""
+    eid: String!
+  ): SharedQuestionSession
+
+  """paginated list of the current user's QuestionSessions"""
+  currentUserQuestionSessions(
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): QuestionSessionConnection!
+
+  """paginated list of TutorSessions"""
+  tutorSessions(
+    """"""
+    criteria: TutorSessionCriteria!
+
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): TutorSessionConnection!
+
+  """Fetch questions by list of ids"""
+  questions(
+    """"""
+    eids: [String!]!
+  ): [QuestionUnion!]!
+
+  """Fetch LabValues Spreadsheet by eid"""
+  labValuesSheet(
+    """"""
+    eid: String!
+  ): LabValuesSheet
+
+  """"""
+  labValue(
+    """"""
+    eid: String!
+  ): LabValuesSheet
+
+  """Fetch question case by eid"""
+  questionsCase(
+    """"""
+    eid: String!
+  ): QuestionCase
+
+  """list of "question-list"-subsitutes"""
+  currentUserQuestionLists: [Tray]!
+
+  """Fetch all taxons of taxonomy as a flat list"""
+  taxonList(
+    """"""
+    taxonomy: TaxonomyName!
+  ): [Taxon!]!
+
+  """Fetch all exams taxons as a flat list"""
+  examTaxonList(
+    """"""
+    upcoming: Boolean!
+  ): [Taxon!]!
+
+  """
+  Fetch multiple Taxonomies with their Taxons in a hierarchically structure
+  """
+  taxonomies(
+    """"""
+    taxonomies: [TaxonomyName!]!
+  ): [Taxonomy!]!
+
+  """Fetch and calculate next exam data"""
+  nextExam(
+    """"""
+    taxonomy: TaxonomyName!
+  ): Taxon
+
+  "\tTest for the maximum number of questions a session may have according to the set criteria\n\tCan throw access.no_valid_access client error"
+  questionSessionCustomSize(
+    """"""
+    criteria: SessionQuestionCriteria!
+  ): Int!
+
+  """newsfeed"""
+  feed: Feed!
+
+  """references used to create editorial content"""
+  references(
+    """"""
+    eids: [ID!]!
+  ): [Reference!]!
+
+  """data for dashboard's study objective status/progress widget"""
+  studyObjectiveStatus(
+    """"""
+    mode: QuestionResultMode
+  ): StudyObjectiveStatus
+
+  "\tnotifications for the current user resp. to requested channels ordered by priority\n\tNota bene: payload is provided by CRM operators"
+  currentUserNotification(
+    """"""
+    channels: [String!]!
+
+    """"""
+    limit: Int
+
+    """"""
+    showDismissed: Boolean
+  ): [Notification!]!
+
+  """	returns user's percentile compared to a specific comparison group"""
+  currentUserStudyPerformancePercentile(
+    """"""
+    peerGroup: ComparisonPeerGroup!
+  ): Percentile!
+
+  """Fetch the current user's configuration"""
+  currentUserConfig: UserConfig!
+
+  """Answers options for user study goal complete profile field"""
+  studyGoals: [StudyGoal!]!
+
+  """
+  Is a survey question answer. If another one will come - it should be refactored to a general approach
+  """
+  currentUserStudyGoal: UserStudyGoal
+
+  """Returns the billing address of the current user"""
+  currentUserBillingAddress: BillingAddress!
+
+  """List of countries available in user profile"""
+  countries: [Country!]!
+
+  """Current user membership details"""
+  currentUserMembership: MembershipDetails
+
+  """Current user planned membership details"""
+  currentUserFutureMembership: Subscription
+
+  """Current user upgrades"""
+  currentUserUpgrade: [SubscriptionUpgrade]
+
+  """Estimate cancel the subscription (see mutation.cancelSubscription)"""
+  estimateCancelSubscription(
+    """"""
+    subscriptionId: String!
+  ): SubscriptionChangeEstimation!
+
+  """
+  Estimate reactivate the subscription (see mutation.reactivateSubscription)
+  """
+  estimateReactivateSubscription(
+    """"""
+    subscriptionId: String!
+  ): SubscriptionChangeEstimation!
+
+  """Estimate change the subscription (see mutation.changeSubscription)"""
+  estimateChangeSubscription(
+    """"""
+    subscriptionId: String!
+
+    """"""
+    productId: String!
+  ): SubscriptionChangeEstimation!
+
+  """Estimate cancel scheduled change (see mutation.cancelScheduledChange)"""
+  estimateCancelScheduledChange(
+    """"""
+    subscriptionId: String!
+  ): SubscriptionChangeEstimation!
+
+  """What payment method is primary for the current user"""
+  currentUserPrimaryPaymentMethod: PaymentMethod
+
+  """
+  List of institutional lices attached to the current user account, returns only active licenses, as there is no way to detach license
+  """
+  currentUserInstitutionalLicenses: [InstitutionalLicense!]!
+
+  """List of SSO institutional licenses activated by the user"""
+  currentUserInstitutionalSSOLicenses: [InstitutionalSSOLicense!]!
+
+  """returns a brief overview of the accesses of the current user"""
+  currentUserAccessOverview: AccessOverview!
+
+  """returns the status of access for the current user"""
+  currentUserAccesses: [Access!]!
+
+  """returns the trial status for the current user"""
+  currentUserTrialInfo: TrialInfo!
+
+  """returns the payment status for the current user"""
+  currentUserPaymentStatus: PaymentStatus!
+
+  """University list filtered by Country"""
+  universities(
+    """"""
+    country: String!
+  ): [University!]!
+
+  """Whether or not a user exists by a given email address"""
+  userExists(
+    """"""
+    email: String
+  ): Boolean
+
+  """The list of specialities for user's profile"""
+  specialities: [Speciality!]!
+
+  """Clinic list (DE/AT/CH)"""
+  clinics: [Clinic!]!
+
+  """
+  The list of possible marketing sources for user's profile based on their selected profession, excluding 'other' source
+  """
+  marketingSources(
+    """"""
+    profession: Profession!
+  ): [MarketingSource!]!
+
+  """
+  The list of possible occupations for user's profile for a profession, excluding 'other' occupation
+  """
+  occupations(
+    """"""
+    profession: Profession!
+
+    """"""
+    country: String!
+  ): [Occupation!]!
+
+  """
+  The list of possible occupations for user's profile for many professions
+  """
+  occupationOptions(
+    """"""
+    professions: [Profession!]!
+  ): [Occupation!]!
+
+  """The list of possible graduation years for students profile"""
+  graduationYears(
+    """"""
+    profession: Profession!
+  ): [Int!]!
+
+  """The list of possible use cases based on Country and profession"""
+  profileUseCases(
+    """"""
+    profession: Profession!
+
+    """"""
+    country: String!
+  ): [ProfileUseCase!]
+
+  """
+  The list of study objectives relevant to a specific exam taxon id. This is to show to the user only the study objectives that are relevant for the exam they chose.
+  """
+  examRelatedStudyObjectives(
+    """"""
+    taxonId: EncodedId!
+  ): [StudyObjective!]
+
+  "\tThe list of possible exam dates for user's profile\n\t- states when the user has it's next exam\n\t- DateTime strings (ISO 8601)\n\t- us only"
+  examDates: [DateTime!]!
+
+  "\t- The list of possible exam dates when the user has next exam\n\t- DateTime strings (ISO 8601) eg.: 2020-02-10T13:49:27+00:00"
+  upcomingExamDates: [DateTime!]!
+
+  """The list of possible semesters for user's profile"""
+  semesters: [Semester!]!
+
+  "\tCAVE: only exam taxonomy is supported for now\n\treturns a list of taxa which should be preselected for the current user in the custom session creation"
+  currentUserPreselectedTaxa(
+    """"""
+    taxonomy: TaxonomyName!
+  ): [Taxon!]!
+
+  """	return whether it is possible to buy an iOS In App Purchase Subscription
+  """
+  currentUserCanBuyIosSubscription: Boolean!
+
+  """
+  This will return a valid IOSSubscription object otherwise it will return null otherwise.
+  """
+  currentUserActiveIosSubscription: IosSubscription
+
+  """Get all tutorials of a user"""
+  tutorials: [Tutorial]!
+
+  """Get the latest version of the libraryArchive"""
+  latestFullLibraryArchive: LibraryArchive!
+
+  """
+  Get a specific version of the library archive by a given version number
+  """
+  fullLibraryArchive(
+    """"""
+    version: Int!
+  ): LibraryArchive
+
+  """Get an Article inside a specific mobile archive"""
+  libraryArchiveArticle(
+    """"""
+    version: Int!
+
+    """"""
+    eid: ID!
+  ): LibraryArchiveArticle
+
+  """Get the latest no html archive without authentication"""
+  latestNoHtmlLibraryArchive(
+    """"""
+    secret: String!
+  ): NoHtmlLibraryArchive
+
+  """
+  Get data for learning recommendation analysis from the new analysis server
+  """
+  learningRecommendations(
+    """"""
+    peerGroup: ComparisonPeerGroup!
+
+    """"""
+    topic: ComparisonTopic!
+  ): [LearningRecommendation!]!
+
+  """Get learning recommendations for custom study day's question session"""
+  studyDayLearningRecommendations(
+    """"""
+    studyDayEid: EncodedId!
+
+    """"""
+    peerGroup: ComparisonPeerGroup!
+
+    """"""
+    topic: ComparisonTopic!
+  ): [LearningRecommendation!]!
+
+  """
+  Get learning recommendations for all question sessions of a course combined
+  """
+  courseLearningRecommendations(
+    """"""
+    courseEid: EncodedId!
+
+    """"""
+    peerGroup: ComparisonPeerGroup!
+
+    """"""
+    topic: ComparisonTopic!
+  ): [LearningRecommendation!]!
+
+  """
+  Get learning recommendations for a sessions which is part of a course combined
+  """
+  courseSessionLearningRecommendations(
+    """"""
+    questionSessionEid: EncodedId!
+
+    """"""
+    peerGroup: ComparisonPeerGroup!
+
+    """"""
+    topic: ComparisonTopic!
+  ): [LearningRecommendation!]!
+
+  """	Get the users relative strengths and weaknesses for a course. This is based on the questions the users answered in this course.
+  """
+  relativeStrengthsAndWeaknesses(
+    """"""
+    courseEid: EncodedId!
+
+    """"""
+    topic: RelativePerformanceTopic!
+
+    """"""
+    countUnanswered: Boolean!
+  ): [RelativeTopicPerformance!]!
+
+  """get links to hot topics for physician dashboard"""
+  physicianFocusList: [ListItem!]!
+
+  """
+  Returns all available shop products in categories known as shopAreas e.g membership products, qbank products
+  """
+  shop(
+    """"""
+    coupon: CouponInput
+
+    """"""
+    campaignId: String
+  ): Shop
+
+  """Get a specific user's particle extensions"""
+  userParticleExtensions(
+    """"""
+    userId: EncodedId
+
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): ParticleExtensionConnection
+
+  """
+  Up to `limit` most recently highlighted articles from canonical clinician changelog
+  """
+  clinicianChangelog(
+    """"""
+    limit: Int!
+  ): ArticleChangelog!
+
+  """Generic article recommendations"""
+  articleRecommendations(
+    """"""
+    criteria: ArticleRecommendationCriteria!
+  ): ArticleRecommendations
+
+  """"""
+  currentUserShopConfig: ShopConfig!
+
+  """"""
+  getCustomStudySchedule(
+    """"""
+    schedule: CustomStudyScheduleInput!
+  ): CustomStudySchedule
+
+  """"""
+  node(
+    """"""
+    id: ID!
+  ): Node
+
+  """List of available mobile version deprecations"""
+  mobileDeprecationList: [MobileDeprecation]
+
+  """
+  Retrieves the current user's last accessed CustomStudyPlan OR UserCourse excluding specific categories
+  """
+  currentUserLastAccessedCourseOrPlan: UserCourseAndPlan
+
+  """
+  Generate a unique hash for current user. The optional passcode can be used to add strength to the hash
+  """
+  currentUserToken(
+    """"""
+    passcode: String
+  ): UserToken
+
+  """
+  public shop that requires no authentication and only used for A/B test hackathon
+  """
+  shopWithoutAuth(
+    """"""
+    coupon: CouponInput
+
+    """"""
+    campaignId: String
+  ): Shop
+
+  """last 20 Chargebee purchase invoices"""
+  currentUserChargebeePurchaseInvoices: [ChargebeePurchaseInvoice]
+
+  """"""
+  boardsAndBeyondAccessKey: String
+
+  """link to download Chargebee purchase invoice as PDF"""
+  downloadChargebeePurchaseInvoice(
+    """"""
+    invoiceId: String!
+  ): ChargeebeeInvoiceDownloadResult!
+
+  """Group discount referral marketing campaign"""
+  applicableMarkertingCampaign: MarketingCampaign
+
+  """what external identities are available and how to initiate them"""
+  externalIdentityProviders: ExternalIdentityProviderResultUnion
+
+  """what external identities are available and how to initiate them"""
+  samlExternalIdentityProvider(
+    """"""
+    email: String!
+  ): SAMLExternalIdentityProviderResultUnion
+
+  """Which saml federations are available and how to initiate them"""
+  samlFederations: SAMLFederationResultUnion
+
+  """List of study objectives by a given topic. Only available in US."""
+  studyObjectives(
+    """"""
+    topic: StudyObjectiveTopic!
+  ): [StudyObjective!]
+
+  """
+  Fetch the current study objective. This is a temporary solution, please utilize the StudyObjective fetched from profile for US.
+  """
+  currentStudyObjective: StudyObjective
+
+  """Get enabled payment methods from Adyen"""
+  adyenPaymentMethods: AdyenPaymentMethodResult!
+
+  """List of available residency programs"""
+  residencyPrograms: [ResidencyProgram!]!
+
+  """Legacy 'campus license' entities"""
+  institutionalLicenseConfigs: [InstitutionalLicenseConfig!]!
+
+  """Licenses for institutional SSO"""
+  institutionalSSOLicenseConfigs: [InstitutionalSSOLicenseConfig!]!
+
+  """A list of all the possible tray tags available for a university"""
+  universityLectureTagsByCategory(
+    """"""
+    universityId: EncodedId!
+  ): [LectureCategory!]
+
+  """check if a set password combination is valid"""
+  isSetPasswordValid(
+    """"""
+    eid: ID!
+
+    """"""
+    key: String!
+  ): Boolean
+
+  """Email verification status of the  current user"""
+  currentUserEmailVerificationStatus: EmailVerificationStatus!
+
+  """
+  Suggestions for search query input, comprising Topical Instant Results, Instant Results and Completions.
+  """
+  searchSuggestions(
+    """The search input field content."""
+    query: String!
+
+    """List of supported types of Instant Results."""
+    types: [SearchResultType]
+
+    """Maximum number of suggestions returned. Default value is 7."""
+    limit: Int
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+
+    """Check if current IR should be changed to related terms"""
+    useRelatedTerm: Boolean
+
+    """Whether TopicalIR(if it exists) included in the response or not"""
+    includeTopicalIr: Boolean
+
+    """Whether Suggestions Filters included in the response or not"""
+    includeQueryFilters: Boolean
+  ): [SearchSuggestionBase]!
+
+  """"""
+  searchInfo(
+    """Search query."""
+    query: String!
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+  ): SearchInfo!
+
+  """"""
+  searchPhrasionary(
+    """Search query."""
+    query: String!
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+  ): SearchPhrasionary
+
+  """"""
+  searchArticleResults(
+    """Search query."""
+    query: String!
+
+    """Number of Article search results to return, if available."""
+    first: Int
+
+    """For pagination, `endCursor` of previously returned results."""
+    after: String
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+  ): SearchResultArticlesConnection!
+
+  """"""
+  searchArticleContentTree(
+    """Search query."""
+    query: String!
+
+    """Number of Article results to return, if available."""
+    first: Int!
+
+    """For pagination, `endCursor` of previously returned results."""
+    after: String
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+
+    """
+    Whether to return the results in a condensed form suitable for Mobile clients.
+    """
+    compact: Boolean
+  ): SearchResultArticleNodeConnection!
+
+  """"""
+  searchMediaResults(
+    """Search query."""
+    query: String!
+
+    """Media result filters to apply for the query."""
+    filters: SearchFiltersMediaInput
+
+    """Number of Media search results to return, if available."""
+    first: Int
+
+    """For pagination, `endCursor` of previously returned results."""
+    after: String
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+  ): SearchResultMediaConnection!
+
+  """"""
+  searchPharmaAgentResults(
+    """Search query."""
+    query: String!
+
+    """Number of Pharma Agent search results to return, if available."""
+    first: Int
+
+    """For pagination, `endCursor` of previously returned results."""
+    after: String
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+  ): SearchResultPharmaAgentsConnection!
+
+  """"""
+  searchPharmaMonographResults(
+    """Search query."""
+    query: String!
+
+    """Number of Pharma Monograph search results to return, if available."""
+    first: Int
+
+    """For pagination, `endCursor` of previously returned results."""
+    after: String
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+  ): SearchResultPharmaMonographsConnection!
+
+  """"""
+  searchGuidelineResults(
+    """Search query."""
+    query: String!
+
+    """Number of Guideline search results to return, if available."""
+    first: Int
+
+    """For pagination, `endCursor` of previously returned results."""
+    after: String
+
+    """Code of the language to be used for translated Search."""
+    useTranslation: SearchTranslationLang
+  ): SearchResultGuidelinesConnection!
+
+  """
+  Get a list of Pharma offline db versions by a given major version number.
+  """
+  pharmaDatabases(
+    """"""
+    major: Int!
+  ): [PharmaDatabase!]!
+
+  """This returns Amboss Substance by ID since agents are deprecated"""
+  pharmaAgent(
+    """"""
+    id: ID!
+  ): PharmaAgent!
+
+  """Get Pharma Drug by ID."""
+  pharmaDrug(
+    """"""
+    id: ID!
+  ): PharmaDrug!
+
+  """Get Pharma Dosage by ID."""
+  dosage(
+    """"""
+    id: ID!
+  ): Dosage!
+
+  """@deprecated Get Pharma Monograph by ID."""
+  pharmaMonograph(
+    """"""
+    id: ID!
+  ): PharmaMonograph!
+
+  """Get Amboss Substance by ID."""
+  ambossSubstance(
+    """"""
+    id: ID!
+  ): AmbossSubstance!
+
+  """Ping the service"""
+  sasPing: String!
+
+  """Provides the performance on several question sessions"""
+  sasQuestionSessionPerformance(
+    """"""
+    sessionEids: [ID!]!
+  ): [SasQuestionSessionPerformance!]
+
+  """
+  Provides the performance including all completed questions relevant for a specific study objective
+  """
+  sasStudyObjectivePerformance(
+    """"""
+    options: SasAnalysisFilterOptions!
+  ): SasStudyObjectivePerformance
+
+  """
+  Provides the percentile on answer-correct-rate for a specific study objective
+  """
+  sasStudyObjectivePercentile(
+    """"""
+    options: SasAnalysisFilterOptions!
+  ): Int
+
+  """Provides article stats, specific to the user"""
+  sasUserArticleStats(
+    """"""
+    articleEids: [ID!]!
+
+    """"""
+    options: SasAnalysisFilterOptions!
+  ): [SasUserArticleStats!]
+
+  """
+  Provides study recommendations for a list of question sessions.
+  If users have not answered any question yet, `null` will be returned.
+  If there is no study recommendation due to perfect results, an empty list `[]` will be returned.
+  """
+  sasQuestionSessionStudyRecommendations(
+    """"""
+    sessionEids: [ID!]!
+
+    """"""
+    options: SasRecommendationFilterOptions!
+  ): [SasStudyRecommendation]
+
+  """
+  Provides study recommendations for a specific study objective.
+  If users have not answered any question yet, `null` will be returned.
+  If there is no study recommendation due to perfect results, an empty list `[]` will be returned.
+  """
+  sasStudyObjectiveStudyRecommendations(
+    """"""
+    options: SasRecommendationFilterOptions!
+  ): [SasStudyRecommendation]
+
+  """
+  Provides study recommendations for a list of question sessions.
+  If users have not answered any question yet, `SasUserAnswersEmpty` will be returned.
+  If there is no study recommendation due to perfect results, `SasNoRecommendationsAsAllAnswersCorrect` will be returned.
+  If Users answers are not part of the recommendation question pool, SasNoRecommendationsForUserAnswers will be returned.
+  This is a temporary version and will be cleaned up.
+  """
+  sasQuestionSessionStudyRecommendationsV2(
+    """"""
+    sessionEids: [ID!]!
+
+    """"""
+    options: SasRecommendationFilterOptions!
+  ): SasStudyRecommendationResponse
+
+  """
+  Provides study recommendations for a specific study objective.
+  If users have not answered any question yet, `SasUserAnswersEmpty` will be returned.
+  If there is no study recommendation due to perfect results, `SasNoRecommendationsAsAllAnswersCorrect` will be returned.
+  If Users answers are not part of the recommendation question pool, SasNoRecommendationsForUserAnswers will be returned.
+  This is a temporary version and will be cleaned up.
+  """
+  sasStudyObjectiveStudyRecommendationsV2(
+    """"""
+    options: SasRecommendationFilterOptions!
+  ): SasStudyRecommendationResponse
+
+  """Provides the active target exam details"""
+  sasActiveTargetExam: SasTargetExam
+
+  """Provides the active target exam's predicted score"""
+  sasActivePredictedScore: SasPredictedScore
+
+  """Provides all the target exam details"""
+  sasTargetExams: [SasTargetExam!]
+
+  """Provides practice exam results associated to specific target exam"""
+  sasPracticeExams(
+    """"""
+    targetExam: SasTargetExamLevel!
+  ): [SasPracticeExamUnion!]
+
+  """"""
+  currentUserHighlightsOnParticle(
+    """"""
+    particleEid: ID!
+  ): ParticleHighlights!
+}
+
+""""""
+type Question {
+  """"""
+  eid: String!
+
+  "\tThe questions's \\\"question-text\\\" as provided by IMPP or editors in case of self-written questions; named »question« in other APIs\n\tCan throw access.no_valid_access client error"
+  content: String
+
+  """content field used for public question session"""
+  publicContent: String
+
+  """shortened preview of content"""
+  contentPreview: String!
+
+  """difficulty of the question ranging from 1 to 5 (could be also an ENUM)"""
+  difficultyIndex: Int!
+
+  """
+  »Oberarztkommentar«, attending tip, consulting hint (using angular-content for the moment, to enable autolinking)
+  """
+  hintContent: String
+
+  """id of the associated lab value's card (if any)"""
+  labValuesSheetEid: String
+
+  """associated laboratory spreadsheet if there is any"""
+  labValuesSheet: LabValuesSheet
+
+  """"""
+  labValueEid: String
+
+  """"""
+  labValue: LabValuesSheet
+
+  """id of the associated question case"""
+  questionCaseEid: String
+
+  """Associated question case if there is any"""
+  questionCase: QuestionCase
+
+  """
+  Eid of a question that needs to be answered before this question will be displayed
+  """
+  blockedByQuestionId: String
+
+  """
+  List of eids of questions that only can be seen after this question is answered (opposite to blockedByQuestionId)
+  """
+  blocksQuestionIds: [String!]!
+
+  """list of associated answers"""
+  answers: [Answer!]!
+
+  """
+  list of images associated only to the question!  (answers got their own) Should be returned in the same order of appearance as in the actual exam! Named »image_resources« in Vesikel.
+  """
+  media: [MediaAsset!]
+
+  """(exam) source if there is one"""
+  source: String
+
+  """"""
+  editorialLink: EditorialLink!
+
+  """
+  tells if the medical content of this question still reflects the current medical knowledge
+  """
+  isOutdated: Boolean!
+}
+
+""""""
+enum QuestionAnsweredStatus {
+  """"""
+  correct
+
+  """"""
+  incorrect
+}
+
+""""""
+type QuestionCase implements Typed {
+  """"""
+  entityType: String!
+
+  """"""
+  eid: String!
+
+  """
+  Brief summary of the case; for now only used for internal editing purposes; was planned to be shown to the user in the far future
+  """
+  description: String
+
+  "\tHtml content; Named »story« in Vesikel and »render_story« in classic web API\n\tCan throw access.no_valid_access client error"
+  content: String!
+
+  """
+  list of images associated only to the question case Should be returned in the same order of appearance as in the actual exam! Named »images« in classic web API and »image_resources« in Vesikel.
+  """
+  media: [MediaAsset!]
+}
+
+""""""
+type QuestionCluster {
+  """Id list of questions in the cluster"""
+  questionIds: [String!]!
+}
+
+""""""
+enum QuestionOrder {
+  """"""
+  random
+
+  """"""
+  latestFirst
+
+  """"""
+  oldestFirst
+
+  """"""
+  initial
+}
+
+""""""
+type QuestionResult {
+  """Session Id of the result"""
+  sessionEid: String!
+
+  """Id of a question"""
+  questionEid: String!
+
+  """id of an answer chosen by user, null if user didn't give an answer"""
+  answerEid: String
+
+  """time in seconds user spent to answer, null if time wasn't submitted"""
+  timeSpent: Int
+
+  """user clicked reveal button"""
+  hasGivenUp: Boolean!
+
+  """if user either gave an answer or has given up"""
+  isCompleted: Boolean!
+
+  """Answer was given and matches correct answer"""
+  isAnswerCorrect: Boolean!
+
+  """true if used hint disregarding its uselessness"""
+  usedHint: Boolean!
+
+  """true if displayed hint before answering"""
+  usedHintAsHelp: Boolean!
+
+  """true if displayed hint before answering but it was not helpful"""
+  usedHintAsNonsense: Boolean!
+
+  """true if question-highlight clicked"""
+  usedHighlight: Boolean!
+
+  """true if used case highlight"""
+  usedCaseHighlight: Boolean!
+
+  """true if image was opened"""
+  usedImage: Boolean!
+
+  """true if image overlay was used"""
+  usedImageOverlay: Boolean!
+
+  """true if anything was used as help (this is the make-yellow flag)"""
+  usedHelp: Boolean!
+}
+
+""""""
+input QuestionResultInput {
+  """id of an answer chosen by user"""
+  answerEid: String
+
+  """time in seconds user spent to answer"""
+  timeSpent: Int
+
+  """user clicked reveal button"""
+  hasGivenUp: Boolean!
+
+  """true if displayed hint before answering"""
+  usedHint: Boolean!
+
+  """true if question-highlight clicked"""
+  usedHighlight: Boolean!
+
+  """true if used case highlight"""
+  usedCaseHighlight: Boolean!
+
+  """true if image was opened"""
+  usedImage: Boolean!
+
+  """true if image overlay was used"""
+  usedImageOverlay: Boolean!
+}
+
+""""""
+enum QuestionResultMode {
+  """"""
+  first
+
+  """"""
+  last
+
+  """"""
+  all
+}
+
+""""""
+enum QuestionResultSet {
+  """"""
+  all
+
+  """"""
+  mostRecent
+}
+
+""""""
+type QuestionResultStatus {
+  """"""
+  resultSet: QuestionResultSet
+
+  """"""
+  statuses: [QuestionStatus!]
+}
+
+""""""
+type QuestionSession implements Typed {
+  """"""
+  eid: ID!
+
+  """"""
+  entityType: String!
+
+  """"""
+  title: String!
+
+  """"""
+  mode: QuestionSessionMode!
+
+  """"""
+  type: String!
+
+  """"""
+  detail: String
+
+  """UTC, ISO 8601 (YYYY-MM-DDThh:mm:ss+00:00)"""
+  createdAt: String!
+
+  """list of Question eIds; use limit and skip for pagination"""
+  questionIds(
+    """"""
+    limit: Int
+
+    """"""
+    skip: Int
+  ): [String!]!
+
+  """Question cluster list in the session"""
+  questionClusters: [QuestionCluster!]!
+
+  "\ttotal number of questions referenced by this questionCollection/session\n\tCAVE: not covering unpublished questions, or newly required preceding questions to a collection's one"
+  questionCount: Int!
+
+  """
+  Question results; limit and skip defines slice of questions as defined in session
+  """
+  questionResults(
+    """"""
+    limit: Int
+
+    """"""
+    skip: Int
+  ): [QuestionResult]!
+
+  """Number of seconds spent currently on all questions results"""
+  sessionTime: Int!
+
+  """Fetch results for specific question ids within the session"""
+  questionIdsResults(
+    """"""
+    questionEids: [String!]!
+  ): [QuestionResult]!
+
+  """list of Question; use limit and skip for pagination"""
+  questions(
+    """"""
+    limit: Int
+
+    """"""
+    skip: Int
+  ): [QuestionUnion!]!
+
+  """
+  User inputted data - limit/skip is synchronized with `questions`, even if user data does not exist for that question yet
+  """
+  questionUserData(
+    """"""
+    limit: Int
+
+    """"""
+    skip: Int
+  ): [QuestionUserData]!
+
+  """List of question IDs that have user notes attached"""
+  questionIdsWithNotes: [EncodedId!]!
+
+  """List of question IDs that have been marked by a user"""
+  questionIdsWithMark: [EncodedId!]!
+
+  """current question ID"""
+  currentQuestion: ID
+
+  """session performance parameters"""
+  sessionPerformance: QuestionSetPerformance!
+
+  "\tCAVE should not be called for a list of QuestionSessions\n\tuser perfomance percentile based on this session"
+  sessionPerformancePercentile(
+    """"""
+    peerGroup: ComparisonPeerGroup!
+  ): Percentile!
+
+  """Get learning recommendations for a given question session"""
+  sessionLearningRecommendations(
+    """"""
+    peerGroup: ComparisonPeerGroup!
+
+    """"""
+    topic: ComparisonTopic!
+  ): [LearningRecommendation!]!
+
+  """
+  If this question session was created via a course it belongs to a bundle
+  """
+  userBundle: UserBundle
+
+  """
+  If this session was created via a custom study plan it belongs to a custom study day
+  """
+  customStudyDay: CustomStudyDay
+}
+
+""""""
+type QuestionSessionConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [QuestionSessionEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type QuestionSessionEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: QuestionSession!
+}
+
+""""""
+enum QuestionSessionMode {
+  """
+  Guidance mode - mode when it is possible to see hints and also get feedback if your answer is correct or not
+  """
+  guidance
+
+  """
+  Exam mode - mode when no hints are displayed and correct answer is not revealed till the end of the session
+  """
+  exam
+
+  """Exam simulation mode - Only available in US"""
+  examSimulation
+}
+
+""""""
+type QuestionSessionMutationResult {
+  """"""
+  success: Boolean!
+
+  """"""
+  eid: String
+
+  """"""
+  questionSession: QuestionSession
+}
+
+""""""
+enum QuestionSessionType {
+  """Custom - a custom QBank session"""
+  custom
+
+  """Anki - an anki bank session that is created through Anki Extension"""
+  anki
+}
+
+""""""
+union QuestionSessionUnion = QuestionSession | AccessDenied
+
+""""""
+input QuestionSessionUpdate {
+  """"""
+  title: String
+
+  """"""
+  mode: QuestionSessionMode
+}
+
+""""""
+type QuestionSetPerformance implements QuestionSetPerformanceInterface {
+  """Total count of question in the set"""
+  totalQuestions: Int!
+
+  """Total amount of questions that are answered"""
+  completedQuestions: Int!
+
+  """Amount of questions that are answered correctly without using hints"""
+  answeredCorrectly: Int!
+
+  """Amount of questions that are answered correctly with using hints"""
+  answeredWithHelp: Int!
+
+  """Amount of questions that are answered wrong or given up"""
+  answeredWrong: Int!
+
+  """Total amount of questions that are unseen or not answered"""
+  unansweredQuestions: Int!
+
+  """Total time spent on giving answers"""
+  totalTime: Int!
+
+  """
+  Average time spent on answering one question, null if there are no answered questions in the set
+  """
+  averageTimePerAnswer: Float
+}
+
+""""""
+interface QuestionSetPerformanceInterface {
+  """Total count of question in the set"""
+  totalQuestions: Int!
+
+  """Total amount of questions that are answered"""
+  completedQuestions: Int!
+
+  """
+  Average time spent on answering one question, null if there are no answered questions in the set
+  """
+  averageTimePerAnswer: Float
+
+  """Total time spent on giving answers"""
+  totalTime: Int!
+}
+
+""""""
+enum QuestionStatus {
+  """"""
+  unseenOrSkipped
+
+  """"""
+  answeredIncorrectly
+
+  """"""
+  answeredCorrectlyWithHelp
+
+  """"""
+  answeredCorrectly
+}
+
+""""""
+input QuestionStatusCriterion {
+  """"""
+  resultSet: QuestionResultSet!
+
+  """"""
+  statuses: [QuestionStatus!]!
+}
+
+""""""
+enum QuestionType {
+  """"""
+  standalone
+
+  """"""
+  questionCaseStandalone
+
+  """"""
+  questionCase
+}
+
+""""""
+union QuestionUnion = Question | ExamBlockedQuestion
+
+""""""
+type QuestionUserData {
+  """"""
+  questionEid: EncodedId!
+
+  """"""
+  isMarked: Boolean!
+
+  """"""
+  crossedOutAnswers: [EncodedId!]!
+
+  """"""
+  richHighlights: [RichSelection!]!
+
+  """"""
+  notes: String
+
+  """"""
+  hasNotes: Boolean!
+}
+
+"""An abstract range with a lower and a upper value"""
+type Range {
+  """"""
+  lower: Float!
+
+  """"""
+  upper: Float!
+}
+
+""""""
+input RedirectData {
+  """"""
+  shop: RedirectPage!
+
+  """string which will be appended to the redirect url"""
+  queryString: String
+}
+
+""""""
+enum RedirectPage {
+  """"""
+  default
+
+  """"""
+  addon
+
+  """"""
+  discount
+
+  """"""
+  publicDiscount
+
+  """"""
+  scholarship
+
+  """"""
+  paymentInfo
+}
+
+"""
+GuidlineReference is returned as either ArticleReference, WebUrlReference or MiscReference, depending on content
+"""
+union Reference = AnthologyReference | ArticleReference | BookReference | MiscReference | UpToDateReference | UrlReference | WebMdReference
+
+""""""
+enum RelativePerformance {
+  """"""
+  higher
+
+  """"""
+  same
+
+  """"""
+  lower
+}
+
+""""""
+enum RelativePerformanceTopic {
+  """"""
+  system
+
+  """"""
+  discipline
+}
+
+""""""
+type RelativeTopicPerformance {
+  """The title of the topic"""
+  title: String!
+
+  """The numbers of questions the user answered for this topic"""
+  numberOfQuestions: String!
+
+  """
+  higher, same or lower depending if this topics performance is higher, same or lower than the avarage performance for the course
+  """
+  relativePerformance: RelativePerformance!
+
+  """
+  A range representing the percentage of this topic in the exam topic distribution
+  """
+  examItemPercentage: Range!
+
+  """The criterias used to create a session corresponding to this topic"""
+  sessionQuestionCriteria: SessionQuestionCriteriaConfiguration!
+}
+
+""""""
+type RemoveCurrentUserSecondaryEmailResult {
+  """"""
+  status: Boolean!
+}
+
+""""""
+type ResidencyProgram {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  state: String!
+
+  """"""
+  city: String!
+
+  """"""
+  speciality: String!
+
+  """"""
+  name: String!
+
+  """"""
+  programNumber: String!
+
+  """"""
+  accreditationStatus: String!
+
+  """"""
+  isActive: Boolean!
+}
+
+"""Only one of the two fields can be provided"""
+input ResidencyProgramInput {
+  """Id from the reference"""
+  id: EncodedId
+
+  """Free-text if the residency program is not found"""
+  text: String
+}
+
+""""""
+type RichSelection {
+  """"""
+  id: ID!
+
+  """"""
+  starts: [Int!]!
+
+  """"""
+  ends: [Int!]!
+}
+
+""""""
+input RichSelectionInput {
+  """"""
+  id: ID!
+
+  """"""
+  starts: [Int!]!
+
+  """"""
+  ends: [Int!]!
+
+  """"""
+  data: [Int!]!
+}
+
+"""Pharma: represents rotehand data"""
+type Rotehand {
+  """"""
+  title: String!
+
+  """"""
+  link: String!
+
+  """"""
+  date: Date!
+
+  """"""
+  substances: [String!]!
+}
+
+""""""
+type SAMLExternalIdentityProvider implements ExternalIdentityProviderInterface {
+  """"""
+  eid: String!
+
+  """Human-readable name of IDP"""
+  name: String!
+
+  """URL user have to follow to initiate login"""
+  initiateURL: String!
+
+  """URL user have to follow to initiate connection"""
+  connectURL: String
+
+  """URL user have to follow to initiate disconnect"""
+  disconnectURL: String
+}
+
+""""""
+union SAMLExternalIdentityProviderResultUnion = SAMLExternalIdentityProvider | ExternalIdentityProviderFetchingError
+
+""""""
+type SAMLFederation {
+  """"""
+  eid: EncodedId!
+
+  """Human-readable name of IDP"""
+  name: String!
+
+  """URL user should follow to initiate login"""
+  initiateURL: String!
+
+  """URL user should follow to initiate connection"""
+  connectURL: String!
+}
+
+""""""
+type SAMLFederationResult {
+  """"""
+  samlFederations: [SAMLFederation!]!
+}
+
+""""""
+union SAMLFederationResultUnion = SAMLFederationResult | ExternalIdentityProviderFetchingError
+
+""""""
+input SasAnalysisFilterOptions {
+  """"""
+  studyObjectiveEid: ID!
+
+  """"""
+  timelineFilter: SasTimelineFilter!
+}
+
+""""""
+enum SasArea {
+  """"""
+  ARTICLE
+
+  """"""
+  SUBJECT
+
+  """"""
+  SYSTEM
+}
+
+""""""
+type SasArticleRecommendation implements SasStudyRecommendation {
+  """"""
+  eid: ID!
+
+  """"""
+  label: String!
+
+  """"""
+  totalQuestions: Int!
+
+  """"""
+  completedQuestions: Int!
+
+  """"""
+  correctWithoutHelp: Int!
+
+  """"""
+  correctWithHelp: Int!
+
+  """"""
+  incorrectOrGivenUp: Int!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: SasStudyRecommendationRelevance
+
+  """"""
+  representation: Float!
+
+  """"""
+  taxonEid: ID
+}
+
+"""
+No Recommendation for the Users question result as all responses are correct
+"""
+type SasNoRecommendationsAsAllAnswersCorrect {
+  """"""
+  reason: String!
+}
+
+"""No Recommendation for the Users question result"""
+type SasNoRecommendationsForUserAnswers {
+  """"""
+  reason: String!
+}
+
+""""""
+type SasOrganSystemRecommendation implements SasStudyRecommendation {
+  """"""
+  eid: ID!
+
+  """"""
+  label: String!
+
+  """"""
+  totalQuestions: Int!
+
+  """"""
+  completedQuestions: Int!
+
+  """"""
+  correctWithoutHelp: Int!
+
+  """"""
+  correctWithHelp: Int!
+
+  """"""
+  incorrectOrGivenUp: Int!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: SasStudyRecommendationRelevance
+
+  """"""
+  representation: Float!
+
+  """"""
+  taxonEid: ID
+}
+
+"""User provided Other Exam Results"""
+type SasOtherExamResult {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  date: Date!
+
+  """"""
+  score: Int!
+
+  """"""
+  unit: SasPracticeExamUnit!
+
+  """"""
+  label: String!
+}
+
+""""""
+input SasOtherExamResultInput {
+  """"""
+  eid: EncodedId
+
+  """"""
+  date: Date
+
+  """"""
+  score: Int
+
+  """"""
+  unit: SasPracticeExamUnit
+
+  """"""
+  label: String
+}
+
+""""""
+enum SasPracticeExam {
+  """"""
+  NBME_CBSSA_FORM_25
+
+  """"""
+  NBME_CBSSA_FORM_26
+
+  """"""
+  NBME_CBSSA_FORM_27
+
+  """"""
+  NBME_CBSSA_FORM_28
+
+  """"""
+  NBME_CBSSA_FORM_29
+
+  """"""
+  NBME_CBSSA_FORM_30
+
+  """"""
+  NBME_CBSSA_FORM_31
+
+  """"""
+  NBME_CBSE_1
+
+  """"""
+  NBME_CBSE_2
+
+  """"""
+  NBME_CBSE_3
+
+  """"""
+  UWORLD_SA_FORM_1
+
+  """"""
+  UWORLD_SA_FORM_2
+
+  """"""
+  ABMOSS_STEP_1_SA
+
+  """"""
+  FREE_120_JUNE_2022
+
+  """"""
+  USMLE_RX_SA_FORM_1
+
+  """"""
+  USMLE_RX_SA_FORM_2
+
+  """"""
+  KAPLAN_SA_FORM_1
+
+  """"""
+  KAPLAN_SA_FORM_2
+
+  """"""
+  UWORLD_QBANK_PERCENTAGE_CORRECT_FIRST_PASS
+
+  """"""
+  USMLE_STEP_1
+
+  """"""
+  USMLE_STEP_2
+
+  """"""
+  NBME_CCSSA_FORM_9
+
+  """"""
+  NBME_CCSSA_FORM_10
+
+  """"""
+  NBME_CCSSA_FORM_11
+
+  """"""
+  NBME_CCSSA_FORM_12
+
+  """"""
+  NBME_CCSSA_FORM_13
+
+  """"""
+  NBME_CCSSA_FORM_14
+
+  """"""
+  NBME_CCSE_1
+
+  """"""
+  NBME_CCSE_2
+
+  """"""
+  NBME_CCSE_3
+
+  """"""
+  FREE_120_JULY_2023
+
+  """"""
+  FREE_120_MARCH_2023_APRIL_2022_MARCH_2021
+
+  """"""
+  NBME_CCMSA_FORM_5
+
+  """"""
+  FREE_137_DECEMBER_2023
+
+  """"""
+  FREE_137_AUGUST_2022_NOVEMBER_2020
+
+  """"""
+  HIGH_YIELD_CCS_CASES
+}
+
+"""User provided Practice Exam Results"""
+type SasPracticeExamResult {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  type: SasPracticeExam!
+
+  """"""
+  date: Date!
+
+  """"""
+  score: Int!
+
+  """"""
+  unit: SasPracticeExamUnit!
+}
+
+""""""
+input SasPracticeExamResultInput {
+  """"""
+  eid: EncodedId
+
+  """"""
+  type: SasPracticeExam!
+
+  """"""
+  date: Date
+
+  """"""
+  score: Int
+
+  """"""
+  unit: SasPracticeExamUnit
+}
+
+""""""
+union SasPracticeExamUnion = SasPracticeExamResult | SasOtherExamResult | SasShelfExamResult
+
+""""""
+enum SasPracticeExamUnit {
+  """"""
+  PERCENTILE
+
+  """"""
+  PASS_FAIL
+
+  """"""
+  DIGIT3
+
+  """"""
+  EPC
+
+  """"""
+  RAW_PERCENTAGE
+}
+
+"""Prediction model indicators"""
+type SasPredictedScore {
+  """"""
+  level: SasTargetExamLevel!
+
+  """"""
+  score: Int
+
+  """"""
+  piHigh: Int
+
+  """"""
+  piLow: Int
+
+  """"""
+  likelihoodOfPassing: Int
+}
+
+"""Basic performance indicators for a specific question session"""
+type SasQuestionSessionPerformance {
+  """"""
+  sessionEid: ID!
+
+  """"""
+  totalQuestions: Int!
+
+  """"""
+  completedQuestions: Int!
+
+  """"""
+  correctWithoutHelp: Int!
+
+  """"""
+  correctWithHelp: Int!
+
+  """"""
+  incorrectOrGivenUp: Int!
+
+  """"""
+  skipped: Int!
+
+  """"""
+  totalTime: Int!
+
+  """"""
+  averageTimePerQuestion: Int
+}
+
+""""""
+input SasRecommendationFilterOptions {
+  """"""
+  studyObjectiveEid: ID!
+
+  """"""
+  timelineFilter: SasTimelineFilter!
+
+  """"""
+  area: SasArea!
+
+  """
+  Offset for pagination, this needs to be set to a value greater than or equal to 0
+  """
+  offset: Int
+
+  """
+  Limit for pagination, this needs to be set to a value greater than 0 and less than or equal to 20
+  """
+  limit: Int
+}
+
+""""""
+enum SasShelfExam {
+  """"""
+  AMBULATORY_CARE
+
+  """"""
+  EMERGENCY_MEDICINE
+
+  """"""
+  FAMILY_MEDICINE
+
+  """"""
+  MEDICINE
+
+  """"""
+  NEUROLOGY
+
+  """"""
+  OBSTETRICS_GYNECOLOGY
+
+  """"""
+  PEDIATRICS
+
+  """"""
+  PSYCHIATRY
+
+  """"""
+  SURGERY
+}
+
+"""User provided Shelf Exam Results"""
+type SasShelfExamResult {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  type: SasShelfExam!
+
+  """"""
+  date: Date!
+
+  """"""
+  score: Int
+
+  """"""
+  percentile: Int
+}
+
+""""""
+input SasShelfExamResultInput {
+  """"""
+  eid: EncodedId
+
+  """"""
+  type: SasShelfExam!
+
+  """"""
+  date: Date
+
+  """"""
+  score: Int
+
+  """"""
+  percentile: Int
+}
+
+"""Basic performance indicators based on study objective"""
+type SasStudyObjectivePerformance {
+  """"""
+  studyObjectiveLabel: String!
+
+  """"""
+  totalQuestions: Int!
+
+  """"""
+  completedQuestions: Int!
+
+  """"""
+  correctWithoutHelp: Int!
+
+  """"""
+  correctWithHelp: Int!
+
+  """"""
+  incorrectOrGivenUp: Int!
+
+  """"""
+  skipped: Int!
+
+  """"""
+  totalTime: Int!
+
+  """"""
+  averageTimePerQuestion: Int
+}
+
+""""""
+interface SasStudyRecommendation {
+  """"""
+  eid: ID!
+
+  """"""
+  label: String!
+
+  """"""
+  totalQuestions: Int!
+
+  """"""
+  completedQuestions: Int!
+
+  """"""
+  correctWithoutHelp: Int!
+
+  """"""
+  correctWithHelp: Int!
+
+  """"""
+  incorrectOrGivenUp: Int!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: SasStudyRecommendationRelevance
+
+  """"""
+  representation: Float!
+
+  """"""
+  taxonEid: ID
+}
+
+""""""
+type SasStudyRecommendationPagination {
+  """A list of edges in this pagination window."""
+  items: [SasStudyRecommendation!]!
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """The offset of the next item in this pagination window."""
+  offset: Int!
+}
+
+""""""
+enum SasStudyRecommendationRelevance {
+  """"""
+  LOW
+
+  """"""
+  MEDIUM
+
+  """"""
+  HIGH
+}
+
+""""""
+union SasStudyRecommendationResponse = SasUserAnswersEmpty | SasNoRecommendationsForUserAnswers | SasNoRecommendationsAsAllAnswersCorrect | SasStudyRecommendationPagination
+
+""""""
+type SasSubjectRecommendation implements SasStudyRecommendation {
+  """"""
+  eid: ID!
+
+  """"""
+  label: String!
+
+  """"""
+  totalQuestions: Int!
+
+  """"""
+  completedQuestions: Int!
+
+  """"""
+  correctWithoutHelp: Int!
+
+  """"""
+  correctWithHelp: Int!
+
+  """"""
+  incorrectOrGivenUp: Int!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: SasStudyRecommendationRelevance
+
+  """"""
+  representation: Float!
+
+  """"""
+  taxonEid: ID
+}
+
+"""User provided Target Exam details and associated practice exam scores"""
+type SasTargetExam {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  level: SasTargetExamLevel!
+
+  """"""
+  date: Date
+
+  """"""
+  isActive: Boolean!
+
+  """"""
+  officialScore: Int
+
+  """"""
+  practiceExams: [SasPracticeExamUnion!]!
+}
+
+""""""
+input SasTargetExamInput {
+  """"""
+  level: SasTargetExamLevel!
+
+  """"""
+  examDate: Date
+
+  """"""
+  officialScore: Int
+}
+
+""""""
+enum SasTargetExamLevel {
+  """"""
+  USMLE_STEP1
+
+  """"""
+  USMLE_STEP2
+
+  """"""
+  USMLE_STEP3
+}
+
+""""""
+enum SasTimelineFilter {
+  """"""
+  FIRST
+
+  """"""
+  LATEST
+
+  """"""
+  ALL
+}
+
+""""""
+union SasUpdatePracticeExamResult = SasUpdatePracticeExamSuccess | SasUpdatePracticeExamValidationError
+
+"""List of all practice exam results ordered by latest practice exam date"""
+type SasUpdatePracticeExamSuccess {
+  """"""
+  practiceExams: [SasPracticeExamUnion!]
+}
+
+"""Generic Practice Exam Validation Error """
+type SasUpdatePracticeExamValidationError {
+  """"""
+  reason: String!
+}
+
+"""User question result is empty"""
+type SasUserAnswersEmpty {
+  """"""
+  reason: String!
+}
+
+""""""
+type SasUserArticleStats {
+  """"""
+  articleEid: ID!
+
+  """Relevance-score mapped to a scale from 0 to 5"""
+  imppact: Int!
+
+  """Recommendation level ranging from 0 to 5"""
+  studyRecommendationLevel: Int!
+
+  """Average question count per exam related to this article"""
+  examQuestionFrequency: Float!
+
+  """Performance on questions linked to the article"""
+  studyObjectivePerformance: SasStudyObjectivePerformance!
+}
+
+""""""
+input ScholarshipCouponInput {
+  """id of a coupon granting a reduction on chargebee plans"""
+  membershipCouponId: String
+
+  """id of a coupon granting a reduction on chargebee non-recurring addons"""
+  upgradeCouponId: String
+}
+
+"""Generic representation of the value of any given Search Filter."""
+type SearchFilterValue {
+  """Internal identifier of the filter value."""
+  value: String!
+
+  """Localized label for the filter value."""
+  label: String!
+
+  """Total number of results that match the filter."""
+  matchingCount: Int
+
+  """Current state of the filter."""
+  isActive: Boolean!
+}
+
+""""""
+type SearchFiltersMedia {
+  """List of Media type filters."""
+  mediaType: [SearchFilterValue!]!
+}
+
+""""""
+input SearchFiltersMediaInput {
+  """Values of the filters to apply on Media type."""
+  mediaType: [String!]
+}
+
+""""""
+type SearchInfo {
+  """"""
+  queryInfo: SearchInfoQueryData!
+
+  """"""
+  resultInfo: SearchInfoResultData!
+
+  """"""
+  messages: [SearchInfoMessage!]!
+
+  """"""
+  data: SearchInfoData!
+
+  """"""
+  items: [SearchInfoItem!]!
+
+  """"""
+  overviewSectionOrder: [SearchResultType!]!
+}
+
+""""""
+type SearchInfoData {
+  """"""
+  processedQuery: String!
+
+  """"""
+  wasAutocorrected: Boolean!
+
+  """"""
+  translatedFrom: SearchTranslationLang
+}
+
+""""""
+type SearchInfoItem {
+  """"""
+  variant: SearchInfoVariant!
+
+  """"""
+  spans: [SearchInfoSpan!]!
+
+  """"""
+  reportPrompt: String
+
+  """"""
+  metadata: String
+}
+
+""""""
+type SearchInfoMessage {
+  """"""
+  variant: SearchInfoMessageVariant!
+
+  """"""
+  spans: [SearchInfoMessageSpan!]!
+
+  """"""
+  reportPrompt: String
+
+  """"""
+  metadata: String
+}
+
+""""""
+type SearchInfoMessageSpan {
+  """Text content. May be styled with <b> and <i> tags."""
+  text: String!
+
+  """"""
+  target: SearchTargetSerp
+
+  """"""
+  noTranslate: Boolean
+}
+
+""""""
+enum SearchInfoMessageVariant {
+  """"""
+  PRIMARY
+
+  """"""
+  SECONDARY
+
+  """"""
+  INFO
+
+  """"""
+  ERROR
+}
+
+""""""
+type SearchInfoQueryData {
+  """"""
+  processedQuery: String!
+
+  """"""
+  wasAutocorrected: Boolean!
+
+  """"""
+  translatedFrom: SearchTranslationLang
+}
+
+""""""
+type SearchInfoResultData {
+  """Tab to switch to on the Search Results Page, if specified."""
+  targetView: SearchResultsView
+
+  """Sections to move up on the Results Overview tab, in the order listed."""
+  boostOverviewSections: [SearchResultsOverviewSection!]!
+}
+
+""""""
+type SearchInfoSpan {
+  """Text content. May be styled with <b> and <i> tags."""
+  text: String!
+
+  """"""
+  target: SearchTargetSerp
+
+  """"""
+  noTranslate: Boolean
+}
+
+""""""
+enum SearchInfoVariant {
+  """"""
+  PRIMARY
+
+  """"""
+  SECONDARY
+
+  """"""
+  INFO
+
+  """"""
+  ERROR
+}
+
+"""Generic categories of Media types supported by Search."""
+enum SearchMediaTypeCategory {
+  """"""
+  FLOWCHART
+
+  """"""
+  ILLUSTRATION
+
+  """"""
+  PHOTO
+
+  """"""
+  IMAGING
+
+  """"""
+  CHART
+
+  """"""
+  MICROSCOPY
+
+  """"""
+  AUDIO
+
+  """"""
+  AUDITOR
+
+  """"""
+  VIDEO
+
+  """"""
+  CALCULATOR
+
+  """"""
+  WEB_CONTENT
+
+  """"""
+  MEDITRICKS
+
+  """"""
+  SMARTZOOM
+
+  """"""
+  EFFIGOS
+}
+
+"""
+PageInfo type is present in the Mozart GraphQL Schema and cannot be
+used in Wernicke. The SearchPageInfo should be used instead to
+avoid name conflicts on the GraphQL Gateway side.
+"""
+type SearchPageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+""""""
+type SearchPhrasionary {
+  """
+  Did You Mean field returns results if the search used spelling correction.
+  """
+  didYouMean: String
+
+  """The title of the phrase"""
+  title: String!
+
+  """
+  The subtitle of the phrase. Contains the breadbrumbs to the linked result.
+  """
+  subtitle: String
+
+  """Etymology of the phrase."""
+  etymology: String
+
+  """Phrase synonyms."""
+  synonyms: [String]
+
+  """Breadcrumbs. (DEPRECATED)"""
+  details: [String]
+
+  """Definition of a phrase"""
+  body: String
+
+  """
+  Main phrasionary target. Makes a title and subtitle clickable if present.
+  """
+  target: SearchTarget
+
+  """List of secondary AMBOSS targets with titles."""
+  secondaryTargets: [SecondaryTarget]
+
+  """List of linked media."""
+  media: [SearchResultMedia]
+}
+
+""""""
+type SearchResultArticle implements SearchResultBase {
+  """
+  Title of the Search Result. Constitutes the primary label for the main target. Can contain \<b\>, \<i\> HTML tags.
+  """
+  title: String!
+
+  """
+  Subtitle of the Search Result. Should be considered part of the label for the main target and exhibit the same behavior as the title on clients. Can contain \<b\>, \<i\> HTML tags.
+  """
+  subtitle: String
+
+  """List of details. Can contain \<b\>, \<i\> HTML tags."""
+  details: [String]
+
+  """
+  Usually a text content of the Search Result. Can contain \<b\>, \<i\> HTML tags.
+  """
+  body: String
+
+  """List of secondary AMBOSS targets with titles."""
+  secondaryTargets: [SecondaryTarget]
+
+  """List of labels. For example: vorklinik, klinik, arzt."""
+  labels: [String]
+
+  """
+  The metadata contains tracking information that should be forwarded to the tracking events.
+  """
+  metadata: String
+
+  """"""
+  target: SearchTargetArticle
+}
+
+""""""
+type SearchResultArticleNode {
+  """
+  Title of the Node. May be styled with `<b>` and `<i>` tags for bold and italic, respectively.
+  """
+  title: String!
+
+  """
+  Content snippet with a preview of the matched Article text. May be styled with `<b>` and `<i>` tags for bold and italic, respectively.
+  """
+  snippet: String
+
+  """
+  Target of the Node, specified by Article, Section and ID of the particular element, as applicable.
+  """
+  target: SearchTargetArticleNode!
+
+  """
+  Indicates whether the Node is selectively flagged as a main result for the search query and should be highlighted accordingly on clients.
+  """
+  highlighted: Boolean
+
+  """List of child Nodes."""
+  children: [SearchResultArticleNode!]!
+}
+
+""""""
+type SearchResultArticleNodeConnection {
+  """"""
+  pageInfo: SearchPageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SearchResultArticleNodeEdge]!
+
+  """Total number of available results."""
+  totalCount: Int!
+}
+
+"""A Relay edge containing a `SearchResultArticleNode` and its cursor."""
+type SearchResultArticleNodeEdge {
+  """The item at the end of the edge"""
+  node: SearchResultArticleNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+""""""
+type SearchResultArticlesConnection {
+  """"""
+  pageInfo: SearchPageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SearchResultArticlesEdge]!
+
+  """
+  Did You Mean field returns results if the search used spelling correction.
+  """
+  didYouMean: String
+
+  """Number of results"""
+  totalCount: Int!
+}
+
+"""A Relay edge containing a `SearchResultArticles` and its cursor."""
+type SearchResultArticlesEdge {
+  """The item at the end of the edge"""
+  node: SearchResultArticle
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+""""""
+interface SearchResultBase {
+  """
+  Title of the Search Result. Constitutes the primary label for the main target. Can contain \<b\>, \<i\> HTML tags.
+  """
+  title: String!
+
+  """
+  Subtitle of the Search Result. Should be considered part of the label for the main target and exhibit the same behavior as the title on clients. Can contain \<b\>, \<i\> HTML tags.
+  """
+  subtitle: String
+
+  """List of details. Can contain \<b\>, \<i\> HTML tags."""
+  details: [String]
+
+  """
+  Usually a text content of the Search Result. Can contain \<b\>, \<i\> HTML tags.
+  """
+  body: String
+
+  """List of secondary AMBOSS targets with titles."""
+  secondaryTargets: [SecondaryTarget]
+
+  """List of labels. For example: vorklinik, klinik, arzt."""
+  labels: [String]
+
+  """
+  The metadata contains tracking information that should be forwarded to the tracking events.
+  """
+  metadata: String
+}
+
+""""""
+type SearchResultConnection implements PaginationConnection {
+  """
+  Original search string i.e. user input. Check `didYouMean` for possible autocorrection!
+  """
+  query: String!
+
+  """"""
+  phraseGroup: PhraseGroup
+
+  """
+  EXPERIMENTAL Image Search: Provides Ids respective to MediaAsset, likely to become deprecated.
+  """
+  mediaEids: [ID!]!
+
+  """
+  In case of detected typos this field contains the corrected search string.
+  """
+  didYouMean: String
+
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [SearchResultEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type SearchResultEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: SearchResultItem!
+}
+
+""""""
+type SearchResultGuideline implements SearchResultBase {
+  """
+  Title of the Search Result. Constitutes the primary label for the main target. Can contain \<b\>, \<i\> HTML tags.
+  """
+  title: String!
+
+  """
+  Subtitle of the Search Result. Should be considered part of the label for the main target and exhibit the same behavior as the title on clients. Can contain \<b\>, \<i\> HTML tags.
+  """
+  subtitle: String
+
+  """List of details. Can contain \<b\>, \<i\> HTML tags."""
+  details: [String]
+
+  """
+  Usually a text content of the Search Result. Can contain \<b\>, \<i\> HTML tags.
+  """
+  body: String
+
+  """List of secondary AMBOSS targets with titles."""
+  secondaryTargets: [SecondaryTarget]
+
+  """List of labels. For example: vorklinik, klinik, arzt."""
+  labels: [String]
+
+  """
+  The metadata contains tracking information that should be forwarded to the tracking events.
+  """
+  metadata: String
+
+  """"""
+  target: SearchTargetExternalUrl
+}
+
+""""""
+type SearchResultGuidelinesConnection {
+  """"""
+  pageInfo: SearchPageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SearchResultGuidelinesEdge]!
+
+  """
+  Did You Mean field returns results if the search used spelling correction.
+  """
+  didYouMean: String
+
+  """Number of results"""
+  totalCount: Int!
+}
+
+"""A Relay edge containing a `SearchResultGuidelines` and its cursor."""
+type SearchResultGuidelinesEdge {
+  """The item at the end of the edge"""
+  node: SearchResultGuideline
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+""""""
+type SearchResultItem {
+  """"""
+  isTopMatch: Boolean!
+
+  """"""
+  synonyms: [String!]!
+
+  """"""
+  stages: [Stage!]!
+
+  """optional context of a search hit containing the hit in <em> tags"""
+  contexts: [String!]!
+
+  """"""
+  destination: DestinationInterface!
+}
+
+""""""
+type SearchResultMedia implements SearchResultBase {
+  """
+  Title of the Search Result. Constitutes the primary label for the main target. Can contain \<b\>, \<i\> HTML tags.
+  """
+  title: String!
+
+  """
+  Subtitle of the Search Result. Should be considered part of the label for the main target and exhibit the same behavior as the title on clients. Can contain \<b\>, \<i\> HTML tags.
+  """
+  subtitle: String
+
+  """List of details. Can contain \<b\>, \<i\> HTML tags."""
+  details: [String]
+
+  """
+  Usually a text content of the Search Result. Can contain \<b\>, \<i\> HTML tags.
+  """
+  body: String
+
+  """List of secondary AMBOSS targets with titles."""
+  secondaryTargets: [SecondaryTarget]
+
+  """List of labels. For example: vorklinik, klinik, arzt."""
+  labels: [String]
+
+  """
+  The metadata contains tracking information that should be forwarded to the tracking events.
+  """
+  metadata: String
+
+  """"""
+  target: SearchTargetMedia!
+
+  """"""
+  mediaType: SearchResultMediaType!
+}
+
+""""""
+type SearchResultMediaConnection {
+  """"""
+  pageInfo: SearchPageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SearchResultMediaEdge]!
+
+  """Autocorrection of the submitted query, if applied for search."""
+  didYouMean: String
+
+  """Total number of available results."""
+  totalCount: Int!
+
+  """Media filters applied and/or suggested for the query."""
+  filters: SearchFiltersMedia!
+}
+
+"""A Relay edge containing a `SearchResultMedia` and its cursor."""
+type SearchResultMediaEdge {
+  """The item at the end of the edge"""
+  node: SearchResultMedia
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+""""""
+type SearchResultMediaType {
+  """
+  Generic category of the Media type, to be represented with the appropriate Icon.
+  """
+  category: SearchMediaTypeCategory!
+
+  """Localized text label for the specific Media type."""
+  label: String!
+}
+
+""""""
+type SearchResultPharmaAgent implements SearchResultBase {
+  """
+  Title of the Search Result. Constitutes the primary label for the main target. Can contain \<b\>, \<i\> HTML tags.
+  """
+  title: String!
+
+  """
+  Subtitle of the Search Result. Should be considered part of the label for the main target and exhibit the same behavior as the title on clients. Can contain \<b\>, \<i\> HTML tags.
+  """
+  subtitle: String
+
+  """List of details. Can contain \<b\>, \<i\> HTML tags."""
+  details: [String]
+
+  """
+  Usually a text content of the Search Result. Can contain \<b\>, \<i\> HTML tags.
+  """
+  body: String
+
+  """List of secondary AMBOSS targets with titles."""
+  secondaryTargets: [SecondaryTarget]
+
+  """List of labels. For example: vorklinik, klinik, arzt."""
+  labels: [String]
+
+  """
+  The metadata contains tracking information that should be forwarded to the tracking events.
+  """
+  metadata: String
+
+  """Pharma Agent target."""
+  target: SearchTargetPharmaAgent!
+}
+
+""""""
+type SearchResultPharmaAgentsConnection {
+  """"""
+  pageInfo: SearchPageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SearchResultPharmaAgentsEdge]!
+
+  """Autocorrection of the submitted query, if applied for search."""
+  didYouMean: String
+
+  """Total number of available results."""
+  totalCount: Int!
+}
+
+"""A Relay edge containing a `SearchResultPharmaAgents` and its cursor."""
+type SearchResultPharmaAgentsEdge {
+  """The item at the end of the edge"""
+  node: SearchResultPharmaAgent
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+""""""
+type SearchResultPharmaMonograph implements SearchResultBase {
+  """
+  Title of the Search Result. Constitutes the primary label for the main target. Can contain \<b\>, \<i\> HTML tags.
+  """
+  title: String!
+
+  """
+  Subtitle of the Search Result. Should be considered part of the label for the main target and exhibit the same behavior as the title on clients. Can contain \<b\>, \<i\> HTML tags.
+  """
+  subtitle: String
+
+  """List of details. Can contain \<b\>, \<i\> HTML tags."""
+  details: [String]
+
+  """
+  Usually a text content of the Search Result. Can contain \<b\>, \<i\> HTML tags.
+  """
+  body: String
+
+  """List of secondary AMBOSS targets with titles."""
+  secondaryTargets: [SecondaryTarget]
+
+  """List of labels. For example: vorklinik, klinik, arzt."""
+  labels: [String]
+
+  """
+  The metadata contains tracking information that should be forwarded to the tracking events.
+  """
+  metadata: String
+
+  """Pharma Monograph target."""
+  target: SearchTargetPharmaMonograph!
+}
+
+""""""
+type SearchResultPharmaMonographsConnection {
+  """"""
+  pageInfo: SearchPageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SearchResultPharmaMonographsEdge]!
+
+  """Autocorrection of the submitted query, if applied for search."""
+  didYouMean: String
+
+  """Total number of available results."""
+  totalCount: Int!
+}
+
+"""
+A Relay edge containing a `SearchResultPharmaMonographs` and its cursor.
+"""
+type SearchResultPharmaMonographsEdge {
+  """The item at the end of the edge"""
+  node: SearchResultPharmaMonograph
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+""""""
+enum SearchResultType {
+  """"""
+  PHRASIONARY
+
+  """"""
+  ARTICLE
+
+  """"""
+  PHARMA_AGENT
+
+  """"""
+  PHARMA_MONOGRAPH
+
+  """"""
+  MEDIA_GROUP
+
+  """"""
+  GUIDELINE
+
+  """"""
+  LIBRARY_LIST
+
+  """"""
+  COURSE
+}
+
+""""""
+enum SearchResultsOverviewSection {
+  """"""
+  ARTICLE
+
+  """"""
+  MEDIA
+
+  """"""
+  PHARMA
+
+  """"""
+  GUIDELINE
+}
+
+""""""
+enum SearchResultsView {
+  """"""
+  OVERVIEW
+
+  """"""
+  ARTICLE
+
+  """"""
+  MEDIA
+
+  """"""
+  PHARMA
+
+  """"""
+  GUIDELINE
+}
+
+"""The interface for search suggestions"""
+interface SearchSuggestionBase {
+  """
+  The text of the suggestion with highlighting. Can contain \<b\> HTML tags.
+  """
+  text: String!
+
+  """The text of the suggestion that is shown to users."""
+  value: String!
+
+  """The metadata of the suggestion engine."""
+  metadata: String
+}
+
+""""""
+type SearchSuggestionInstantResult implements SearchSuggestionBase {
+  """
+  The text of the suggestion with highlighting. Can contain \<b\> HTML tags.
+  """
+  text: String!
+
+  """The text of the suggestion that is shown to users."""
+  value: String!
+
+  """The metadata of the suggestion engine."""
+  metadata: String
+
+  """"""
+  target: SearchTarget
+}
+
+""""""
+type SearchSuggestionInstantResultGroup implements SearchSuggestionBase {
+  """
+  The text of the suggestion with highlighting. Can contain \<b\> HTML tags.
+  """
+  text: String!
+
+  """The text of the suggestion that is shown to users."""
+  value: String!
+
+  """The metadata of the suggestion engine."""
+  metadata: String
+
+  """"""
+  target: SearchTarget
+
+  """List of Instant Results"""
+  items: [SearchSuggestionInstantResult!]!
+}
+
+""""""
+type SearchSuggestionQuery implements SearchSuggestionBase {
+  """
+  The text of the suggestion with highlighting. Can contain \<b\> HTML tags.
+  """
+  text: String!
+
+  """The text of the suggestion that is shown to users."""
+  value: String!
+
+  """The metadata of the suggestion engine."""
+  metadata: String
+}
+
+"""The (suggested) filters that can be applied to the completion query."""
+type SearchSuggestionQueryFilters implements SearchSuggestionBase {
+  """
+  The text of the suggestion with highlighting. Can contain \<b\> HTML tags.
+  """
+  text: String!
+
+  """The text of the suggestion that is shown to users."""
+  value: String!
+
+  """The metadata of the suggestion engine."""
+  metadata: String
+
+  """List of Filters that can be applied to the query"""
+  items: [SearchSuggestionQuery!]!
+}
+
+""""""
+union SearchTarget = SearchTargetArticle | SearchTargetPharmaAgent | SearchTargetPharmaMonograph | SearchTargetMedia | SearchTargetExternalUrl | SearchTargetLibraryList
+
+""""""
+type SearchTargetArticle {
+  """Article ID."""
+  articleEid: String!
+
+  """Particle ID."""
+  particleEid: String
+
+  """Anchor ID."""
+  anchorId: String
+
+  """First found query match in the Article content."""
+  matchedText: String
+}
+
+""""""
+type SearchTargetArticleNode {
+  """Article EID."""
+  articleEid: String!
+
+  """Section EID."""
+  sectionEid: String
+
+  """Node ID."""
+  nodeId: String
+}
+
+""""""
+type SearchTargetExternalUrl {
+  """The URL of the external resource."""
+  externalUrl: String!
+}
+
+""""""
+type SearchTargetLibraryList {
+  """The Library list ID."""
+  listEid: String!
+
+  """The list of library parent EIDs."""
+  parentEids: [String]!
+}
+
+""""""
+type SearchTargetMedia {
+  """Media ID."""
+  mediaEid: String!
+
+  """The source URL of the media asset."""
+  assetUrl: String!
+
+  """The source URL of the medium size media asset."""
+  assetMediumUrl: String!
+
+  """The source URL of the small size media asset."""
+  assetSmallUrl: String!
+
+  """"""
+  externalAdditionType: SearchTargetMediaAdditionType
+
+  """
+  The URL to the external addition. Only used if the media is an external addition.
+  """
+  externalAdditionUrl: String
+}
+
+""""""
+enum SearchTargetMediaAdditionType {
+  """"""
+  meditricks
+
+  """"""
+  meditricksNeuroanatomy
+
+  """"""
+  webContent
+
+  """"""
+  easyradiology
+
+  """"""
+  smartzoom
+
+  """"""
+  video
+
+  """"""
+  calculator
+
+  """"""
+  auditor
+
+  """"""
+  patientInformation
+
+  """"""
+  threeDModel
+}
+
+""""""
+type SearchTargetPharmaAgent {
+  """Pharma Agent ID."""
+  pharmaAgentId: String!
+
+  """Drug ID."""
+  drugId: String!
+
+  """Anchor ID."""
+  anchorId: String
+}
+
+""""""
+type SearchTargetPharmaMonograph {
+  """Pharma Monograph ID."""
+  pharmaMonographId: String!
+
+  """Anchor ID."""
+  anchorId: String
+}
+
+""""""
+type SearchTargetSerp {
+  """"""
+  query: String!
+
+  """"""
+  view: SearchResultsView
+}
+
+""""""
+enum SearchTranslationLang {
+  """Spanish (US Platform)"""
+  ES
+}
+
+""""""
+type SecondaryEmailInputValidationError implements Error {
+  """"""
+  message: String!
+
+  """"""
+  emailErrors: [InputFieldViolation!]!
+}
+
+""""""
+type SecondaryEmailTakenError implements Error {
+  """"""
+  message: String!
+}
+
+"""List of target AMBOSS URLs or external URLs with labels."""
+type SecondaryTarget {
+  """The title of the target.Can contain \<b\>, \<i\> HTML tags."""
+  title: String!
+
+  """
+  Usually a text content of the search result.Can contain \<b\>, \<i\> HTML tags.
+  """
+  body: String
+
+  """"""
+  target: SearchTarget!
+
+  """
+  The metadata contains tracking informationthat should be forwarded to the tracking events.
+  """
+  metadata: String
+}
+
+""""""
+type SelfAssessmentConfiguration {
+  """"""
+  reportType: SelfAssessmentReportType!
+
+  """no need to handle client time this way"""
+  reportReleased: Boolean!
+
+  """only used to show users on report page when this will be available"""
+  reportReleaseDate: DateTime!
+
+  """
+  Up until when may users finish their self assessment and still get a report
+  """
+  endDate: DateTime!
+
+  """Which exam does the self assessment cover"""
+  exam: Taxon!
+
+  """
+  Which user Exam does the self assessment covers-this is the eid that UPU requires
+  """
+  userExam: Taxon!
+
+  """The url of the blog entry explaing report and scores"""
+  blogURL: String!
+
+  """which score is needed to pass the self assessment"""
+  passingScore: Int!
+
+  """"""
+  studyObjective: StudyObjective
+}
+
+""""""
+enum SelfAssessmentReportType {
+  """"""
+  pass_fail
+
+  """"""
+  score
+}
+
+"""sememe's destination for now only to be used in Answer.explanation"""
+type SememeDestination {
+  """link label"""
+  label: String
+
+  """Destination's article id"""
+  articleEid: ID!
+
+  """Destinations's particle id"""
+  particleEid: ID
+
+  """Destination's anchor id"""
+  anchor: String!
+
+  """Destination's public URL"""
+  publicUrl: String
+}
+
+""""""
+type Semester {
+  """
+  Number of semester, should be used to identify it when submitting profileUpdate
+  """
+  number: Int!
+
+  """label for the user"""
+  label: String!
+}
+
+""""""
+input SessionCloneCriterion {
+  """"""
+  questionSessionEid: ID!
+
+  """"""
+  status: [QuestionStatus!]!
+}
+
+""""""
+input SessionQuestionCriteria {
+  """"""
+  difficulties: [Difficulty!]
+
+  """"""
+  examDays: [Int!]
+
+  """"""
+  exams: [ID!]
+
+  """"""
+  hasImages: Boolean
+
+  """"""
+  learningCard: [ID!]
+
+  """"""
+  learningCards: [ID!]
+
+  """"""
+  lists: [ID!]
+
+  """"""
+  maxSize: Int
+
+  """"""
+  minorSubject: [ID!]
+
+  """"""
+  minorSubjectPreclinic: [ID!]
+
+  """"""
+  minorSubjects: [ID!]
+
+  """"""
+  nbmeSystems: [ID!]
+
+  """"""
+  onlyBasicQuestions: Boolean
+
+  """"""
+  onlyRelevant: Boolean
+
+  """"""
+  onlyStudyObjectiveRelated: Boolean
+
+  """"""
+  onlyMarkedQuestions: Boolean
+
+  """"""
+  order: QuestionOrder
+
+  """"""
+  organsystems: [ID!]
+
+  """"""
+  originQuestionSessionEid: ID
+
+  """"""
+  questionIds: [ID!]
+
+  """"""
+  questionLists: [ID!]
+
+  """"""
+  questionTypes: [QuestionType!]
+
+  """"""
+  sessionClone: SessionCloneCriterion
+
+  """"""
+  statusCriterion: QuestionStatusCriterion
+
+  """"""
+  symptoms: [ID!]
+}
+
+""""""
+type SessionQuestionCriteriaConfiguration {
+  """"""
+  exams: [EncodedId!]
+
+  """"""
+  minorSubjects: [EncodedId!]
+
+  """"""
+  nbmeSystems: [EncodedId!]
+}
+
+""""""
+type SessionTemplate {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  questionCount: Int!
+
+  """"""
+  availableQuestionCount: Int!
+
+  """"""
+  defaultMode: QuestionSessionMode!
+}
+
+""""""
+type SetPasswordIdentifierError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+type SetPasswordInputError implements Error {
+  """"""
+  message: String!
+
+  """"""
+  inputErrors: [InputFieldViolation]!
+}
+
+""""""
+union SetPasswordResult = AuthToken | SetPasswordInputError | SetPasswordIdentifierError
+
+""""""
+type SharedQuestionSession {
+  """"""
+  title: String!
+
+  """"""
+  questions(
+    """"""
+    limit: Int
+
+    """"""
+    skip: Int
+  ): [QuestionUnion!]!
+}
+
+"""Shop products categorized"""
+type Shop {
+  """Controls what the user can or cannot buy in the shop"""
+  config: ShopConfig
+
+  """Chargebee subscriptions, monthly and yearly"""
+  membership: ShopArea
+
+  """Chargebee non-recurring addons for Qbank shopArea products"""
+  qbank: ShopArea
+
+  """Squarespace special products"""
+  studentLife: ShopArea
+
+  """coupons applied to this shop"""
+  coupon: CouponResult
+}
+
+"""Represents a single shop area"""
+type ShopArea {
+  """"""
+  name: String!
+
+  """"""
+  description: String!
+
+  """"""
+  products: [Product!]
+}
+
+""""""
+type ShopConfig {
+  """"""
+  canBuyAddon: Boolean!
+
+  """"""
+  canActivateTrialAccess: Boolean!
+
+  """"""
+  canStackSubscription: Boolean!
+
+  """"""
+  addonPlanId: String!
+}
+
+"""
+Shop item fulfilled by represent the source of the item or where the item is hosted / sold
+"""
+enum ShopItemFulfilledBy {
+  """"""
+  chargebee
+
+  """"""
+  squarespace
+
+  """"""
+  iosSubscription
+
+  """"""
+  chargebeeAddon
+}
+
+""""""
+enum ShopLayout {
+  """"""
+  group_discount
+
+  """"""
+  scholarship
+
+  """"""
+  package_to_subcription
+
+  """"""
+  boards_and_beyond
+
+  """"""
+  boards_and_beyond_bb_step_1
+
+  """"""
+  boards_and_beyond_bb_step_2
+
+  """"""
+  anking_mastery_course
+
+  """"""
+  sanford_campaign
+}
+
+""""""
+type Speciality {
+  """"""
+  eid: ID!
+
+  """"""
+  name: String!
+}
+
+"""User stage values. Temporary removed: electives"""
+enum Stage {
+  """"""
+  preclinic
+
+  """"""
+  clinic
+
+  """"""
+  doctor
+}
+
+""""""
+enum StatusText {
+  """"""
+  email_already_confirmed
+
+  """"""
+  invalid_token
+
+  """"""
+  invalid_user_id
+}
+
+""""""
+type StripePaymentError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+type StudyGoal {
+  """"""
+  id: ID!
+
+  """"""
+  label: String!
+}
+
+""""""
+type StudyObjective {
+  """"""
+  eid: ID!
+
+  """"""
+  label: String!
+
+  """"""
+  superset: String
+}
+
+""""""
+type StudyObjectiveStatus {
+  """"""
+  studyObjectiveLabel: String!
+
+  """"""
+  totalQuestions: Int!
+
+  """"""
+  completedQuestions: Int!
+
+  """"""
+  answeredCorrectly: Int!
+
+  """"""
+  answeredWithHelp: Int!
+
+  """"""
+  answeredWrong: Int!
+
+  """"""
+  notDone: Int!
+
+  """"""
+  totalTime: Int!
+
+  """"""
+  averageTimePerAnswer: Float
+}
+
+""""""
+enum StudyObjectiveTopic {
+  """"""
+  comlex
+
+  """"""
+  usmle
+
+  """"""
+  maxiMd
+}
+
+""""""
+type SubjectProgress {
+  """This is the title of the subject in the custom study plan"""
+  subjectTitle: String!
+
+  """
+  The total number of questions belonging to this subject in the custom study plan
+  """
+  totalQuestions: Int!
+
+  """
+  The total number of questions that the user has completed that belong to this subject
+  """
+  completedQuestions: Int!
+}
+
+""""""
+type SubjectScoring implements LearningRecommendation {
+  """"""
+  recommendationTypeEid: String!
+
+  """"""
+  recommendationType: String!
+
+  """
+  this label is a temporary solution, it should be taxon, but currently taxon is ambigous, so we cannot use it
+  """
+  label: String!
+
+  """Percentile / Bar position / DE-style: Success rate"""
+  successScore: Float!
+
+  """
+  Confidence / Bar width / DE-style: Progress rate: answered / unanswered
+  """
+  progressScore: Float!
+
+  """"""
+  answeredRight: Int!
+
+  """"""
+  answeredWithHelp: Int!
+
+  """"""
+  answeredWrong: Int!
+
+  """"""
+  percentileScore: Float!
+
+  """"""
+  priorityScore: Float!
+
+  """"""
+  totalQuestionCount: Int!
+
+  """"""
+  questionsCompleted: Int!
+
+  """"""
+  percentageAnsweredRightFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRight: Float!
+
+  """"""
+  percentageAnsweredRightWithHelpFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredRightWithHelp: Float!
+
+  """"""
+  percentageAnsweredWrongFromCompleted: Float!
+
+  """"""
+  percentageAnsweredAnsweredWrong: Float!
+
+  """"""
+  percentageUnseen: Float!
+
+  """"""
+  relevanceScore: Float!
+
+  """"""
+  relevanceCategory: LearningRecommendationRelevance
+}
+
+""""""
+type Subscription {
+  """"""
+  id: ID!
+
+  """Id of the related product"""
+  productId: String!
+
+  """The related product"""
+  product: Product!
+
+  """"""
+  invoiceEstimation: FutureInvoiceEstimation
+
+  """When this subscription will be cancelled"""
+  cancelationDate: DateTime
+
+  """
+  When will the current term of this subscription end, null for future subscriptions
+  """
+  renewalDate: DateTime
+
+  """Status of this subscription"""
+  status: SubscriptionStatus!
+
+  """Shows if change is scheduled or not"""
+  hasScheduledChange: Boolean!
+
+  """
+  If change is scheduled will return id of a product in future subscription
+  """
+  scheduledChangeProductId: String
+
+  """If change is scheduled will return a product in future subscription"""
+  scheduledChangeProduct: Product
+
+  """
+  If change is scheduled will return date new subscription product will be applied
+  """
+  scheduledChangeAt: DateTime
+
+  """
+  Applicable only for 'future' subscriptions. The scheduled start time of the subscription.
+  """
+  startDate: DateTime
+}
+
+""""""
+type SubscriptionChangeEstimation {
+  """If change will be applied imidiately"""
+  isImmediate: Boolean!
+
+  """If isImmediate == false this field indicate date of change applied"""
+  applyDate: String!
+
+  """
+  If change is reversible, if null than this is not predicted for particular change
+  """
+  isReversible: Boolean
+
+  """The product in subscription after change is applied"""
+  futureProduct: Product
+
+  """Future invoice"""
+  futureInvoice: FutureInvoiceEstimation
+}
+
+""""""
+interface SubscriptionDiscount {
+  """"""
+  originalPrice: Price!
+
+  """"""
+  value: DiscountValue!
+}
+
+"""SubscriptionPrice represent amount and currency for recurring item."""
+type SubscriptionPrice implements ProductPrice {
+  """"""
+  price: Price!
+
+  """"""
+  billingPeriod: BillingCycleUnit!
+
+  """
+  The remaining billing circle for the subscription for which this price is applicable
+  """
+  remainingBillingCircle: Int
+
+  """"""
+  appliedDiscount: SubscriptionDiscount
+}
+
+""""""
+enum SubscriptionStatus {
+  """"""
+  active
+
+  """"""
+  non_renewing
+
+  """"""
+  future
+}
+
+""""""
+type SubscriptionUpgrade {
+  """"""
+  id: String
+
+  """"""
+  name: String!
+
+  """"""
+  price: Price
+
+  """
+  it is only needed in access overview when the upgrade starts in the future and the user doesnot have any active upgrade
+  """
+  startDate: DateTime
+
+  """Represent the question upgrade with the highest end date"""
+  expiringDate: DateTime!
+}
+
+""""""
+type SubscriptionWithUpgrade {
+  """"""
+  subscription: Subscription!
+
+  """"""
+  upgrade: SubscriptionUpgrade
+}
+
+""""""
+type Taxon {
+  """"""
+  eid: String!
+
+  """"""
+  label: String!
+
+  """"""
+  level: Int!
+
+  """"""
+  parentEid: String
+
+  """"""
+  children: [Taxon!]
+
+  """"""
+  hasQuestions: Boolean
+}
+
+""""""
+type Taxonomy {
+  """"""
+  name: TaxonomyName!
+
+  """"""
+  treeDepth: Int!
+
+  """"""
+  taxa: [Taxon!]!
+}
+
+"""
+Taxonomies and their Taxons are used to categories other entities such as Questions. Used to provide filter options
+"""
+enum TaxonomyName {
+  """"""
+  comlexExam
+
+  """"""
+  doctorIntlExam
+
+  """"""
+  doctorIntlUsmleExam
+
+  """"""
+  exam
+
+  """"""
+  minorSubject
+
+  """"""
+  minorSubjectPreclinic
+
+  """"""
+  nbmeSystem
+
+  """"""
+  organsystem
+
+  """"""
+  studentIntlExam
+
+  """"""
+  symptom
+
+  """"""
+  userExam
+}
+
+""""""
+type TeamAccess {
+  """"""
+  reason: AccessReasonType!
+
+  """Limited or unlimited access"""
+  scope: String!
+}
+
+""""""
+type TemporaryDiscount implements Discount & SubscriptionDiscount {
+  """"""
+  originalPrice: Price!
+
+  """"""
+  periodInMonths: Int!
+
+  """"""
+  value: DiscountValue!
+}
+
+""""""
+enum TimeAccommodationMultiplier {
+  """No additional time is provided"""
+  NoAdditionalTime
+
+  """Additional 1.25 time is provided"""
+  AdditionalQuarterTime
+
+  """Additional 1.50 time is provided"""
+  AdditionalHalfTime
+
+  """Double the time is provided"""
+  DoubleTime
+}
+
+""""""
+type TipAndLink {
+  """"""
+  description: String!
+
+  """"""
+  url: String
+
+  "\tAdditional information related to the Tip and Link, can be info like if is the resource that is suggested in the\n\ttip and link is a book, a pdf, or any information the the editor adds."
+  additional: String
+}
+
+"""Destination of a search result item pointing at an article"""
+type TopDestination implements DestinationInterface {
+  """"""
+  articleEid: ID!
+
+  """"""
+  articleTitle: String!
+
+  """"""
+  particleEid: ID
+
+  """"""
+  particleTitle: String
+
+  """Destination's anchor id"""
+  anchorId: String!
+
+  """Destination's anchored term"""
+  anchor: String!
+}
+
+""""""
+union TopicScoring = SubjectScoring | PreclinicSubjectScoring | ArticleScoring | OrganSystemScoring
+
+"""interim substitute to »list« of questions"""
+type Tray implements Typed {
+  """"""
+  eid: String!
+
+  """"""
+  entityType: String!
+
+  """"""
+  title: String!
+
+  """list of question eIDs"""
+  questionEids: [String!]!
+
+  """"""
+  questions: [QuestionUnion!]!
+
+  "\tplain db modification date\n\tCAVE: this is not tracking the removal of questions from a list"
+  modified: String
+
+  """the saved tags for the tray"""
+  tags: [LectureTag!]!
+
+  """if the tray has been published by the lecturer"""
+  published: Boolean!
+
+  """
+  If tray is in exam or study mode. This is only relevant for tutor sessions.
+  """
+  type: TrayMode!
+
+  """
+  The editing permissions for the tray. This is only relevant for tutor sessions.
+  """
+  editAccess: TutorSessionEditAccess
+
+  """
+  The reading permissions for the tray. This is only relevant for tutor sessions.
+  """
+  readAccess: TutorSessionReadAccess
+}
+
+""""""
+input TrayInput {
+  """"""
+  title: String!
+
+  """
+  Set to true to publish and false to unpublish. Don't send or send null to leave it unchanged
+  """
+  publish: Boolean
+
+  """
+  Pass an empty array to remove all tags for the tray. Don't send or send null to leave it unchanged
+  """
+  tags: [EncodedId]
+
+  """"""
+  type: TrayMode
+
+  """"""
+  editAccess: TutorSessionEditAccess
+
+  """"""
+  readAccess: TutorSessionReadAccess
+}
+
+""""""
+enum TrayMode {
+  """"""
+  study
+
+  """"""
+  exam
+}
+
+""""""
+type TrayMutationResult {
+  """"""
+  success: Boolean!
+
+  """"""
+  eid: String
+
+  """"""
+  tray: Tray
+}
+
+""""""
+type TrialInfo {
+  """"""
+  canActivateTrialAccess: Boolean!
+
+  """"""
+  hasTrialAccess: Boolean!
+}
+
+""""""
+type TutorSession {
+  """"""
+  eid: ID!
+
+  """"""
+  tray: Tray!
+
+  """"""
+  tutorName: String
+
+  """"""
+  tutorFullName: String
+
+  """"""
+  categories: [TutorSessionCategory!]!
+}
+
+""""""
+type TutorSessionCategory {
+  """"""
+  name: String!
+
+  """"""
+  items: [String!]!
+}
+
+""""""
+type TutorSessionConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [TutorSessionEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+input TutorSessionCriteria {
+  """"""
+  universityEid: ID!
+
+  """"""
+  searchTerm: String
+
+  """"""
+  showUnpublished: Boolean
+}
+
+""""""
+type TutorSessionEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: TutorSession!
+}
+
+""""""
+enum TutorSessionEditAccess {
+  """"""
+  private
+
+  """"""
+  faculty
+}
+
+""""""
+enum TutorSessionReadAccess {
+  """"""
+  private
+
+  """"""
+  faculty
+}
+
+""""""
+type Tutorial {
+  """"""
+  id: ID!
+
+  """"""
+  state: TutorialState!
+}
+
+""""""
+input TutorialInput {
+  """"""
+  id: ID!
+
+  """"""
+  state: TutorialState!
+}
+
+""""""
+type TutorialMutationResult {
+  """"""
+  tutorial: Tutorial
+}
+
+""""""
+enum TutorialState {
+  """"""
+  complete
+
+  """"""
+  incomplete
+
+  """"""
+  playing
+}
+
+""""""
+interface Typed {
+  """"""
+  entityType: String!
+}
+
+""""""
+type University {
+  """"""
+  eid: ID!
+
+  """"""
+  name: String!
+
+  """"""
+  fullName: String!
+
+  """"""
+  informalName: String!
+}
+
+"""Only one of two fields can be provided"""
+input UniversityInput {
+  """Id from the reference"""
+  id: ID
+
+  """If you haven't found your university you can provide it as a free-text"""
+  text: String
+}
+
+""""""
+type UnlimitedAccess implements Access {
+  """"""
+  target: AccessTarget!
+}
+
+""""""
+type UnsubscribeEmailResult {
+  """"""
+  status: Boolean!
+
+  """filled with error message if status is false"""
+  statusText: ErrorText
+}
+
+""""""
+type UpToDateReference {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  author: String!
+
+  """"""
+  editor: String!
+
+  """"""
+  publisher: String!
+
+  """"""
+  city: String!
+
+  """"""
+  journal: String!
+
+  """"""
+  url: String!
+
+  """year-month-day"""
+  versionDate: String
+
+  """year-month-day"""
+  accessDate: String!
+}
+
+""""""
+union UpdateCurrentUserSecondaryEmailResult = UserSecondaryEmail | SecondaryEmailTakenError | SecondaryEmailInputValidationError
+
+"""
+Upload custom scalar type. Use this Scalar when uploading a file throw a graphQL operation
+"""
+scalar Upload
+
+""""""
+union UploadReceiptResult = IosSubscription | IosSubscriptionError
+
+""""""
+type UrlReference {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  author: String
+
+  """"""
+  publisher: String
+
+  """"""
+  url: String!
+
+  """year-month-day"""
+  versionDate: String
+
+  """year-month-day"""
+  accessDate: String!
+}
+
+"""Represents user profile"""
+type User implements Typed {
+  """"""
+  entityType: String!
+
+  """"""
+  eid: String!
+
+  """"""
+  hasAccess: Boolean!
+
+  """"""
+  stage: Stage!
+
+  """"""
+  firstName: String
+
+  """"""
+  lastName: String
+
+  """"""
+  gender: Gender
+
+  """"""
+  email: String
+
+  """"""
+  phoneNumber: String
+
+  """Not implemented yet"""
+  picture: String
+
+  """"""
+  locale: String
+
+  """"""
+  createdAt: DateTime!
+
+  """"""
+  profileUpdatedAt: DateTime!
+
+  """Provides UserVoice SSO token"""
+  userVoiceToken: String
+
+  """"""
+  uservoiceID: String
+
+  """
+  Equals true if user has access to NEXT (is only returned for currently authorised user)
+  """
+  isBetaUser: Boolean!
+
+  """
+  Equals true if user has opted in to see new beta features (is only returned for currently authorised user)
+  """
+  isBetaTester: Boolean!
+
+  """
+  If user can opt out the beta test - we should show beta bar (is only returned for currently authorised user)
+  """
+  showBetaBar: Boolean!
+
+  """Equals true if the user wants to receive newsletters"""
+  sendNewsletter: Boolean!
+
+  """Equals true if the user is also a lecturer"""
+  isLecturer: Boolean!
+
+  """
+  returns a list of »feature-flags« (i.e. strings) granted to the current user. This will fail if requested for another than the authorized user
+  """
+  features: [String!]!
+
+  """
+  Dates are adjusted according to provided time zone id, e.g. "Europe/Berlin". If not found, fall back to default timezone of current environment
+  """
+  licenses(
+    """"""
+    timeZoneId: String
+  ): [License]!
+
+  """"""
+  university: University
+
+  """
+  The free text given by the user when they cannot find their university.
+  """
+  universityText: String
+
+  """The university where the user is a tutor"""
+  tutorAtUniversity: University
+
+  """"""
+  isConfirmedTutor: Boolean!
+
+  """If user has confirmed to see advanced physician content"""
+  hasConfirmedPhysicianDisclaimer: Boolean!
+
+  """Country user specified in his profile"""
+  country: Country
+
+  """Profession user specified in her profile"""
+  profession: Profession
+
+  """Occupation user specified in her profile"""
+  occupation: Occupation
+
+  "\tAggregated speciality user specified in her profile.\n\tIn detail: either currentSpeciality if user has profession=physician or aspiredSpeciality if user has profession=student"
+  speciality: Speciality
+
+  """Only available in US currently"""
+  studyObjective: StudyObjective
+
+  """Time accommodation multiplier for qbank sessions"""
+  timeAccommodation: Float!
+
+  """Preferences for NEXT UI view"""
+  viewPreference: ViewPreference!
+
+  """set of pending onboarding steps"""
+  pendingOnboardingSteps: [OnboardingStep!]!
+
+  """Latest user interactions in articles"""
+  articleInteractions(
+    """"""
+    interactionType: ArticleInteractionType
+
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): ArticleInteractionConnection
+
+  """User notes done in different particles"""
+  particleExtensions(
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): ParticleExtensionConnection
+
+  """
+  Get list of available and selectable study objectives for the current user
+  """
+  availableStudyObjectives: [StudyObjective!]
+
+  """User who have shared notes with me"""
+  usersWhoShareNotesWithMe(
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): UserConnection
+
+  """Moment when the latest notes was created or updated"""
+  latestParticleExtensionUpdatedAt: DateTime
+
+  """Get list of mobile accesses"""
+  mobileAccessList: [MobileAccessUnion!]
+
+  """Latest answer statuses of this user"""
+  mostRecentAnswerStatuses(
+    """"""
+    first: Int!
+
+    """"""
+    after: String
+  ): AnswerStatusesResult!
+
+  """A list of exams the user entered"""
+  userExam: [UserExam!]!
+
+  """"""
+  semester: Semester
+
+  """"""
+  semesterUpdatedAt: DateTime
+
+  """
+  The projection of the current user's semester based on given semester and time of last update
+  """
+  projectedSemester: Semester
+
+  """A list of the profileUseCases associated to the user"""
+  userProfileUseCases: [UserProfileUseCase!]
+
+  """"""
+  graduationYear: Int
+
+  """The clinic where the user works"""
+  clinic: Clinic
+
+  """
+  A free text for the clinic name  if the clinic is not present in the clinics options
+  """
+  clinicText: String
+
+  """Connected to current user external identities"""
+  externalIdentities: UserExternalIdentityResultUnion
+
+  """The user's CME numbers per type. Only the latest per type is shown."""
+  cmeUserNumbers: [CmeUserNumber!]
+
+  """
+  Equals true if the user is currently doing a "Gleichwertigkeitsprüfung"
+  """
+  doesEquivalenceAssessment: Boolean!
+
+  """Whether or not the current user has trial access now"""
+  hasTrialAccess: Boolean
+
+  """Returns the trial status for the current user"""
+  trialInfo: TrialInfo
+
+  """Email has been verified"""
+  verifiedEmail: Boolean!
+
+  """The user residency program"""
+  residencyProgram: UserResidencyProgram
+
+  """Date in which the user has set their password"""
+  passwordUpdatedAt: DateTime
+
+  """Email verification status of the user"""
+  emailVerificationStatus: EmailVerificationStatus
+}
+
+"""user specific information about an article"""
+type UserArticle {
+  """"""
+  eid: ID!
+
+  """When the user has last read this article"""
+  lastRead: String
+
+  """Whether user has marked this article as learned"""
+  isLearned: Boolean
+
+  """Whether user has favorited this article"""
+  isFavorite: Boolean
+
+  """latest QuestionResults to questions related to the current article"""
+  questionResults: [QuestionResult!]!
+
+  """Article that is represented by this entity"""
+  article: Article!
+
+  """Previews unpublished changes of the article"""
+  articlePreview: ArticlePreviewResult!
+
+  """Progress on question linked to this LC and resp. to the current SO"""
+  studyQuestionProgress: StudyObjectiveStatus!
+
+  """Relevance on a scale from 0 to 5"""
+  imppact: Int!
+
+  """Recommendation level for this LC ranging from 0 to 5"""
+  studyRecommendation: Int!
+
+  """Average question count per exam related to this Learning Card"""
+  examQuestionFrequency: Float!
+
+  """user-specific particles content"""
+  userParticles: [UserParticle!]!
+
+  """"""
+  editorialLink: EditorialLink!
+}
+
+""""""
+type UserArticleConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [UserArticleEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+"""Criteria to select user articles. Doesn't care if null, AND if bool."""
+input UserArticleCriteria {
+  """"""
+  isRead: Boolean
+
+  """"""
+  isLearned: Boolean
+
+  """"""
+  isFavorite: Boolean
+}
+
+""""""
+type UserArticleEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: UserArticle!
+}
+
+""""""
+input UserArticleInput {
+  """"""
+  articleEid: ID!
+
+  """"""
+  learned: Boolean
+
+  """"""
+  favorite: Boolean
+
+  """Client date when the change happened"""
+  updatedAt: String
+}
+
+""""""
+input UserAttribution {
+  """"""
+  initialUserAttribution: UserAttributionInput
+
+  """"""
+  finalUserAttribution: UserAttributionInput
+}
+
+""""""
+input UserAttributionInput {
+  """"""
+  referrer: String!
+
+  """"""
+  landingPage: String!
+
+  """"""
+  initialisedAt: DateTime!
+
+  """"""
+  utmParameters: String!
+}
+
+""""""
+type UserBundle {
+  """"""
+  eid: EncodedId
+
+  """"""
+  bundle: Bundle!
+
+  """"""
+  accessedAt: String
+
+  """"""
+  sessionEid: ID
+
+  """
+  For timed bundles this tells us if the bundle is currently locked or not
+  """
+  isLocked: Boolean!
+
+  """"""
+  openFrom: DateTime
+
+  """"""
+  openUntil: DateTime
+
+  """If the bundle's session was started, we return its performance"""
+  sessionPerformance: QuestionSetPerformance
+
+  """
+  Is called Destination because the old API entity is named like this. This way we are consistent
+  """
+  userBundleDestinations: [UserBundleDestination!]!
+}
+
+""""""
+type UserBundleDestination {
+  """"""
+  bundleDestination: BundleDestination!
+
+  """"""
+  status: UserBundleDestinationStatus!
+}
+
+""""""
+enum UserBundleDestinationStatus {
+  """"""
+  read
+
+  """"""
+  unread
+}
+
+""""""
+input UserBundleDestinationStatusInput {
+  """"""
+  bundleDestinationEid: EncodedId!
+
+  """"""
+  status: UserBundleDestinationStatus!
+}
+
+""""""
+type UserConfig {
+  """"""
+  examWhiteList: [Taxon!]
+
+  """"""
+  canSeeBrandNames: Boolean!
+
+  """"""
+  hasConfirmedHealthCareProfession: Boolean!
+}
+
+""""""
+input UserConfigInput {
+  """"""
+  examWhiteList: [ID!]
+
+  """"""
+  hasConfirmedHealthCareProfession: Boolean
+}
+
+""""""
+type UserConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [UserEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type UserCourse {
+  """"""
+  course: Course!
+
+  """"""
+  startedAt: DateTime
+
+  """"""
+  accessedAt: DateTime
+
+  """"""
+  isArchived: Boolean
+
+  """"""
+  progress: Float
+
+  """"""
+  isResettable: Boolean!
+
+  """"""
+  certificate: UserCourseCertificate
+}
+
+""""""
+union UserCourseAndPlan = UserCourse | CustomStudyPlan
+
+""""""
+type UserCourseCertificate {
+  """"""
+  certificateInformation: CourseCertificateInformation!
+
+  """"""
+  token: String!
+
+  """"""
+  verifyUrl: String!
+
+  """"""
+  firstName: String
+
+  """"""
+  lastName: String
+
+  """"""
+  dateOfBirth: Date
+
+  """"""
+  placeOfBirth: String
+
+  """"""
+  score: Int!
+
+  """When was the first answer for this course recorded"""
+  startDate: DateTime!
+
+  """When was the last answer for this course recorded"""
+  endDate: DateTime!
+}
+
+""""""
+type UserCourseCertificateData {
+  """"""
+  firstName: String
+
+  """"""
+  lastName: String
+
+  """"""
+  dateOfBirth: Date
+
+  """"""
+  placeOfBirth: String
+
+  """"""
+  efnNumber: String
+}
+
+""""""
+type UserEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: User!
+}
+
+""""""
+type UserExam {
+  """"""
+  examDate: DateTime
+
+  """"""
+  createdAt: DateTime!
+
+  """"""
+  examEid: EncodedId
+}
+
+""""""
+type UserExternalIdentity {
+  """"""
+  eid: String!
+
+  """"""
+  idp: ExternalIdentityProvider!
+
+  """"""
+  externalUserId: ID!
+
+  """User email on IDP"""
+  email: String!
+
+  """
+  If there is associated SSO license activation it will be here, otherwise it is null
+  """
+  license: InstitutionalSSOLicense
+}
+
+""""""
+type UserExternalIdentityFetchingError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+type UserExternalIdentityNotFoundError implements Error {
+  """"""
+  message: String!
+}
+
+""""""
+type UserExternalIdentityResult {
+  """"""
+  externalIdentities: [UserExternalIdentity!]!
+}
+
+""""""
+union UserExternalIdentityResultUnion = UserExternalIdentityResult | UserExternalIdentityFetchingError | UserExternalIdentityNotFoundError
+
+"""user-specific information for a user particle"""
+type UserParticle {
+  """"""
+  particleEid: ID!
+
+  """"""
+  extension: ParticleExtension
+
+  """"""
+  sharedExtensions: [ParticleExtension!]
+}
+
+"""
+All the fields are optional, if you dont pass the field it is not updated
+"""
+input UserProfileInput {
+  """Displayed as salutation"""
+  gender: Gender
+
+  """"""
+  firstName: String
+
+  """"""
+  lastName: String
+
+  """"""
+  email: String
+
+  """"""
+  phoneNumber: String
+
+  """"""
+  profession: Profession
+
+  """Country ID from countries endpoint"""
+  country: ID
+
+  """University - for students"""
+  university: UniversityInput
+
+  """Clinic - for doctors"""
+  clinic: ClinicInput
+
+  """Occupation - for doctors and others"""
+  occupation: OccupationInput
+
+  """From speciality endpoint"""
+  specialityId: ID
+
+  """The year you graduated or will graduate"""
+  graduationYear: Int
+
+  """AMBOSS modus"""
+  mode: Stage
+
+  """Semester number (depends on locale see query.semesters)"""
+  semester: Int
+
+  """
+  Use Case for using the platform (depends on locale and profession see query.profileUseCases)
+  """
+  profileUseCase: ProfileUseCaseInput
+
+  """Id of userExam taxonomy"""
+  nextExam: ID
+
+  """Next exam date in ISO format e.g. 2022-02-15T00:00:00+0000"""
+  nextExamDate: Date
+
+  """Next exam target score"""
+  targetScore: Int
+
+  """The selected study objective encoded id. Only available for US"""
+  studyObjectiveId: EncodedId
+
+  """Agree to receive newsletter"""
+  sendNewsletter: Boolean
+
+  """Time Accommodation for qbank sessions"""
+  timeAccommodation: TimeAccommodationMultiplier
+
+  """Set true if user is also a lecturer"""
+  isLecturer: Boolean
+
+  """Set true if user wants to access new beta features"""
+  isBetaTester: Boolean
+
+  """User confirms that they have legal permission to see brand names"""
+  canSeeBrandNames: Boolean
+
+  """
+  User confirms to have a health care profession. This grants e.g. to see brand names
+  """
+  hasConfirmedHealthCareProfession: Boolean
+
+  """Specify where user knows amboss from"""
+  marketingSource: MarketingSourceInput
+
+  """
+  is this doctor currently doing a "Gleichwertigkeitsprüfung". defaults to false
+  """
+  doesEquivalenceAssessment: Boolean
+
+  """Free text for users workplace (practice most of the time)"""
+  workplaceText: String
+
+  """Does the Physician want to see advanced contents"""
+  hasConfirmedPhysicianDisclaimer: Boolean
+
+  """A user CME number for gaining CME credits"""
+  cmeUserNumber: CmeUserNumberInput
+
+  """The user residency program"""
+  residencyProgram: ResidencyProgramInput
+}
+
+""""""
+union UserProfileResult = User | UserProfileValidationError
+
+""""""
+type UserProfileUseCase {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  text: String
+
+  """"""
+  createdAt: DateTime!
+
+  """"""
+  useCaseEid: EncodedId!
+}
+
+""""""
+type UserProfileValidationError {
+  """"""
+  globalErrors: [InputTypeViolation!]
+
+  """"""
+  genderErrors: [InputFieldViolation!]!
+
+  """"""
+  firstNameErrors: [InputFieldViolation!]!
+
+  """"""
+  lastNameErrors: [InputFieldViolation!]!
+
+  """"""
+  emailErrors: [InputFieldViolation!]!
+
+  """"""
+  phoneNumberErrors: [InputFieldViolation!]!
+
+  """"""
+  professionErrors: [InputFieldViolation!]!
+
+  """"""
+  countryErrors: [InputFieldViolation!]!
+
+  """"""
+  universityErrors: [InputFieldViolation!]!
+
+  """"""
+  clinicErrors: [InputFieldViolation!]!
+
+  """"""
+  occupationErrors: [InputFieldViolation!]!
+
+  """"""
+  specialityErrors: [InputFieldViolation!]!
+
+  """"""
+  graduationYearErrors: [InputFieldViolation!]!
+
+  """"""
+  modeErrors: [InputFieldViolation!]!
+
+  """"""
+  semesterErrors: [InputFieldViolation!]!
+
+  """"""
+  profileUseCaseErrors: [InputFieldViolation!]!
+
+  """"""
+  nextExamErrors: [InputFieldViolation!]!
+
+  """"""
+  nextExamDateErrors: [InputFieldViolation!]!
+
+  """"""
+  studyObjectiveErrors: [InputFieldViolation!]!
+
+  """"""
+  marketingSourceErrors: [InputFieldViolation!]!
+
+  """"""
+  workplaceTextErrors: [InputFieldViolation!]!
+
+  """"""
+  cmeUserNumberErrors: [InputFieldViolation!]!
+
+  """"""
+  residencyProgramErrors: [InputFieldViolation!]!
+}
+
+""""""
+type UserQuestionSessionQuestion {
+  """"""
+  sessionEid: EncodedId!
+
+  """Fetch result for specific question id within the session"""
+  questionResult: QuestionResult
+
+  """list of Question"""
+  question: QuestionUnion!
+
+  """User inputted data"""
+  questionUserData: QuestionUserData
+}
+
+"""user specific information about recent article"""
+type UserRecentArticle {
+  """"""
+  eid: ID!
+
+  """Article that is represented by this entity"""
+  article: Article!
+}
+
+""""""
+type UserRecentArticleConnection implements PaginationConnection {
+  """"""
+  totalCount: Int!
+
+  """"""
+  edges: [UserRecentArticleEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type UserRecentArticleEdge implements PaginationEdge {
+  """"""
+  cursor: String!
+
+  """"""
+  node: UserRecentArticle!
+}
+
+""""""
+type UserResidencyProgram {
+  """"""
+  program: ResidencyProgram
+
+  """"""
+  updatedAt: DateTime!
+
+  """"""
+  text: String
+}
+
+""""""
+type UserSecondaryEmail {
+  """"""
+  confirmed: String
+
+  """"""
+  pending: String
+}
+
+""""""
+type UserStudyGoal {
+  """
+  This is not same as study objective in the database, it is more a survey
+  """
+  studyGoal: StudyGoal
+
+  """"""
+  studyGoalCustom: String
+}
+
+""""""
+input UserStudyGoalInput {
+  """Study goal option"""
+  studyGoal: String!
+
+  """
+  Freetext study goal option, can be specidfied if studyGoal is "other"
+  """
+  studyGoalCustom: String
+}
+
+""""""
+type UserToken {
+  """"""
+  token: String
+}
+
+""""""
+type VerifyCurrentUserSecondaryEmailResult {
+  """"""
+  status: Boolean!
+
+  """filled with error message if status is false"""
+  statusText: StatusText
+}
+
+""""""
+type ViewPreference {
+  """"""
+  eid: EncodedId!
+
+  """"""
+  isHighYieldActive: Boolean!
+
+  """"""
+  isHighlightingActive: Boolean!
+
+  """"""
+  isPersonalHighlightingActive: Boolean!
+
+  """"""
+  isLearningRadarActive: Boolean!
+
+  """"""
+  isPreclinicFocusActive: Boolean!
+
+  """"""
+  isShowAnswersStatsActive: Boolean!
+
+  """"""
+  isBetaModalHidden: Boolean!
+
+  """"""
+  isInitialAccessChooserHidden: Boolean!
+
+  """"""
+  isScholarshipBannerHidden: Boolean!
+
+  """"""
+  isStudyPlanWidgetHidden: Boolean!
+
+  """"""
+  qbankFilterPreferences: QbankFilterPreferences
+}
+
+""""""
+input ViewPreferenceInput {
+  """"""
+  isHighYieldActive: Boolean
+
+  """"""
+  isHighlightingActive: Boolean
+
+  """"""
+  isPersonalHighlightingActive: Boolean
+
+  """"""
+  isLearningRadarActive: Boolean
+
+  """"""
+  isPreclinicFocusActive: Boolean
+
+  """"""
+  isShowAnswersStatsActive: Boolean
+
+  """"""
+  isBetaModalHidden: Boolean
+
+  """"""
+  isInitialAccessChooserHidden: Boolean
+
+  """"""
+  isScholarshipBannerHidden: Boolean
+
+  """"""
+  isStudyPlanWidgetHidden: Boolean
+
+  """"""
+  sessionQuestionCriteria: SessionQuestionCriteria
+}
+
+""""""
+type WebMdReference {
+  """"""
+  eid: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  author: String!
+
+  """"""
+  editor: String!
+
+  """"""
+  publisher: String!
+
+  """"""
+  city: String!
+
+  """"""
+  url: String!
+
+  """year-month-day"""
+  versionDate: String
+
+  """year-month-day"""
+  accessDate: String!
+}
+
+""""""
+enum Weekday {
+  """"""
+  sunday
+
+  """"""
+  monday
+
+  """"""
+  tuesday
+
+  """"""
+  wednesday
+
+  """"""
+  thursday
+
+  """"""
+  friday
+
+  """"""
+  saturday
+}
+
+""""""
+type _Service {
+  """"""
+  sdl: String!
+}

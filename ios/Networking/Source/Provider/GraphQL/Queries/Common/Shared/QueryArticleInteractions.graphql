@@ -1,0 +1,19 @@
+query ArticleInteractions($first: Int!, $after: String){
+  currentUser{
+    articleInteractions(first: $first, after: $after){
+      pageInfo{
+        endCursor
+        hasNextPage
+      }
+      edges{
+        node{
+          eid
+          type
+          active
+          updatedAt
+          articleEid
+        }
+      }
+    }
+  }
+}

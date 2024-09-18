@@ -1,0 +1,50 @@
+Possibilities and findings:
+
+1- The iOS app implements the logic in a wrong way:
+I followed the code and saw that it should work as expected and upload the events in the correct way.
+
+2- The iOS app is not sending the readings at all for some reason:
+I checked that the request to upload the readings is being sent and that we're receiving a response from the server with status code 204.
+
+3- The iOS app is sending the events but the backend is not persisting them in the database for some reason:
+I checked that together with Miguel and we were able to verify that every event sent from the iOS app was persisted on the database and we were able to see it.
+
+4- The iOS app has a lot of failing reading requests (the requests where we send readings to the backend), which results in a lot of events not being sent:
+I checked the code executed when a request fails and i found out that when a request fails we don't delete the events, we do nothing. We keep the events and try to upload them the next time we try to upload readings.
+We only delete the readings after they're uploaded.
+
+5- The iOS app doesn't upload the readings that happens while the device is offline after internet connection is back:
+I checked that and after the iOS device is connected to the internet we are actually uploading the readings that weren't uploaded (after a new reading happens we schedule suncing and we upload that new reading along with the old un-uploaded ones).
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Weird piece of code:
+
+In the `initialize()` method of the `ReadingsController`, the first thing we do is that we delete all the readings that don't have a close event (the reason as commented is to delete events unclosed because of a crash, but this is not always the case).
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+A failing case that we know:
+
+Vinzent knows a user that has Firebase events but doesn't have backend events on a certain day. We checked both the database were the readings sent from iOS are saved to and the database that the chart reads from. Both of them don't contain data related to that user on that specific day.
+Which means that there are cases like this but we don't know a scenario to reproduce them till now.
+
+Observations from this and the other failing cases:
+
+The cases were there a difference between Firebase and backend are all for low number of readings, for example: The majority of them are 1 Firebase reading and no backend readings.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Things we could try:
+
+1- We could try to trigger some events from the iOS client, verify they were persisted in the database and THEN verify they were persisted in the database our charts read from.
+2- 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bugs to fix but are unrelated to the issue under investigation:
+
+1- Dead code needs to be deleted
+2- Some network calls are done on the main thread for some reason (there is a comment saying that this is intended without mentioning the reason). I think this should be changed
+3- We still have calls to `recordOpeningIfNecessary()` and `recordClosingIfNecessary()` in `WebTableViewController`, `ExtensionViewController` and `ImageViewController` while the ticket says that those should be removed
+

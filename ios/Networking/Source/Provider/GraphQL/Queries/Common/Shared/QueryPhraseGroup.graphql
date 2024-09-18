@@ -1,0 +1,15 @@
+query phraseGroup ($eid: String!) {
+    phraseGroup(eid: $eid) {
+        eid
+        title
+        synonyms
+        abstract
+        translation
+        destinations {
+            label
+            articleEid
+            particleEid
+            anchor
+        }
+    }
+}

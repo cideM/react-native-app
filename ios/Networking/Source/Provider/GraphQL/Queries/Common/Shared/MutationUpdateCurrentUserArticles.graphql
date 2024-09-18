@@ -1,0 +1,7 @@
+mutation UpdateCurrentUserArticles($userArticles: [UserArticleInput!]!){
+  updateCurrentUserArticles(userArticles: $userArticles){
+    type
+    articleEid
+    active
+  }
+}

@@ -1,0 +1,60 @@
+query pharmaCard($agentId: ID!, $drugId: ID!, $sorting: PriceAndPackageSorting!) {
+    ambossSubstance(id: $agentId) {
+        id
+        name
+        drugs {
+            id
+            name
+            atcLabel
+            vendor
+            prescriptions
+            applicationForms
+            priceAndPackageInfo(sorting: $sorting) {
+                packageSize
+                amount
+                unit
+                pharmacyPrice
+                recommendedRetailPrice
+            }
+        }
+        pocketCard {
+           id
+           groups {
+                title
+                anchor
+                sections {
+                     title
+                     anchor
+                     content
+                }
+           }
+        }
+    }
+
+    pharmaDrug(id: $drugId) {
+        id
+        name
+        atcLabel
+        applicationForms
+        brandName
+        dosageForms
+        patientPackageInsertUrl
+        prescribingInformationUrl
+        prescriptions
+        publishedAt
+        sections {
+            id
+            title
+            position
+            text
+        }
+        vendor
+        priceAndPackageInfo(sorting: $sorting) {
+            packageSize
+            amount
+            unit
+            pharmacyPrice
+            recommendedRetailPrice
+        }
+    }
+}

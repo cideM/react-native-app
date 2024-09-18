@@ -1,0 +1,20 @@
+query UsersWhoShareExtensionsWithCurrentUser($first: Int!, $after: String){
+  currentUser {
+    latestParticleExtensionUpdatedAt
+    usersWhoShareNotesWithMe(first: $first, after: $after) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          eid
+          email
+          firstName
+          lastName
+          latestParticleExtensionUpdatedAt
+        }
+      }
+    }
+  }
+}

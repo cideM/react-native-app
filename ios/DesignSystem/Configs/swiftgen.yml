@@ -1,0 +1,10 @@
+xcassets:
+  - inputs: ${PROJECT_DIR}/DesignSystem/Resources/Assets/Assets.xcassets
+    outputs:
+      - templateName: swift5
+        output: ${PROJECT_DIR}/DesignSystem/Resources/Assets/Asset.swift
+        params:
+          enumName: Asset
+          forceProvidesNamespaces: true
+          publicAccess: true
+          allValues: true

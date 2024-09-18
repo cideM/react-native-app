@@ -1,0 +1,12 @@
+query CurrentUserInformation {
+  currentUser {
+    shouldUpdateTnC
+    features
+    stage
+    studyObjective {
+      eid
+      label
+      superset
+    }
+  }
+}

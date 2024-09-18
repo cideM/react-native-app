@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="139" id="KGk-i7-Jjw" customClass="SearchResultTableViewCell" customModule="Knowledge_DE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="528" height="139"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="528" height="139"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="YJl-QH-yQl">
+                        <rect key="frame" x="16" y="16" width="496" height="107"/>
+                        <subviews>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xb2-FF-SOU" userLabel="Tag">
+                                <rect key="frame" x="0.0" y="0.0" width="16" height="0.0"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="2" maxX="8" maxY="2"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TPb-7b-uJi">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNy-I4-G8Z" userLabel="Subtitle Label">
+                                <rect key="frame" x="0.0" y="3" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ir-SW-fvw">
+                                <rect key="frame" x="0.0" y="6" width="0.0" height="101"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <viewLayoutGuide key="safeArea" id="Y4c-5b-rEe"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="YJl-QH-yQl" secondAttribute="bottom" constant="16" id="J2r-ji-aOA"/>
+                    <constraint firstItem="YJl-QH-yQl" firstAttribute="leading" secondItem="Y4c-5b-rEe" secondAttribute="leading" constant="16" id="SII-kT-310"/>
+                    <constraint firstItem="YJl-QH-yQl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="V0d-CY-xUN"/>
+                    <constraint firstItem="Y4c-5b-rEe" firstAttribute="trailing" secondItem="YJl-QH-yQl" secondAttribute="trailing" constant="16" id="lVi-Ph-7Mr"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="bodyLabel" destination="8ir-SW-fvw" id="8RM-Cs-X9u"/>
+                <outlet property="subtitleLabel" destination="uNy-I4-G8Z" id="yl5-5D-0zi"/>
+                <outlet property="tagButton" destination="xb2-FF-SOU" id="nBn-1a-4DY"/>
+                <outlet property="titleLabel" destination="TPb-7b-uJi" id="lBH-X9-CkY"/>
+            </connections>
+            <point key="canvasLocation" x="188.40579710144928" y="427.56696428571428"/>
+        </tableViewCell>
+    </objects>
+</document>

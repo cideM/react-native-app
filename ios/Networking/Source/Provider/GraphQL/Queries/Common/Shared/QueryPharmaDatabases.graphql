@@ -1,0 +1,11 @@
+query pharmaDatabases($pharmaDBMajorVersion: Int!) {
+    pharmaDatabases(major: $pharmaDBMajorVersion) {
+        major
+        minor
+        patch
+        size
+        zippedSize
+        url
+        dateCreated
+    }
+}

@@ -1,0 +1,25 @@
+query SearchPharmaResults($query: String!, $first: Int!, $after: String) {
+    searchPharmaAgentResults(query: $query, first: $first, after: $after) {
+        didYouMean
+        totalCount
+        pageInfo {
+            hasNextPage
+            endCursor
+        }
+        edges {
+            cursor
+            node {
+                metadata
+                title
+                subtitle
+                details
+                  _trackingUuid
+                target {
+                    pharmaAgentId
+                    drugId
+                    _trackingUuid
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+query MediaAssets($featureEids: [String!]!){
+  mediaAssets(eids: $featureEids){
+    eid
+    externalAddition{
+      ... on ExternalAddition{
+        __typename
+        type
+        url
+        isFreebie
+      }
+      ... on BlockedExternalAddition{
+        __typename
+        type
+      }
+    }
+  }
+}

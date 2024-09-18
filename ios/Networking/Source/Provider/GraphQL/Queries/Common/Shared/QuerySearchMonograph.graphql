@@ -1,0 +1,41 @@
+query SearchMonographResults($query: String!, $first: Int!, $after: String) {
+  searchAmbossSubstanceResults(query: $query, first: $first, after: $after, compact: true, ) {
+    totalCount
+    pageInfo {
+      endCursor
+      hasNextPage
+      __typename
+    }
+
+    edges {
+      cursor
+      node {
+        ...ambossSubstanceNodeFields
+        children {
+          ...ambossSubstanceNodeFields
+          children {
+            ...ambossSubstanceNodeFields
+                children {
+                    ...ambossSubstanceNodeFields
+                }
+          }
+           
+        }
+         
+      }
+       
+    }
+  }
+}
+
+fragment ambossSubstanceNodeFields on SearchResultAmbossSubstanceNode {
+  __typename
+  title
+  details
+  _trackingUuid
+  target {
+    ambossSubstanceId,
+    anchorId
+    _trackingUuid
+  }
+}

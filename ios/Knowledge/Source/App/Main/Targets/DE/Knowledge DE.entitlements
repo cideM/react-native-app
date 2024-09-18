@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:*.medicuja.de</string>
+		<string>applinks:www.amboss.com</string>
+		<string>applinks:de.amboss.com</string>
+		<string>applinks:amboss.miamed.de</string>
+		<string>applinks:next.amboss.com</string>
+	</array>
+	<key>com.apple.developer.siri</key>
+	<true/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)de.miamed.AMBOSS-Bibliothek</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,160 @@
+require 'json'
+require 'open-uri'
+
+import('fastlane_helpers.rb')
+
+fastlane_version "2.219.0"
+default_platform(:ios)
+
+platform :ios do
+
+  before_all do
+    set_build_version(
+      ENV['CIRCLE_BUILD_NUM'],
+      './Knowledge/Knowledge.xcodeproj')
+    try_setup_circle_ci()
+  end
+
+  desc "Syncs code signing. Execute `fastlane certificates` and keys, certs and profiles for all targets will be synced."
+  lane :certificates do
+    match(app_identifier: env('APP_IDENTIFIER'), type: "development", readonly: true)
+    match(app_identifier: env('APP_IDENTIFIER'), type: "appstore", readonly: true)
+    match(app_identifier: env('APP_IDENTIFIER_QA'), type: "enterprise", readonly: true, team_id: "QBFSWDN66Z")
+  end
+
+  desc "Revokes development certificates and profiles and generates new ones"
+  lane :regenerate_development_certificates_and_profiles do
+    # Invalidate development certificates and profiles for DE and US
+    ["DE","US"].each { |shorthand|
+      Dotenv.overload(".env.#{shorthand}")
+      match_nuke(username: 'appcoding@medicuja.de', app_identifier: env('APP_IDENTIFIER'), type: "development")
+    }
+    # Regenerate development certificates and profiles for DE and US
+    ["DE","US"].each { |shorthand|
+      Dotenv.overload(".env.#{shorthand}")
+      match(username: 'appcoding@medicuja.de', app_identifier: env('APP_IDENTIFIER'), type: "development")
+    }
+  end
+
+  desc "Revokes all certificates and profiles and generates new ones"
+  lane :regenerate_certificates_and_profiles do
+    # Invalidate all certificates and profiles for DE and US
+    ["DE","US"].each { |shorthand|
+      Dotenv.overload(".env.#{shorthand}")
+      match_nuke(username: 'appcoding@medicuja.de', app_identifier: env('APP_IDENTIFIER'), type: "development")
+      match_nuke(username: 'appcoding@medicuja.de', app_identifier: env('APP_IDENTIFIER'), type: "appstore")
+      match_nuke(username: 'appcoding@medicuja.com', app_identifier: env('APP_IDENTIFIER_QA'), type: "enterprise")
+    }
+    # Regenerate all certificates and profiles for DE and US
+    ["DE","US"].each { |shorthand|
+      Dotenv.overload(".env.#{shorthand}")
+      match(username: 'appcoding@medicuja.de', app_identifier: env('APP_IDENTIFIER'), type: "development")
+      match(username: 'appcoding@medicuja.de', app_identifier: env('APP_IDENTIFIER'), type: "appstore")
+      match(username: 'appcoding@medicuja.com', app_identifier: env('APP_IDENTIFIER_QA'), type: "enterprise")
+    }
+  end
+
+  desc "Perform all unit tests for a given device"
+  lane :test_unittests_for_device do |options|
+    run_tests(
+          workspace: "Knowledge.xcworkspace",
+          devices: options[:devices],
+          scheme: "Knowledge DE",
+          testplan: "UnitTests",
+          ensure_devices_found: true,
+          output_types: "junit",
+          cloned_source_packages_path: "SourcePackages",
+          number_of_retries: 3
+        )
+  end
+
+  desc "Perform all unit tests"
+  lane :test_unittests do
+    run_tests(
+          workspace: "Knowledge.xcworkspace",
+          devices: ["iPhone 14 Pro (16.4)"],
+          scheme: "Knowledge DE",
+          testplan: "UnitTests",
+          prelaunch_simulator: true,
+          ensure_devices_found: true,
+          output_directory: "fastlane/test_output/iphone_14_pro_16.4")
+    run_tests(workspace: "Knowledge.xcworkspace",
+          devices: ["iPhone 15 Pro Max (17.2)"],
+          scheme: "Knowledge DE",
+          testplan: "UnitTests",
+          skip_build: true,
+          ensure_devices_found: true,
+          output_directory: "fastlane/test_output/iphone_15_pro_max_17.2")
+  end
+
+  desc "Builds a QA build and uploads it to firebase app distribution."
+  lane :build_and_upload_qa do
+    # Previously we used the add_badge fastlane action
+    # but we replaced it with prerendered app icons to speed
+    # up builds on ci (since it had to install imagemagick)
+    `cp -r ../fastlane/AppIcon-de-beta.appiconset/* ../Knowledge/Source/App/Main/Targets/DE/Media.xcassets/AppIcon.appiconset`
+    `cp -r ../fastlane/AppIcon-us-beta.appiconset/* ../Knowledge/Source/App/Main/Targets/US/Media.xcassets/AppIcon.appiconset`
+
+    build_app(workspace: "Knowledge.xcworkspace",
+      configuration: "QA",
+      export_method: "enterprise",
+      scheme: env('SCHEME'),
+      cloned_source_packages_path: "SourcePackages",
+      export_options: {
+        compileBitcode: false,
+        uploadBitcode: false
+      })
+
+    gitInfo = git_info
+    notes = "#{gitInfo.branch_name}\n#{gitInfo.notes}"
+
+    firebase_app_distribution(
+      app: env('FIREBASE_APP_ID_QA'),
+      release_notes: "#{notes}",
+      groups: "AMBOSS-QA"
+      )
+    refresh_dsyms(env('APP_IDENTIFIER_QA'), "./Knowledge/Source/App/Main/Targets/#{env('ENVIRONMENT_NAME')}/GoogleService-Info-qa.plist")
+  end
+
+  desc "Builds a Release version and uploads to Appstore Connect for TestFligt testing"
+  lane :build_and_upload_release do
+
+    build_app(workspace: "Knowledge.xcworkspace",
+      configuration: "Release",
+      export_method: "app-store",
+      cloned_source_packages_path: "SourcePackages",
+      scheme: env('SCHEME'))
+
+    ensure_app_store_connect_environment_variables()
+    app_store_connect_api_key()
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true # we just want to upload to testflight, nothing more
+    )
+    refresh_dsyms(env('APP_IDENTIFIER'), "./Knowledge/Source/App/Main/Targets/#{env('ENVIRONMENT_NAME')}/GoogleService-Info.plist")
+  end
+
+  desc "Updates partial archive"
+  lane :update_partial_archive do
+    puts "Updating partial archive ..."
+    dataBinary = "{\"query\":\"query{latestNoHtmlLibraryArchive(secret:\\\"LLnav2nhxF7ZYQC8iFJ9DM6jQCgujVdm\\\"){version url}}\"}"
+    responseString = `curl -s '#{env('NEXT_API_BASE_URL')}' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Connection: keep-alive' -H 'Origin: ios-fastlane://-' --data-binary '#{dataBinary}'`
+    response = JSON.parse(responseString)['data']['latestNoHtmlLibraryArchive']
+    puts "Download partial archive version #{response['version']}"
+
+    path = "#{Dir.pwd}/../Knowledge/Source/App/Main/Targets/#{env('ENVIRONMENT_NAME')}/partialArchive.zip"
+    open(path, 'wb') do |file|
+      file << URI.open(response['url']).read
+    end
+
+    puts `date -r #{path}`
+  end
+
+  desc "Executes the Apolloscript schema which will update the API.swift based on the schema."
+  lane :update_graphql_schema do
+    xcodebuild( scheme: "Apolloscript",
+      configuration: "Develop",
+      clean: false,
+      build: true)
+  end
+
+end

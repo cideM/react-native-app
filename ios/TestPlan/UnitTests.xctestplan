@@ -1,0 +1,59 @@
+{
+  "configurations" : [
+    {
+      "id" : "2260177D-898B-4DA6-BF21-697E7444DEA0",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/Domain\/Domain.xcodeproj",
+        "identifier" : "1D2BC57D2552CEF70064B9DC",
+        "name" : "DomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/RichTextRenderer\/RichTextRenderer.xcodeproj",
+        "identifier" : "ECD2E81125C9A0590033FD47",
+        "name" : "RichTextRendererTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/PharmaDatabase\/PharmaDatabase.xcodeproj",
+        "identifier" : "A486C73626149D37005C2765",
+        "name" : "PharmaDatabaseTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Common\/Common.xcodeproj",
+        "identifier" : "5CE26B3F2201FEE400A6EE64",
+        "name" : "CommonTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Knowledge.xcodeproj",
+        "identifier" : "5C2CAB2222539CB000BD7FAD",
+        "name" : "UnitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/DesignSystem\/DesignSystem.xcodeproj",
+        "identifier" : "6681BC062A1E3AA60008725E",
+        "name" : "DesignSystemTests"
+      }
+    }
+  ],
+  "version" : 1
+}

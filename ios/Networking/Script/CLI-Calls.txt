@@ -1,0 +1,8 @@
+
+// Parking space for the CLI commands to run further down the road
+
+// Fetching
+./apollo-ios-cli fetch-schema --path apollo-codegen-config-shared.json 
+
+// Generation
+./apollo-ios-cli generate --path apollo-codegen-config-shared.json 

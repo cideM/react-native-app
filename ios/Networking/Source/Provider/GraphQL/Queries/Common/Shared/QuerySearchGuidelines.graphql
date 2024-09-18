@@ -1,0 +1,29 @@
+query SearchGuidelineResults($query: String!, $first: Int!, $after: String) {
+    searchGuidelineResults(query: $query, first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            metadata
+            title
+            labels
+            subtitle
+            subtitle
+            details
+            _trackingUuid
+            secondaryTargets {
+              title
+              body
+              _trackingUuid
+            }
+            target {
+              externalUrl
+              _trackingUuid
+            }
+          }
+        }
+        totalCount
+    }
+}

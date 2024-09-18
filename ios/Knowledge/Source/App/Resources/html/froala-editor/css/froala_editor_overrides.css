@@ -1,0 +1,66 @@
+/* THIS WAS ADDED MANUALLY IN ORDER TO HACK IN DARK MODE SUPPORT  */
+/* THIS NEEDS TO BE LOADED LAST CAUSE IT NEEDS TO OVERWRITE PREVIOUS VALUES */
+/* SEE "extensions-editor/html" */
+
+@media (prefers-color-scheme: light) {
+   :root {
+      --themeColorDividerPrimary: #e0e6eb;
+      --themeColorTextSecondary: #b9bcc3;
+      --themeColorDividerSecondary: #a3b2bd40;
+      --themeColorTextPrimary: #1a1c1c;
+      --themeColorBackgroundPrimary: #ffffff;
+      --themeColorBackgroundBackdrop: #000000;
+      --themeColorTextQuaternary: #a3b2bd;
+      --themeColorBackgroundContrast: #314554;
+      --themeColorBorderAccent: #067c89;
+      --themeColorBorderError: #dc4847;
+   }
+}
+
+@media (prefers-color-scheme: dark) {
+   :root {
+      --themeColorDividerPrimary: #32363e;
+      --themeColorTextSecondary: #b9bcc3;
+      --themeColorDividerSecondary: #93959f26;
+      --themeColorTextPrimary: #ced1d6;
+      --themeColorBackgroundPrimary: #1a1c1c;
+      --themeColorBackgroundBackdrop: #00000099;
+      --themeColorTextQuaternary: #757a84;
+      --themeColorBackgroundContrast: #ced1d6;
+      --themeColorBorderAccent: #62b2bc;
+      --themeColorBorderError: #d07c7c;
+   }
+}
+
+/* The background of the whole html page */
+html {
+  background: var(--themeColorBackgroundPrimary);
+}
+
+/* The background of the editing area */
+.froala-wrapper.f-basic {
+  background: var(--themeColorBackgroundPrimary);
+}
+
+/* This is the text color of the placeholder shown when the editor is empty  */
+.froala-element.f-placeholder + span.fr-placeholder {
+    color: var(--themeColorTextQuaternary);
+    font-family: sans-serif;
+    background: clear;
+
+}
+
+/* The color of the text */
+p {
+  color: var(--themeColorTextPrimary);
+}
+
+/* The color of the list text */
+li {
+  color: var(--themeColorTextPrimary);
+}
+
+/* Text in the editor displays in "TimesNewRoman" in case this is not overwritten */
+.froala-view {
+    font-family: sans-serif;
+}

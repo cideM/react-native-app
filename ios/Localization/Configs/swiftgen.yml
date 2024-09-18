@@ -1,0 +1,9 @@
+strings:
+  inputs:
+    - ${PROJECT_DIR}/Resources/Strings/en.lproj/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      output: ${PROJECT_DIR}/Source/L10n.swift
+      params:
+        lookupFunction: Localization.lookupTranslation(forKey:inTable:)
+        publicAccess: true

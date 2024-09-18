@@ -1,0 +1,11 @@
+mutation LoginUser($username: String!, $password: String!, $deviceid: String!) {
+    login(login:$username, password:$password, deviceId:$deviceid) {
+        token
+        user{
+            eid
+            firstName
+            lastName
+            email
+        }
+    }
+}

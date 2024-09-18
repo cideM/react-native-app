@@ -1,0 +1,13 @@
+query registrationStudyObjectives {
+    usmle: studyObjectives(topic: usmle) {
+    __typename
+    eid
+    label
+  }
+
+  comlex: studyObjectives(topic: comlex) {
+    __typename
+    eid
+    label
+  }
+}

@@ -1,0 +1,11 @@
+query LibraryArchiveUpdate($currentVersion: Int!) {
+  latestFullLibraryArchive{
+    version
+    url
+    size
+    createdAt
+  }
+  fullLibraryArchive(version: $currentVersion){
+    updateMode
+  }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/font-awesome.min.css">
+        <link href="../css/froala_editor.css" rel="stylesheet" type="text/css">
+        <link href="../css/froala_style.css" rel="stylesheet" type="text/css">
+        <link href="../css/froala_editor_overrides.css" rel="stylesheet" type="text/css"> <!-- Hacky dark mode support! -->
+
+        <style>
+        body {
+            text-align: center;
+        }
+
+        section {
+            margin: auto;
+            text-align: left;
+        }
+
+        .froala-view {
+            text-align: left;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+
+        .froala-editor.f-basic {
+            height: 0 !important;
+            border: none !important;
+            overflow: hidden !important;
+        }
+
+        .froala-wrapper.f-basic {
+            border-width: 0;
+        }
+
+        </style>
+    </head>
+    
+    <body>
+        <section id="editor"><div id='edit' /></section>
+
+        <script src="../js/libs/jquery-1.11.1.min.js"></script>
+        <script src="../js/froala_editor.min.js"></script>
+        <script src="../js/plugins/lists.min.js"></script>
+        <script src="../js/plugins/font_family.min.js"></script>
+        <script src="../js/plugins/font_size.min.js"></script>
+        <script src="../js/plugins/block_styles.min.js"></script>
+
+        <script>
+            $(function() {
+              $('#edit').on('editable.initialized', function (e, editor) {
+                    // Tell the web view that the editor is ready
+                    var iframe = document.createElement('iframe');
+                    iframe.setAttribute('src', 'js:init');
+                    
+                    document.documentElement.appendChild(iframe);
+                    iframe.parentNode.removeChild(iframe);
+                    iframe = null;
+                    
+                    // $('#edit').editable('focus');
+                });
+              
+              $('#edit').editable({
+                                  inlineMode: false,
+                                  placeholder: "EXTENSION_EDITOR_PLACEHOLDER"
+                                  });
+            });
+            </script>
+        
+    </body>
+</html>

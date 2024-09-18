@@ -1,0 +1,9 @@
+mutation UpdateExtension($particleEid: ID!, $text: String!) {
+    updateCurrentUserParticleExtension(particleEid: $particleEid, text: $text) {
+        text
+        eid
+        ownerName
+        particleEid
+        updatedAt
+    }
+}

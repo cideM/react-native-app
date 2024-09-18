@@ -1,0 +1,21 @@
+query pharmaAgent($id: ID!){
+    ambossSubstance(id: $id) {
+        id
+        name
+        drugs {
+            id
+            name
+            atcLabel
+            vendor
+            prescriptions
+            applicationForms
+            priceAndPackageInfo(sorting: Ascending) {
+                packageSize
+                amount
+                unit
+                pharmacyPrice
+                recommendedRetailPrice
+            }
+        }
+    }
+}

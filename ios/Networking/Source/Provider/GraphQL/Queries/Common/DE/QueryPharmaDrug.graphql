@@ -1,0 +1,29 @@
+query pharmaDrug($id: ID!, $sorting: PriceAndPackageSorting!) {
+    pharmaDrug(id: $id) {
+        id
+        name
+        atcLabel
+        agentId
+        applicationForms
+        brandName
+        dosageForms
+        patientPackageInsertUrl
+        prescribingInformationUrl
+        prescriptions
+        publishedAt
+        sections {
+            id
+            title
+            position
+            text
+        }
+        vendor
+        priceAndPackageInfo(sorting: $sorting) {
+            packageSize
+            amount
+            unit
+            pharmacyPrice
+            recommendedRetailPrice
+        }
+    }
+}

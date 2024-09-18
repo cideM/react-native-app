@@ -1,0 +1,7 @@
+mutation updateCurrentUserProfile($userProfileInput: UserProfileInput!){
+  updateCurrentUserProfile(userProfile: $userProfileInput){
+    ... on User {
+    eid
+    }
+  }
+}

@@ -1,0 +1,23 @@
+query CurrentUserExtensions($first: Int!, $after: String){
+  currentUser {
+  particleExtensions(first: $first, after: $after){
+    pageInfo{
+      endCursor
+      hasNextPage
+    }
+    edges{
+      node{
+        text
+        eid
+        particleEid
+        updatedAt
+        particle {
+          article  {
+            eid
+          }
+        }
+        }
+      }
+    }
+  }
+}

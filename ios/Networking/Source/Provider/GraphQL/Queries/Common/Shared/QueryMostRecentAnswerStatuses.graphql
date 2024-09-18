@@ -1,0 +1,19 @@
+query MostRecentAnswerStatuses($first: Int!, $after: String) {
+  currentUser {
+    email
+    mostRecentAnswerStatuses(first: $first, after: $after){
+      ... on AnswerStatusConnection{
+        pageInfo {
+        endCursor
+        hasNextPage
+      }
+        edges{
+          node{
+            questionId
+            status
+          }
+        }
+      }
+    }
+  }
+}

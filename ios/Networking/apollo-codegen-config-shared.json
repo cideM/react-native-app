@@ -1,0 +1,50 @@
+{
+   "schemaNamespace":"KnowledgeGraphQLEntities",
+   "input":{
+      "operationSearchPaths":[
+         "Source/Provider/GraphQL/Queries/Common/*/*.graphql"
+      ],
+      "schemaSearchPaths":[
+         "./GraphQL/Schema/Knowledge-Schema.graphqls/"
+      ]
+   },
+   "output":{
+      "testMocks":{
+         "none":{
+            
+         }
+      },
+      "schemaTypes":{
+         "path":"./GraphQL/Generated/Entities/",
+         "moduleType":{
+            "swiftPackageManager":{
+               
+            }
+         }
+      },
+      "operations":{
+         "inSchemaModule":{
+            
+         }
+      }
+   },
+   "schemaDownload":{
+      "downloadMethod":{
+         "introspection":{
+            "endpointURL":"https://www.labamboss.com/de/api/graphql",
+            "httpMethod":{
+               "POST":{
+                  
+               }
+            },
+            "includeDeprecatedInputValues":false,
+            "outputFormat":"SDL"
+         }
+      },
+      "downloadTimeout":60,
+      "headers":[
+         
+      ],
+      "outputPath":"./GraphQL/Schema/Knowledge-Schema.graphqls/"
+   }
+}

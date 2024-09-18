@@ -1,0 +1,1197 @@
+/* Legal notice item title in the About view */
+"about_settings.legal_notice.title" = "Legal notice";
+
+/* Privacy item title in the About view */
+"about_settings.privacy.title" = "Privacy policy";
+
+/* Consent management item title in the About view */
+"about_settings.consent_management.title" = "Privacy settings";
+
+/* Open source libraries item title in the About view */
+"about_settings.libraries.title" = "Open-source libraries";
+
+/* The title of the account section. */
+"account_settings.account.title" = "Account";
+
+/* Message in the confirmation alert shown when user wants to log out. */
+"account_settings.alert.message" = "Do you really want to log out?";
+
+/* Title in the confirmation alert shown when user wants to log out. */
+"account_settings.alert.title" = "Want to log out?";
+
+/* Title of the logout button */
+"account_settings.logout_button.title" = "LOG OUT";
+
+/* The title of the settings feature. */
+"account_settings.title" = "Account";
+
+/* The title of delete account button */
+"account_settings.delete_account_button.title" = "Delete account";
+
+/* The title of the alert we show when delete account button is tapped */
+"account_settings.deleteAccountAlert.title" = "You will be logged out after the account deletion";
+
+/* The body of the alert we show when delete account button is tapped */
+"account_settings.deleteAccountAlert.message" = "The deletion will affect all accounts of our platform. Please be aware that you need to unsubscribe separately through the AppStore.";
+
+/* Substance view application forms label text */
+"substance.applicationFormsLabel" = "Application Forms";
+
+/* Substance view activeIngredientGroupLabel text */
+"substance.activeIngredientGroupLabel" = "WirkstoffGRUPPE";
+
+/* Substance view package size title text */
+"substance.packageSizeTitle" = "Packungsgrösse";
+
+/* Substance view package price title text */
+"substance.packagePriceTitle" = "Preis";
+
+/* Substance view activeIngredientLabel text */
+"substance.activeIngredientLabel" = "Wirkstoff";
+
+/* Substance view commercialDrugsButton title */
+"substance.commercialDrugsButton.title" = "Andere Handelspräparate finden";
+
+/* Substance view activeIngredientGroupLabel text */
+"substance.dosageFormsLabel" = "DARREICHUNGSFORM";
+
+/* Substance view feedbackButton title */
+"substance.feedbackButton.title" = "FEEDBACK";
+
+/* Substance view lastUpdateLabel text */
+"substance.lastUpdateLabel." = "Letztes Update: %@";
+
+/* AgentFooterView patientPackageLabel text */
+"substance.patientPackageLabel" = "Beipackzettel";
+
+/* AgentFooterView patientPackageSubtitleLabel text */
+"substance.patientPackageSubtitleLabel" = "Germany";
+
+/* Substance view prescribingInformationButton title */
+"substance.prescribingInformationButton.title" = "PDF";
+
+/* AgentFooterView prescribingInformationLabel text */
+"substance.prescribingInformationLabel" = "Fachinformationen";
+
+/* AgentFooterView prescribingInformationSubtitleLabel text */
+"substance.prescribingInformationSubtitleLabel" = "Germany";
+
+/* Substance view prescriptionsLabel text */
+"substance.prescribingInformationSectionLabel" = "Fachinformationen";
+
+/* Substance prescriptions separator */
+"substance.prescription_separator" = "Oder";
+
+/* Substance narcotic prescription */
+"substance.prescription.narcotic" = "Betäubungsmittel";
+
+/* Substance overTheCounter prescription */
+"substance.prescription.over_the_counter" = "Freiverkäuflich";
+
+/* Substance pharmacyOnly prescription */
+"substance.prescription.pharmacy_only" = "Apothekenpflichtig";
+
+/* Substance prescriptionOnly prescription */
+"substance.prescription.prescription_only" = "Rezeptpflichtig";
+
+/* Substance view prescriptionsLabel text */
+"substance.prescriptionsLabel" = "VERSCHREIBUNGSPFLICHT";
+
+/* Pharma card network error screen */
+"substance.network_error.cancel" = "Cancel";
+
+/* Pharma card network error screen */
+"substance.network_error.retry" = "Retry";
+
+/* Pharma card show all button title*/
+"substance.showAllButton.title" = "Alle anzeigen";
+
+/* Pharma card not available label*/
+"substance.notAvailableLabel" = "n/v";
+
+/* Tab title - does not apply in US */
+"substance.tab_title.ifap" = "Handelspräparate (ifap)";
+
+/* Tab title - does not apply in US */
+"substance.tab_title.fact_sheet" = "Faktenblatt";
+
+/* Info about the keep screen on setting in the appearance page */
+"appearance_settings.keep_screen_on.description" = "Keep screen on while reading articles";
+
+/* Title of the keep screen on setting in the appearance page */
+"appearance_settings.keep_screen_on.title" = "Keep screen active";
+
+/* The Title of the appearance feaure */
+"appearance_settings.title" = "Appearance";
+
+/* Appearance options */
+"appearance_settings.option.light.title" = "Light";
+"appearance_settings.option.dark.title" = "Dark";
+"appearance_settings.option.system.title" = "System";
+
+/* Message of alert in learning card that warns that the user can't send e-mails. */
+"email_sending_error.client_not_configured.message" = "Your device isn't configured to send emails. Add an email account in your settings to start sending.";
+
+/* Title of alert in learning card that warns that the user can't send e-mails. */
+"email_sending_error.client_not_configured.title" = "Can't send emails";
+
+/* Sign up navigation title */
+"sign_up.title" = "Sign up";
+
+/* Sign up email create your account label text */
+"sign_up.label_create_your_account_text" = "Create your account";
+
+/* Sign up email textField placholder */
+"sign_up.text_field_email_placeholder" = "Email adress";
+
+/* Sign up email information label text */
+"sign_up.label_email_information_text" = "Email already exists. Please login.";
+
+/* Sign up password textField placholder */
+"sign_up.text_field_password_placeholder" = "Password";
+
+/* Sign up password information label text */
+"sign_up.label_password_information_text" = "Password must contain at least 8 characters.";
+
+/* Sign up invalid mail adress information label text */
+"sign_up.label_invalid_email_adress_text" = "Please enter a valid email address.";
+
+/* Sign up already registered information label text */
+"sign_up.label_already_registered_text" = "Already registered? Login here";
+
+/* Sign up verification button title */
+"sign_up.start_button_title" = "Start AMBOSS 5 day free trial";
+
+/* Sign up verification button title variant */
+"sign_up.start_button_title_variant" = "Create AMBOSS account";
+
+/* The message of the alert shown when deep link is not supported. */
+"error.deeplink.article.message" = "This link didn't work. Want to try again using your web browser?";
+
+/* The message of the alert shown when deep link article is not supported. */
+"error.deeplink.message" = "Couldn't find this content. Try updating your library. Want to open it in your browser instead?";
+
+/* The title of the alert shown when deep link is not supported. */
+"error.deeplink.title" = "Oops!";
+
+/* Generic message shown in several places. */
+"error.generic.message" = "An unexpected error occurred. Please try again later.";
+
+/* Generic error alert title. */
+"error.generic.title" = "That shouldn't have happened";
+
+/* Message for the error screen, when the user is offline and tries to update libray manually. */
+"error.offline.library.message" = "No internet connection. Reconnect to check for library updates.";
+
+/* Message for the error screen, when the user is offline. */
+"error.offline.message" = "Please connect to the internet to keep using the app.";
+
+/* Message for the error dialog, when the user is offline and attempts to present a dosage. */
+"dosage.error.offline.message" = ""; /* Pharma offline is not supported by the US app  */
+
+/* Title for the dosage popover */
+"dosage.popover.title" = "Dosage";
+
+/* Title for the error screen, when the user is offline. */
+"error.offline.title" = "No connection";
+
+/* Button title for viewing learning card from extensions cell */
+"extension_cell_view.button.title" = "Show in article";
+
+/* Title for Extension View for presenting notes */
+"extension_view.title" = "Your notes";
+
+/* FeedbackViewCOntroller title */
+"FeedbackView.title" = "Feedback";
+
+/* Title of the first launch info alert */
+"first_launch.info_alert.title" = "Library updates and offline access";
+
+/* Library update progress downloading message */
+"force_library_update.downloading.status" = "Downloading...";
+
+/* Library update progress installing message */
+"force_library_update.installing.status" = "Installing...";
+
+/* Library update progress view message */
+"force_library_update.updating.message" = "The latest content is about to be released onto your phone.";
+
+/* Library update progress view title */
+"force_library_update.updating.title" = "Writing the discharge note";
+
+/* Generic title of the OK button in the alert shown to the user. */
+"generic.alert_default_button" = "Continue";
+
+/* Sign up next button title */
+"generic.next" = "Next";
+
+/* Generic title of the No button in the alert shown to the user. */
+"generic.no" = "No";
+
+/* Try again button title */
+"generic.retry" = "Try again";
+
+/* Generic title of the YES button in the alert shown to the user. */
+"generic.yes" = "Yes";
+
+/* Generic title of save */
+"generic.save" = "Save";
+
+/* Text in the redeem code settings cell. */
+"redeem_code.title" = "Redeem access code";
+
+/* Placeholder in the redeem code text field. */
+"redeem_code.text_field.placeholder" = "Enter access code";
+
+/* Text in the redeem code info callout. */
+"redeem_code.callout.title.info" = "Access codes can only be redeemed once";
+
+/* Text in the redeem code error success. */
+"redeem_code.callout.title.success" = "You've successfully redeemed your access code, and your account is now activated.";
+
+/* Support button title in the redeem code screen. */
+"redeem_code.support_button.title" = "NEED SUPPORT? CONTACT US";
+
+/* Button title in the redeem code screen. */
+"redeem_code.button.title.normal" = "Redeem Code";
+
+/* Button title in the redeem code screen. */
+"redeem_code.button.title.loading" = "Processing...";
+
+/* Button title in the redeem code screen. */
+"redeem_code.button.title.done" = "Done";
+
+/* Text in the redeem code error callout for error case keyNotValid. */
+"redeem_code.error.keyNotValid" = "The access code you entered is not valid.";
+
+/* Text in the redeem code error callout for error case alreadySubscribed. */
+"redeem_code.error.alreadySubscribed" = "You're already subscribed to AMBOSS.";
+
+/* Text in the redeem code error callout for error case unknown. */
+"redeem_code.error.unknown" = "Something went wrong. Please check the access code and re-enter it.";
+
+/* Text in the store settings cell. */
+"iap.settings.store.title" = "Shop";
+
+/* Error message indicating that the user is not allowed to authorize payments. */
+"iap.store.error.payment_not_allowed" = "Payments aren't authorized on this device.";
+
+/* Error message indicating that the user has not yet acknowledged Apple’s privacy policy for Apple Music. */
+"iap.store.error.privacy_acknowledgement_required" = "You haven’t accepted Apple Music's privacy policy.";
+
+/* Message stating that linking the purchase with the amboss account wasn't successful. */
+"iap.store.errormessage.linking" = "Couldn't connect your purchase to your AMBOSS account.";
+
+/* Message stating that the purchase wasn't successful. */
+"iap.store.errormessage.purchasing" = "Your payment did not go through successfully.";
+
+/* Message stating that restoring the purchases wasn't successful. */
+"iap.store.errormessage.restoring" = "Your purchase recovery was unsuccessful.";
+
+/* Headline of the External Subscription ViewController */
+"iap.store.external_subscription.headline" = "You're already subscribed to AMBOSS.";
+
+/* Title for the buy button for the IAP Store in the idle state. */
+"iap.store.idle_inapppurchase.buy_button" = "Sign up to start your trial";
+
+/* Headline for the IAP Store in the idle state. */
+"iap.store.idle_inapppurchase.headline" = "Start with a %@ free trial.";
+
+/* Title for the restore for the IAP Store in the idle state. */
+"iap.store.idle_inapppurchase.restore_button" = "Re-activate subscription";
+
+/* Subheadline for the IAP Store in the idle state, stating the pricing per month with an introductory offer. */
+"iap.store.idle_inapppurchase.subheadline.with_free_offer" = "Subscribe to AMBOSS for %@ / month";
+
+/* Subheadline for the IAP Store in the idle state, stating the pricing per month without an introductory offer. */
+"iap.store.idle_inapppurchase.subheadline.without_free_offer" = "Subscribe to AMBOSS for %@ / month";
+
+/* Disclaimer for the IAP Store. */
+"iap.store.inapppurchase.disclaimer" = "Payment will be charged to your Apple ID account at the confirmation of purchase. Your subscription will automatically renew unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.";
+
+/* Text for free trail duration day. */
+"iap.store.introductory.day" = "Day";
+
+/* Text for free trail duration days. */
+"iap.store.introductory.days" = "Days";
+
+/* Text for free trail duration month. */
+"iap.store.introductory.month" = "Month";
+
+/* Text for free trail duration months. */
+"iap.store.introductory.months" = "Months";
+
+/* Text for free trail duration Week. */
+"iap.store.introductory.week" = "Week";
+
+/* Text for free trail duration days. */
+"iap.store.introductory.weeks" = "Weeks";
+
+/* Text for free trail duration year. */
+"iap.store.introductory.year" = "Year";
+
+/* Text for free trail duration years. */
+"iap.store.introductory.years" = "Years";
+
+/* shown to user in app purchse: Learning Radar */
+"iap.store.perks_page.fifth_perk.title" = "Master medical information with the help of smart study tools";
+
+/* shown to user in app purchse: updated medical information */
+"iap.store.perks_page.first_perk.title" = "Smart content made for medical practice. Get clinical answers in just 5 seconds";
+
+/* shown to user in app purchse: access on major platforms */
+"iap.store.perks_page.fourth_perk.title" = "Use AMBOSS on just about any device";
+
+/* shown to user in app purchse: offline access */
+"iap.store.perks_page.second_perk.title" = "Bad WiFi in your hospital? Never lose access, even when offline";
+
+/* shown to user in app purchse: views charts and diagnostic images */
+"iap.store.perks_page.sixth_perk.title" = "Practice diagnoses with medical images that highlight affected areas ";
+
+/* shown to user in app purchse: expertly written exams questions */
+"iap.store.perks_page.third_perk.title" = "Go through thousands of high-yield exam-style questions";
+
+/* Title of the store view controller */
+"iap.store.title" = "Purchase an AMBOSS iOS subscription";
+
+/* Title for the cancel button for the IAP Store in the unlinked state. */
+"iap.store.unlinked_inapppurchase.cancel_button" = "Cancel subscription";
+
+/* Headline for the IAP Store in the unlinked state. */
+"iap.store.unlinked_inapppurchase.headline" = "You have an active AMBOSS iOS subscription";
+
+/* Title for the link button for the IAP Store in the unlinked state. */
+"iap.store.unlinked_inapppurchase.link_button" = "Link to your account";
+
+/* Title for copyright button in image gallery */
+"image_gallery.image.copyright_button.title" = "© Copyright";
+
+/* Pill toolbar titles for image feature keys */
+"gallery.pill.feature.title.overlay" = "Overlay";
+"gallery.pill.feature.title.smartzoom" = "Smart\nZoom";
+"gallery.pill.feature.title.meditricks" = "Medi\nTricks";
+"gallery.pill.feature.title.meditricksNeuroanatomy" = "Neuro\nanatomy";
+"gallery.pill.feature.title.miamedCalculator" = "Calculator";
+"gallery.pill.feature.title.miamedWebContent" = "Web";
+"gallery.pill.feature.title.miamedAuditor" = "Auditor";
+"gallery.pill.feature.title.miamedPatientInformation" = "Patient\nInfo";
+"gallery.pill.feature.title.miamed3dModel" = "3D";
+"gallery.pill.feature.title.video" = "Video";
+"gallery.pill.feature.title.easyradiology" = "Radio-\nlogy";
+"gallery.pill.feature.title.other" = "More";
+
+/* Message of the error saying that a license is required for a feature */
+"in_app_purchase.paywall.access_required.message" = "Looks like you don't have an active membership. But we can fix that. Head to the store now to purchase one.";
+
+/* Title of the error saying that a license is required */
+"in_app_purchase.paywall.access_required.title" = "This content is only available for members";
+
+/* The title of Buy License button in the paywall screen */
+"in_app_purchase.paywall.buy_license" = "Buy license";
+
+/* The description of the error saying that the campus license has expired */
+"in_app_purchase.paywall.campus_license_expired.message" = "This is to check if you're still a student or if the license is still active. No longer have access? You can purchase your own subcription in the shop";
+
+/* The title of the error saying that the campus license is expired */
+"in_app_purchase.paywall.campus_license_expired.title" = "Verify your campus license by connecting to your university network";
+
+/* The description of the error saying that the license is expired */
+"in_app_purchase.paywall.offline_access_expired.message" = "Your offline access to AMBOSS has expired. Please reconnect to your network.";
+
+/* The title of the error saying that the license is expired */
+"in_app_purchase.paywall.offline_access_expired.title" = "Offline access expired";
+
+/* The description of the error saying that there is unknown access error */
+"in_app_purchase.paywall.unknown_access_error.message" = "Seems like an error on our side. Try again in a bit.";
+
+/* The title of the error saying that there is unknown access error */
+"in_app_purchase.paywall.unknown_access_error.title" = "Oh no, you can't access this now.";
+
+/* The message we show the users in the initialization screen to tell them that we're preparing the application for them */
+"initialization.label" = "Give us a couple seconds, we’re setting up the app for you...";
+
+/* Back button in toolbar */
+"learning_card_toolbar.button.title.back" = "Back";
+
+/* Next button in toolbar */
+"learning_card_toolbar.button.title.next" = "Forward";
+
+/* Fold sections button in toolbar */
+"learning_card_toolbar.button.title.unfold" = "Expand";
+
+/* UnFold sections button in toolbar */
+"learning_card_toolbar.button.title.fold" = "Collapse";
+
+/* Search button in toolbar */
+"learning_card_toolbar.button.title.find" = "Find text";
+
+/* Minimap button in toolbar */
+"learning_card_toolbar.button.title.index" = "Outline";
+
+/*Title of share button in learning card options view*/
+"learning_card_options_view.share.title" = "Share";
+
+/*Title of learned button in learning card options view*/
+"learning_card_options_view.learned.title" = "Learned";
+
+/*Title of create question session button in learning card options view*/
+"learning_card_options_view.create_questions.title" = "Start Qbank session";
+
+/* Learning radar mode subtitle */
+"learning_card_options_view.modes.subheading" = "Article preferences";
+
+/* Highlighting mode title */
+"learning_card_options_view.modes.highlighting.title" = "Key exam info";
+
+/* Highlighting mode subtitle */
+"learning_card_options_view.modes.highlighting.subtitle" = "Highlights the most relevant content for your chosen exam";
+
+/* High-yield mode title */
+"learning_card_options_view.modes.high_yield.title" = "High-Yield";
+
+/* High-yield mode subtitle */
+"learning_card_options_view.modes.high_yield.subtitle" = "View only information relevant to your study objective";
+
+/* Physikum-Fokus mode title */
+"learning_card_options_view.modes.physikum_fokus.title" = "Physikum-Fokus";
+
+/* Physikum-Fokus mode subtitle */
+"learning_card_options_view.modes.physikum_fokus.subtitle" = "Nur Prüfungsinhalte anzeigen";
+
+/* Learning radar mode title */
+"learning_card_options_view.modes.learning_radar.title" = "Learning Radar";
+
+/* Learning radar mode subtitle */
+"learning_card_options_view.modes.learning_radar.subtitle" = "Highlight facts from incorrectly answered questions in red";
+
+/* Title of the text size cell in the learning card options view */
+"learning_card_options_view.text_size_cell.title" = "Text size";
+
+/* Learning card options view title */
+"learning_card_options_view.title" = "Article options";
+
+/* Learning card options view mode callout text */
+"learning_card_options_view.callout.text" = "Student features, such as High-yield, have been removed from Clinician mode.";
+
+/* Learning card options view mode callout underlined text */
+"learning_card_options_view.callout.underlinedText" = "Switch to Student mode";
+
+/* Message of the subview message presenter when a loading learning card error happen */
+"learning_card.error.learning_card_not_found.message" = "An error occurred while trying to access the article. Please check your connection and try again.";
+
+/* Message of the subview message presenter when a loading learning card metadata error happens */
+"learning_card.error.learning_card_metadata_not_found.message" = "An error occurred while trying to access the article. Please update your library and try again.";
+
+/* Title of the Table Detail View */
+"library.learning_card.table_detail_view.title" = "Table";
+
+/* The title of the library feature. */
+"library.title" = "Library";
+
+/* Title of the wifi auto-updates label: Settings Library sync */
+"librarySettings.libraryUpdate.title" = "Update my Library automatically";
+
+/* Title of the wifi auto-updates label: Settings Library sync */
+"librarySettings.pharmaUpdate.title" = "Keep the pharma library  up to date";
+
+/* Title of the cancel button. Settings Library sync */
+"librarySettings.cancelButton.title" = "Cancel";
+
+/* Message shown, when checking for an update. Settings Library sync */
+"librarySettings.checkingForUpdateMessage" = "Checking for updates...";
+
+/* Title of the library settings */
+"librarySettings.library.title" = "Library";
+
+/* Title of the library settings */
+"librarySettings.pharma.title" = "Arzneimitteldatenbank";
+
+/* Title of the delete pharma disclaimer */
+"librarySettings.pharma.deleteDisclaimer.title" = "Swipe left to save space";
+
+/* Title of the delete pharma verification alert */
+"librarySettings.pharma.deleteConfirmationAlert.title" = "Are you sure to delete the pharma library?";
+
+/* Message of the delete pharma verification alert */
+"librarySettings.pharma.deleteConfirmationAlert.message" = "The drug information will not be shown in the offline search results.
+You can re-install it any time.";
+
+/* Title of the delete pharma verification alert cancel action */
+"librarySettings.pharma.deleteConfirmationAlert.cancelAction.title" = "Cancel";
+
+/* Title of the delete pharma verification alert confirm action */
+"librarySettings.pharma.deleteConfirmationAlert.confirmAction.title" = "Confirm";
+
+/* Title of the library settings automaticUpdates label */
+"librarySettings.automaticUpdates.title" = "Automatic Updates";
+
+/* Subtitle of the library settings automaticUpdates label */
+"librarySettings.automaticUpdates.subtitle" = "Updates will be downloaded automatically in WiFi";
+
+/* Library update message */
+"librarySettings.library.subtitle.downloading" = "Update is being downloaded %@";
+
+/* Library installation message */
+"librarySettings.library.subtitle.installing" = "Library is being installed";
+
+/* Message shown, describing update is being installed. */
+"librarySettings.installingUpdateMessage" = "Installing update...";
+
+/* Message shown, describing when it was last updated. */
+"librarySettings.lastUpdate.format" = "Last update: %@";
+
+/* The title of the library update section in the settings screen */
+"librarySettings.update" = "Update";
+
+/* Message shown, describing there is an update. */
+"librarySettings.updateAvailableMessage" = "Update available";
+
+/* Title of the update button. Settings Library sync */
+"librarySettings.updateButton.title" = "Update";
+
+/* Title of the update button. Settings Libraries sync */
+"librarySettings.installButton.title" = "Install";
+
+/* The subtitle of the library item in the settings screen in case of update failed */
+"librarySettings.updateFailed" = "Update failed";
+
+/* The description of the library update's lack of storage error */
+"librarySettings.updateFailed.lackOfStorage.description" = "Not enough storage to update. Free some up so you can update your library to the latest content.";
+
+/* The description of the library update's something went wrong error */
+"librarySettings.updateFailed.somethingWentWrong.description" = "Something went wrong while trying to update the library.\nPlease try updating again.";
+
+/* The description of the library update's something went wrong error */
+"librarySettings.pharma.updateFailed.somethingWentWrong.description" = "Something went wrong while trying to update the pharma database.\nPlease try updating again.";
+
+/* Title of the update failed label inside the library settings screen */
+"librarySettings.updateFailed.title" = "Couldn't update";
+
+/* Message shown, when update is in progress. Settings Library sync */
+"librarySettings.UpdatingMessage" = "Updating...";
+
+/* The subtitle of the library item in the settings screen in case of an up to date library */
+"librarySettings.updated" = "Updated";
+
+/* Message shown, describing library is up to date. */
+"librarySettings.upToDateMessage" = "Updated";
+
+/* Title of Licenses screen */
+"licenses.title" = "Licences";
+
+/* Title for selected favorites in lists */
+"lists.favorites.title" = "Favorites";
+
+/* Title for selected learned in lists */
+"lists.learned.title" = "Studied";
+
+/* Title for selected recent history in lists */
+"lists.recents.title" = "History";
+
+/* Content of the empty state of history list */
+"lists.recents.emptyState.text" = "As you search and read through our content, this area will display your most recently viewed articles.";
+
+/* The title of the lists feature. */
+"lists.title" = "Lists";
+
+/* Placeholder in the email address textfield in the Login page. */
+"login.email_placeholder" = "Email address";
+
+/* Message of the alert shown, when the username and the password don't match. */
+"login.error.invalid_credentials.message" = "Username and password do not match.";
+
+/* Title of the alert shown when login fails. */
+"login.error.title" = "Login failed";
+
+/* Title of 'password forgotten' button */
+"login.forgot_password_button_title" = "Forgot password?";
+
+/* Placeholder in the password textfield in the Login page. */
+"login.password_placeholder" = "Password";
+
+/* Text in the login button in Login page. */
+"login.title" = "Login";
+
+/* SSO hint first line */
+"login.sso_hint.first_line" = "Signed up using Google, Facebook or your Institution?";
+
+/* SSO hint second line */
+"login.sso_hint.second_line" = "You’ll need to set a password first";
+
+/* The title of the news feature. */
+"news.title" = "News";
+
+/* Message in the alert shown when user wants to leave the page and the content might be lost. */
+"note.alert.leave_page_confirmation_message" = "This note contains unsaved changes. Are you sure that you want to leave without saving?";
+
+/* Title of the alert shown when user wants to leave the page and the content might be lost in the note view */
+"note.alert.leave_page_confirmation_title" = "Leave the page?";
+
+/* Placeholder text appearing in the note view. */
+"note.placeholder" = "Edit your personal note";
+
+/* Title of the note view */
+"note.title" = "Note";
+
+/* Title of a search section of instant results*/
+"search.suggestions.section.title.instantResults" = "Go to";
+
+/* Title of a search section of autocomplete*/
+"search.suggestions.section.title.autocomplete" = "Search for";
+
+/* Sign up email already exist error message */
+"password.error_email_already_registered" = "This email is already registered.";
+
+/* Library update recommandation alert download action title */
+"recommend_update.alert.download_action" = "Download";
+
+/* Library update recommandation alert later action title */
+"recommend_update.alert.later_action" = "Later";
+
+/* Message of the library update recommandation alert */
+"recommend_update.alert.message" = "Update to the latest version of the library for the most current medical information.";
+
+/* Title of the library update recommandation alert */
+"recommend_update.alert.title" = "Update the library";
+
+/* Section title of search history */
+"search.history_section.title" = "History";
+
+/* Message shown when online search fails and offline search results are shown. */
+"search.online_search_failure.first_message" = "You are offline - Limited search results";
+
+/* Message shown when online search fails and offline search results are shown. */
+"search.online_search_failure.second_message" = "Reload page?";
+
+/* Placeholder label text in the search view */
+"search.placeholder" = "Search in AMBOSS";
+
+/* Title of a table row that lets the user search for the entered search query 'as is' */
+"search.search_for_text_as_is" = "Search for '%@'";
+
+/* Title of a table row section that lets the user know that no results are found for the text */
+"search.search_no_results.section.title" = "No search results for '%@'";
+
+/* Title of a table row section that lets the user know that no results are found for the text */
+"search.didyoumean.title" = "Search results for";
+
+/* Title of a table row section that lets the user know that no results are found for the text */
+"search.didyoumean.subtitle" = "Search instead exactly for";
+
+/* Search scope overview NoResultsView title */
+"search.search_scope.overview.no_results_view.title" = "No Results Found.\nPlease try again.";
+
+/* Search media overview view more item title */
+"search.search_scope.overview.view_more.title" = "VIEW MORE";
+
+/* Search scope overview NoResultsView subtitle */
+"search.search_scope.overview.no_results_view.subtitle" = "Is something missing?\nLet us know what important content to add.";
+
+/* Search scope overview NoResultsView button title */
+"search.search_scope.overview.no_results_view.button.title" = "WRITE TO US";
+
+/* Search scope overview title */
+"search.search_scope.overview.title" = "Overview";
+
+/* Search scope library title */
+"search.search_scope.library.title" = "Articles";
+
+/* Search scope guideline title */
+"search.search_scope.guideline.title" = "Guidelines";
+
+/* Search scope media title */
+"search.search_scope.media.title" = "Media";
+
+/* Search media type video */
+"search.media.media_types.video" = "VIDEO";
+
+/* Search media type image */
+"search.media.media_types.image" = "IMAGE";
+
+/* Search media type calculator */
+"search.media.media_types.calculator" = "CALCULATOR";
+
+/* Search media type meditricks */
+"search.media.media_types.meditricks" = "MEDITRICKS";
+
+/* Search media type podcast */
+"search.media.media_types.podcast" = "PODCAST";
+
+/* Search media type radiology training */
+"search.media.media_types.easy_radiology" = "EASY RADIOLOGY";
+
+/* Search media type radiology smart zoom */
+"search.media.media_types.smart_zoom" = "SMART ZOOM";
+
+/* Search media type auditor */
+"search.media.media_types.auditor" = "CHALK TALK";
+
+/* Search media type patienteninfo */
+"search.media.media_types.patienteninfo" = "PATIENT INFO";
+
+/* Search media type 3D Model*/
+"search.media.media_types.model_3d" = "3D MODEL";
+
+/* Pharma search beta note */
+"search.search_scope.pharma.beta.text" = "The Drug-Search is in testing phase!";
+
+/* Search scope pharma title */
+"search.search_scope.pharma.title" = "Drugs";
+
+/* Section title of search suggestions */
+"search.suggestion_section.title" = "Suggestions";
+
+/* Everything prefixed with "search.pharma.offline.optin" is subject to the optin dialog for the pharma offline db */
+"search.pharma.offline.optin.alert.title" = "Drug data\raccessible offline";
+
+"search.pharma.offline.optin.alert.description" = "\rFor better access download the approximately 80 MB large pharma database to your device. This way drugs can be searched event without internet access.\r\rThe database can always be deleted via settings.";
+
+"search.pharma.offline.optin.alert.action.download" = "Download drug database";
+
+"search.pharma.offline.optin.alert.action.notnow" = "Not now";
+
+"search.pharma.offline.optin.alert.action.dontaskagain" = "Don't ask again";
+
+"search.pharma.offline.optin.confirmation.alert.title" = "Drug database is being downloaded";
+
+"search.pharma.offline.optin.confirmation.alert.description" = "More information subject to the download in the settings.";
+
+"search.pharma.offline.confirmation.alert.action.ok" = "OK";
+
+"search.pharma.offline.optin.confirmationError.alert.title" = "Drug database could not be downloaded.";
+
+"search.pharma.offline.confirmationError.alert.action.ok" = "OK";
+
+/* Version format for footer in settings view. */
+"settings_footer.version.format" = "Version: %@ (%@)";
+
+/* Title of the library and pharma update item in the settings screen*/
+"settings.update.libraryAndPharma.title" = "Library and Pharma";
+
+/* App settings section title in settings page */
+"settings.app_settings_section.title" = "App settings";
+
+/* About item title in settings */
+"settings.more.about.title" = "About";
+
+/* Reference to qbank item in settings title */
+"settings.more.qbank.title" = "Try the AMBOSS Qbank app!";
+
+/* Reference to terms item in settings title */
+"settings.more.terms.title" = "Terms of service";
+
+/* More section title in settings */
+"settings.more.title" = "More";
+
+/* Help Center item of the support section in settings page */
+"settings.support.helpCenter.title" = "Help Center";
+
+/* Support section title in settings page */
+"settings.support.title" = "Support";
+
+/* The title of the settings feature. */
+"settings.title" = "Settings";
+
+/* Message for Share Learning Card view */
+"share_learning_card.message" = "Hey there,\n\nI found some helpful information about %@ over at AMBOSS, a medical knowledge app and clinical companion. You can check it out here: %@ \n\nAll the best,\n\n %@";
+
+/* Title for Share Learning Card view */
+"share_learning_card.title" = "%@ shared medical knowledge from AMBOSS with you";
+
+/* Alert for a successful sign up */
+"signup.verification.sucesss" = "Click the link in your email to verify your account. Didn't receive one? Reach out at at hello@amboss.com.";
+
+/* Alert title for a successful sign up */
+"signup.verification.sucesss.title" = "Activate your account";
+
+/* Info about the study objective screen */
+"study_objective.info" = "Gives you detailed statistics and peer group comparisons for your current objective in the Qbank app and web platform. You can always change this after you take your exam or are finished studying.";
+
+/* The title of the Current Objective feature */
+"study_objective.title" = "Current objective";
+
+/* The header of the Current Objective feature */
+"study_objective.header" = "Select your current objective";
+
+/* Support section title in settings */
+"support.title" = "Support";
+
+/* The header of the User Section screen */
+"user_stage.header" = "Select your mode";
+
+/* The agreement text in the footer of the User Stage screen for Clinician */
+"user_stage.footer_agreement_clinician" = "I accept the Liability Notice, Legal Notice, Terms and Conditions and Privacy Policy. I acknowledge that all information in AMBOSS refers to the medical standard in the US and that diagnostic and/or therapeutic procedures as well as the regulatory status of named commercial products may differ in other countries.";
+
+/* The agreement text in the footer of the User Stage screen for Non-Clinician */
+"user_stage.footer_agreement_non_clinician" = "I accept the Legal Notice, Terms and Conditions and Privacy Policy. I acknowledge that all information in AMBOSS refers to the medical standard in the US and that diagnostic and/or therapeutic procedures as well as the regulatory status of named commercial products may differ in other countries.";
+
+/* The Limitation of Liability text part of the agreement text */
+"user_stage.footer_agreement_liability_notice_text" = "Liability Notice";
+
+/* The Legal Notice text part of the agreement text */
+"user_stage.footer_agreement_legal_notice_text" = "Legal Notice";
+
+/* The Disclaimer text part of the agreement text */
+"user_stage.footer_agreement_terms_and_conditions_text" = "Terms and Conditions";
+
+/* The Privacy Policy text part of the agreement text */
+"user_stage.footer_agreement_privacy_policy_text" = "Privacy Policy";
+
+/* Sign up user stage navigation title */
+"user_stage.title" = "AMBOSS mode";
+
+/* Clinic user stage name */
+"user_stage.user_stage_clinic.title" = "Student";
+
+/* Physician user stage name */
+"user_stage.user_stage_physician.title" = "Clinician";
+
+/* Preclinic user stage name */
+"user_stage.user_stage_preclinic.title" = "Preclinical";
+
+/* Preclinic user stage name abbreviated */
+/* Only important in DE cause word is long */
+"user_stage.user_stage_preclinic_short.title" = "Preclinical";
+
+/* Clinic user stage description */
+"user_stage.user_stage_clinic.description" = "Search results prominently feature relevant educational topics. Articles focus on must-know information for exams and general studies.";
+
+/* Physician user stage description */
+"user_stage.user_stage_physician.description" = "Search results prominently feature clinically relevant material. Articles include drug dosages, diagnostic and treatment algorithms, and admission checklists.";
+
+/* Preclinic user stage description */
+"user_stage.user_stage_preclinic.description" = "Preclinical";
+
+/* Notification bubble appearing once the user saved stage settings */
+"user_stage.savenotification.title" = "Amboss mode saved";
+
+/* The title of Usage Purpose screen */
+"usage_purpose.title" = "AMBOSS mode";
+
+/* The title of (clinical practice) that is used in usage ways screen */
+"usage_purpose.clinical_practice" = "Clinical practice";
+
+/* The title of (preparing for a medical exam) that is used in usage ways screen */
+"usage_purpose.exam_preparation" = "Preparing for a medical exam";
+
+/* Message about legal stuff shown during sign up */
+"welcome.legal_message" = "By creating an account, you agree to the terms and conditions. For more information see our privacy policy.";
+
+/* Part of the legal message that is a link */
+"welcome.legal_message_privacy_link_text" = "Privacy policy";
+
+/* Part of the legal message that is a link */
+"welcome.legal_message_t_o_s_link_text" = "Terms and conditions";
+
+/* Bottom label text for signup welcome */
+"welcome.loginLabel" = "Already have an account?";
+
+/* Sign up button title */
+"welcome.signUpButtonTitle" = "Sign up";
+
+/* SubTitle label text for signup welcome, We intentionally do not want to have this transaltion for US */
+"welcome.subtitle" = " ";
+
+/* Title label text for signup welcome */
+"welcome.title" = "Medical knowledge for on the go.";
+
+/* Title of the alert shown on welcome screen after account deletion */
+"welcome.accountWasDeletedAlert.title" = "You were logged out based on your account deletion";
+
+/* Body of the alert shown on welcome screen after account deletion */
+"welcome.accountWasDeletedAlert.message" = "The deletion affected all accounts of our platform. Please be aware that you need to unsubscribe separately through the AppStore.";
+
+/* DrugList view searchbar placeholder text*/
+"drug.search_bar.placeholder.text" = "Handelspräparate filtern";
+
+/* DrugList view title first text */
+"drug.search.first_title" = "Andere Handelspräparate finden";
+
+/* NOT USED IN US! DrugList view tags title */
+"drug.search.tags_title" = "APPLIKATIONSWEGE";
+
+/* Drug view activeIngredientLabel text */
+"drug.activeIngredientLabel" = "HANDELSPRÄPARAT";
+
+/* Drug view commercialDrugsButton title */
+"drug.commercialDrugsButton.title" = "ANDERE HANDELSPRÄPARATE";
+
+/* Drug view IFAP information note text */
+"drug.iFAPInformationNote" = "Information from the IFAP drug database";
+
+/* Drug empty section label text */
+"drug.sectionHeader.emptyLabel.text" = "Keine Information verfügbar";
+
+/* Drug view IFAP information note text */
+"substance.iFAPInformationNote" = "Information on “%@” from ifap GmbH";
+
+/* Title of the button with which the user acknowledges the disclaimer */
+"html_dialogue.accept_button_title" = "Accept";
+
+/* Title of the button with which the user refuses to acknowledge the disclaimer */
+"html_dialogue.deny_button_title" = "Don't accept";
+
+/* Application form all title */
+"substance.application_forms.all.title" = "All";
+
+/* Application form enteral title */
+"substance.application_forms.enteral.title" = "Enteral";
+
+/* Application form parenteral title */
+"substance.application_forms.parenteral.title" = "Parenteral";
+
+/* Application form topical title */
+"substance.application_forms.topical.title" = "Topical";
+
+/* Application form ophthalmic title */
+"substance.application_forms.ophthalmic.title" = "Ophthalmic";
+
+/* Application form inhalation title */
+"substance.application_forms.inhalation.title" = "Inhalation";
+
+/* Application form rectal title */
+"substance.application_forms.rectal.title" = "Rectal";
+
+/* Application form nasal spray title */
+"substance.application_forms.nasal_spray.title" = "Nasal Spray";
+
+/* Application form urogenital title */
+"substance.application_forms.urogenital.title" = "Urogenital";
+
+/* Application form bronchial title */
+"substance.application_forms.bronchial.title" = "Bronchial";
+
+/* Application form other title */
+"substance.application_forms.other.title" = "Other";
+
+/* Substance further information section title */
+"substance.further_information_label" = "FURTHER INFORMATION";
+
+/* Search overview section header title all */
+"search.overview_header.title.all" = "All";
+
+/* The title of the search shortcut when it appears in Spotlight Search or Lock Screen */
+"shortcuts.search.notification.title" = "Search AMBOSS";
+
+/* The body of the search shortcut when it appears in Spotlight Search or Lock Screen */
+"shortcuts.search.notification.body" = "Find answers to all your clinical questions";
+
+/* The suggested invocation phrase for search shortcut */
+"shortcuts.search.suggestedInvocationPhrase" = "Search AMBOSS";
+
+/* The title of the alert that offers the user to option to add a voice phrase for the search shortcut */
+"shortcuts.search.addToSiriAlert.title" = "Add \"Search AMBOSS\" to Siri";
+
+/* The body of the alert that offers the user to option to add a voice phrase for the search shortcut */
+"shortcuts.search.addToSiriAlert.body" = "Quickly access AMBOSS Search using a custom voice shortcut like \"%@\"";
+
+/* The title of the refuse button of the alert that offers the user to option to add a voice phrase for the search shortcut */
+"shortcuts.search.addToSiriAlert.no" = "Not now";
+
+/* The title of the accept button of the alert that offers the user to option to add a voice phrase for the search shortcut */
+"shortcuts.search.addToSiriAlert.addToSiriButtonTitle" = "Add to Siri";
+
+/* Medikamenten Handelsnamen disclaimer alert title*/
+"healthcare.disclaimer.title" = "Medikamentenhandelsnamen einblenden";
+
+/* Medikamenten Handelsnamen disclaimer alert content*/
+"healthcare.disclaimer.content" = "Ich bestätige, dass ich Angehörige:r eines Heilberufes im Bereich der Medizin, Zahnmedizin, Pflege, Psychologie oder Pharmazie bin bzw. mich in der Ausbildung zu diesem befinde. Gleichzeitig versichere ich, der AMBOSS GmbH einen schriftlichen Nachweis (z.B. Approbation, Immatrikulationsbescheinigung, Ausbildungsbescheinigung oder Abschlusszeugnis) hierüber an die Emailadresse nachweis@amboss.com zukommen zu lassen. Ich nehme zur Kenntnis, dass sich sämtliche Angaben in AMBOSS auf den medizinischen Standard in Deutschland beziehen und, dass diagnostische und/oder therapeutischen Vorgehensweisen sowie der arzneimittelrechtliche Zulassungsstatus genannter Handelspräparate in anderen Ländern abweichend geregelt sein können.";
+
+/* Medikamenten Handelsnamen disclaimer alert - accept button title*/
+"healthcare.disclaimer.accept" = "Bestätigen";
+
+/* Medikamenten Handelsnamen disclaimer alert - reject button title*/
+"healthcare.disclaimer.reject" = "Nicht bestätigen";
+
+/* References callout group title*/
+"references_callout_group.title" = "References";
+
+/* Title of the prices and package sizes table view */
+"prices_and_package_sizes.table_view.title" = "Preise und Packungsgrößen";
+
+/* Title of the AVP label in the table view */
+"prices_and_package_sizes.avp_label.title" = "Preisangaben entsprechen Apothekenverkaufspreis (AVP)";
+
+/* Title of the KTP label in the table view */
+"prices_and_package_sizes.ktp_label.title" = "KTP = keine therapiegerechte Packungsgröße";
+
+/* Title of the UVP label in the table view */
+"prices_and_package_sizes.uvp_label.title" = "1 Aufgrund fehlendem AVP, hier unverbindliche Preisempfehlung (UVP)";
+
+/* Title of the dashboard screen and tab bar item */
+"dashboard.title" = "Home";
+
+/* Title of the clinical tools dashboard section */
+"dashboard.sections.clinicalTools.title" = "Clinical Resources";
+
+/* Title of the clinical tools drugDatabase dashboard item */
+"dashboard.sections.clinicalTools.drugDatabase.title" = "Drugs";
+
+/* Search field placeholder of the clinical tools drugDatabase content list */
+"dashboard.sections.clinicalTools.drugDatabase.searchPlaceholder" = "Search for drugs";
+
+/* Subtitle of the clinical tools drugDatabase dashboard item */
+"dashboard.sections.clinicalTools.drugDatabase.subtitle" = "In partnership with";
+
+/* Title of the clinical tools flowcharts dashboard item */
+"dashboard.sections.clinicalTools.flowcharts.title" = "Flowcharts";
+
+/* Search field placeholder of the clinical tools flowcharts content list */
+"dashboard.sections.clinicalTools.flowcharts.searchPlaceholder" = "Search for flowcharts";
+
+/* Title of the clinical tools calculators dashboard item */
+"dashboard.sections.clinicalTools.calculators.title" = "Calculators";
+
+/* Search field placeholder of the clinical tools calculators content list */
+"dashboard.sections.clinicalTools.calculators.searchPlaceholder" = "Search for calculators";
+
+/* Title of the clinical tools guidelines dashboard item */
+"dashboard.sections.clinicalTools.guidelines.title" = "Clinical guidelines";
+
+/* Search field placeholder of the clinical tools guidelines content list */
+"dashboard.sections.clinicalTools.guidelines.searchPlaceholder" = "Search for clinical guidelines";
+
+/* Title of the clinical tools pocket guides dashboard item */
+"dashboard.sections.clinicalTools.pocketGuides.title" = "Pocket Guides";
+
+/* Badge Title of the clinical tools pocket guides dashboard item */
+"dashboard.sections.clinicalTools.pocketGuides.badge" = "BETA";
+
+
+/* Placeholder of the dashboard's search text field*/
+ "dashboard.headerView.searchPlaceholder" = "Search diseases, drugs, calculators ...";
+
+/* Title of the discover Amboss dashboard section */
+"dashboard.sections.discoverAmboss.title" = "Discover Amboss";
+
+/* Title of the discover Amboss dashboard section's clinical reference section title */
+"dashboard.sections.discoverAmboss.sections.clinicalReference.title" = "Clinical reference";
+
+/* Title of the discover Amboss dashboard section's clinical tools section title */
+"dashboard.sections.discoverAmboss.sections.clinicalTools.title" = "Clinical tools";
+
+/* Title of the recently read dashboard section */
+"dashboard.sections.recentlyRead.title" = "Recently read";
+
+/* Title of discover Amboss calculator clinical tool */
+"dashboard.sections.discoverAmboss.sections.clinicalTools.calculators.title" = "Cl. Calculators";
+
+/* Title of discover Amboss algorithms clinical tool */
+"dashboard.sections.discoverAmboss.sections.clinicalTools.algorithms.title" = "Algorithms";
+
+/* Title of the clinical reference section's drug database section */
+"dashboard.sections.discoverAmboss.sections.clinicalReference.drugDatabase.title" = "Drug database";
+
+/* Title of the clinical reference section's articles section */
+"dashboard.sections.discoverAmboss.sections.clinicalReference.articles.title" = "Article";
+
+/* Title of the news dashboard section */
+"dashboard.sections.news.title" = "AMBOSS NEWS";
+
+/* Title of All button of the section headers of the dashboard */
+"dashboard.sections.sectionHeader.all" = "All";
+
+/* Title of IAP of the dashboard */
+"dashboard.iap_banner.title" = "You are still in your 5 day free trial";
+
+/* Title of IAP of the dashboard variant */
+"dashboard.iap_banner.title_variant" = "Try unlimited AMBOSS access for free!";
+
+/* Subtitle of IAP of the dashboard */
+"dashboard.iap_banner.sub_title" = "Tap here for another free month.";
+
+/* Subtitle of IAP of the dashboard variant */
+"dashboard.iap_banner.sub_title_variant" = "Tap here for a free month";
+
+/* Title of CME link section */
+"dashboard.section.cme.title" = "CME-Kurse";
+
+/* Description for CME link card */
+"dashboard.section.cme.text" = "Mit unseren Online-Fortbildungen den klinischen Horizont erweitern und CME-Punkte sammeln.";
+
+/* Title of no results state in clinical tools content list */
+"content_list.state.empty.title" = "No results";
+
+/* Subtitle of no results state in clinical tools content list */
+"content_list.state.empty.subtitle" = "Check the spelling or try another keyword.";
+
+/* Title of error state in clinical tools content list */
+"content_list.state.error.title" = "You’re currently offline";
+
+/* Subtitle of no results state in clinical tools content list */
+"content_list.state.error.subtitle" = "Check your internet connection and try again.";
+
+/* Generic connection error */
+"error.internet.message.title" = "Check your internet connection and try again.";
+
+/* Button title of no results state in clinical tools content list */
+"content_list.state.error.button.title" = "Retry";
+
+/* Title of IAP of the iap paywall */
+"iap.paywall.title" = "Enjoy AMBOSS uninterrupted";
+
+/* Subtitle of IAP of the iap paywall */
+"iap.paywall.sub_title" = "Become an AMBOSS member now";
+
+/* Title of IAP info of iap paywall */
+"iap.paywall.info1.title" = "Smart content made for medical practice";
+
+/* Subtitle of IAP info of the iap paywall */
+"iap.paywall.info1.sub_title" = "Optimized for quick reference.\nGet clinical answers in just 5 seconds.";
+
+/* Title of IAP info of iap paywall */
+"iap.paywall.info2.title" = "Decision support tools for better outcomes";
+
+/* Subtitle of IAP info of the iap paywall */
+"iap.paywall.info2.sub_title" = "Flowcharts, checklists, drug dosing, and more";
+
+/* Title of IAP info of iap paywall */
+"iap.paywall.info3.title" = "Our mobile app for on-the-go reference";
+
+/* Subtitle of IAP info of the iap paywall */
+"iap.paywall.info3.sub_title" = "Bad WiFi in your hospital?\nNever lose access even when offline.";
+
+/* Title of IAP Payment info of iap paywall */
+"iap.paywall.payment.info.title" = "Payment will be charged to your Apple ID account at the confirmation of purchase. Your subscription will automatically renew unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.";
+
+/* Title of feedback screen */
+"feedback.title" = "Feedback";
+
+/* Placeholder of feedback intention */
+"feedback.intention.placeholder" = "Select";
+
+/* Placeholder of feedback message */
+"feedback.message.placeholder" = "Write to us";
+
+/* Title of the header in the feedback screen */
+"feedback.header.title" = "What is the nature of your feedback?";
+
+/* Title of send feedback button */
+"feedback.sendFeedbackButton.title" = "Send feedback";
+
+/* Title of feedback's intentions Language issue */
+"feedback.intentionsMenu.intentions.languageIssue" = "Language issue";
+
+/* Title of feedback's intentions Incorrect content */
+"feedback.intentionsMenu.intentions.incorrectContent" = "Incorrect content";
+
+/* Title of feedback's intentions Missing content */
+"feedback.intentionsMenu.intentions.missingContent" = "Missing content";
+
+/* Title of feedback's intentions Technical issue */
+"feedback.intentionsMenu.intentions.technicalIssue" = "Technical issue";
+
+/* Title of feedback's intentions Media feedback */
+"feedback.intentionsMenu.intentions.mediaFeedback" = "Media feedback";
+
+/* Title of feedback's intentions Product feedback */
+"feedback.intentionsMenu.intentions.productFeedback" = "General feedback";
+
+/* Title of feedback's intentions Praise */
+"feedback.intentionsMenu.intentions.praise" = "Praise";
+
+/* Title of the cancel button of the feedback's intentions menu */
+"feedback.intentionsMenu.cancelButton" = "Cancel";
+
+/* Title of the accept button on the terms modal screen */
+"terms.accept_button.title" = "Understood";

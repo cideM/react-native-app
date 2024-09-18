@@ -1,0 +1,7 @@
+query LibraryArchiveArticle($version: Int!, $eid: ID!) {
+    libraryArchiveArticle(version: $version, eid: $eid) {
+        eid
+        url
+        htmlContent
+    }
+}

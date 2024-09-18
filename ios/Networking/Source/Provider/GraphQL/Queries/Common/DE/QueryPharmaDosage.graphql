@@ -1,0 +1,22 @@
+query pharmaDosage($id: ID!) {
+  dosage(id: $id) {
+    id
+
+    ambossSubstanceLink {
+      ambossSubstance {
+        id
+        name
+      }
+      drug {
+        id
+      }
+      monograph {
+        id
+      }
+    }
+
+    content {
+        html
+    }
+  }
+}

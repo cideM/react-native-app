@@ -1,0 +1,6 @@
+query CurrentUserIAPAccess {
+  currentUserCanBuyIosSubscription
+  currentUserActiveIosSubscription {
+    startDate
+  }
+}

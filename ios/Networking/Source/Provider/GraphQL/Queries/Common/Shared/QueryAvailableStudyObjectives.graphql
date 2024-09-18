@@ -1,0 +1,14 @@
+query AvailableStudyObjectives {
+    currentUser {
+        availableStudyObjectives {
+            eid
+            label
+            superset
+        }
+        studyObjective {
+            eid
+            label
+            superset
+        }
+    }
+}

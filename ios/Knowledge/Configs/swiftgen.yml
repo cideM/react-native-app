@@ -1,0 +1,20 @@
+xcassets:
+  - inputs: ${PROJECT_DIR}/Source/App/Resources/Assets/Assets.xcassets
+    outputs:
+      - templateName: swift5
+        output: ${PROJECT_DIR}/Source/App/Resources/Assets/Asset.swift
+        params:
+          enumName: Asset
+          forceProvidesNamespaces: true
+          publicAccess: true
+          allValues: true
+  - inputs: ${PROJECT_DIR}/Source/App/Main/Targets/US/Media.xcassets
+    outputs:
+      - templateName: swift5
+        output: ${PROJECT_DIR}/Source/App/Resources/Asset+Localized.swift
+        params:
+          forceProvidesNamespaces: true
+          publicAccess: true
+          allValues: false
+          skipImplementationDetails: true
+          extension: true

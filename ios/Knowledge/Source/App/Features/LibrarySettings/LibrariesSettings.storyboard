@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Libraries Settings Table View Controller-->
+        <scene sceneID="SYx-TI-a04">
+            <objects>
+                <tableViewController storyboardIdentifier="LibrariesSettingsTableViewController" id="Fgk-gh-VKk" customClass="LibrariesSettingsTableViewController" customModule="Knowledge_DE" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vpS-6p-Qlc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="AgG-oU-08h">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="125" id="Tx4-zp-iem" customClass="ColorThemeAwareUITableViewCell" customModule="Knowledge_DE" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="320" height="125"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tx4-zp-iem" id="Gug-rF-ubt">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nOL-JL-f3q">
+                                                    <rect key="frame" x="16" y="11" width="288" height="103"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="fnV-eF-rYd">
+                                                            <rect key="frame" x="0.0" y="0.0" width="288" height="30"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bibliothek" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Rg-ZI-QcB">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="30"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z6u-vN-UPf" customClass="BigButton" customModule="Common">
+                                                                    <rect key="frame" x="237" y="0.0" width="51" height="30"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="fcl-7p-k1f"/>
+                                                                    </constraints>
+                                                                    <state key="normal" title="Update"/>
+                                                                    <connections>
+                                                                        <action selector="updateLibraryButtonHandler:" destination="Fgk-gh-VKk" eventType="touchUpInside" id="SFk-8x-Zfr"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Up to date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbi-Bk-3yQ">
+                                                            <rect key="frame" x="0.0" y="38" width="288" height="65"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="nOL-JL-f3q" secondAttribute="trailing" id="Sc1-k1-7XU"/>
+                                                <constraint firstItem="nOL-JL-f3q" firstAttribute="top" secondItem="Gug-rF-ubt" secondAttribute="topMargin" id="WX6-Ry-iHk"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="nOL-JL-f3q" secondAttribute="bottom" id="i1l-CX-ohx"/>
+                                                <constraint firstItem="nOL-JL-f3q" firstAttribute="leading" secondItem="Gug-rF-ubt" secondAttribute="leadingMargin" id="sxM-pw-MQX"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="154" id="6h7-jM-I6v" customClass="ColorThemeAwareUITableViewCell" customModule="Knowledge_DE" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="175" width="320" height="154"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6h7-jM-I6v" id="dOt-LT-HcQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xhq-5M-Npx">
+                                                    <rect key="frame" x="16" y="11" width="288" height="132"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="2fx-od-bL5">
+                                                            <rect key="frame" x="0.0" y="0.0" width="288" height="30"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Arzneimitteldatenbank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1q-zj-iy1">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="30"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="air-ul-AnG" customClass="BigButton" customModule="Common">
+                                                                    <rect key="frame" x="237" y="0.0" width="51" height="30"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="KQ3-04-Sok"/>
+                                                                    </constraints>
+                                                                    <state key="normal" title="Update"/>
+                                                                    <connections>
+                                                                        <action selector="updatePharmaButtonHandler:" destination="Fgk-gh-VKk" eventType="touchUpInside" id="xoq-Xr-H5S"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Up to date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Elx-2T-PDp">
+                                                            <rect key="frame" x="0.0" y="38" width="288" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Nach links swipen um Speicherplatz zu sparen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WrE-Bx-12n">
+                                                            <rect key="frame" x="0.0" y="66.5" width="288" height="65.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xhq-5M-Npx" firstAttribute="leading" secondItem="dOt-LT-HcQ" secondAttribute="leadingMargin" id="LhK-tR-nj6"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="xhq-5M-Npx" secondAttribute="bottom" id="RUm-wB-OEf"/>
+                                                <constraint firstItem="xhq-5M-Npx" firstAttribute="top" secondItem="dOt-LT-HcQ" secondAttribute="topMargin" id="XL3-PX-JMx"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xhq-5M-Npx" secondAttribute="trailing" id="nJ9-Fj-q2M"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="eno-z7-kNB">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="242" id="9sQ-pv-hSX" customClass="ColorThemeAwareUITableViewCell" customModule="Knowledge_DE" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="407" width="320" height="242"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9sQ-pv-hSX" id="IO5-zb-ALI">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="242"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cGD-Ry-Yzk">
+                                                    <rect key="frame" x="16" y="11" width="288" height="220"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grK-Co-pWE">
+                                                            <rect key="frame" x="0.0" y="0.0" width="288" height="49"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updates will be downloaded automatically in WiFi" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLq-iC-tC8">
+                                                            <rect key="frame" x="0.0" y="57" width="288" height="49"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hbf-vA-wnT">
+                                                            <rect key="frame" x="0.0" y="114" width="288" height="49"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Keep my library up to date Keep my library up to date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6i-PT-X6O">
+                                                                    <rect key="frame" x="0.0" y="4" width="229" height="41"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lcg-vB-3M1">
+                                                                    <rect key="frame" x="239" y="9" width="51" height="31"/>
+                                                                    <connections>
+                                                                        <action selector="didChangeWifiUpdate:" destination="Fgk-gh-VKk" eventType="valueChanged" id="cXI-fc-eG0"/>
+                                                                    </connections>
+                                                                </switch>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zNZ-dL-7Ow">
+                                                            <rect key="frame" x="0.0" y="171" width="288" height="49"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Keep the pharma library up to date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RnA-u6-x5S">
+                                                                    <rect key="frame" x="0.0" y="4" width="229" height="41"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lcP-Fv-mhQ">
+                                                                    <rect key="frame" x="239" y="9" width="51" height="31"/>
+                                                                    <connections>
+                                                                        <action selector="didChangePharmaWifiUpdate:" destination="Fgk-gh-VKk" eventType="valueChanged" id="LMe-bC-xd4"/>
+                                                                    </connections>
+                                                                </switch>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cGD-Ry-Yzk" firstAttribute="top" secondItem="IO5-zb-ALI" secondAttribute="topMargin" id="WpM-Vp-y5b"/>
+                                                <constraint firstItem="cGD-Ry-Yzk" firstAttribute="leading" secondItem="IO5-zb-ALI" secondAttribute="leadingMargin" id="i7w-po-y7h"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="cGD-Ry-Yzk" secondAttribute="bottom" id="ix3-wB-edQ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="cGD-Ry-Yzk" secondAttribute="trailing" id="p47-Jk-l9c"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Fgk-gh-VKk" id="RrZ-GC-wGS"/>
+                            <outlet property="delegate" destination="Fgk-gh-VKk" id="h0N-RX-UdX"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="automaticUpdatesSubtitleLabel" destination="hLq-iC-tC8" id="z2j-j9-ImK"/>
+                        <outlet property="automaticUpdatesTitleLabel" destination="grK-Co-pWE" id="kX3-q1-rk2"/>
+                        <outlet property="deletePharmaLabel" destination="WrE-Bx-12n" id="0aK-aI-cmg"/>
+                        <outlet property="librarySubtitleLabel" destination="fbi-Bk-3yQ" id="RDx-zT-hny"/>
+                        <outlet property="libraryTitleLabel" destination="8Rg-ZI-QcB" id="EHH-h0-eVx"/>
+                        <outlet property="libraryUpdateButton" destination="z6u-vN-UPf" id="EUV-rd-cof"/>
+                        <outlet property="libraryWifiAutoUpdateLabel" destination="v6i-PT-X6O" id="i8o-5I-Jbs"/>
+                        <outlet property="libraryWifiAutoUpdateSwitch" destination="lcg-vB-3M1" id="bik-wY-RhE"/>
+                        <outlet property="pharmaAutoUpdateStackView" destination="zNZ-dL-7Ow" id="MaG-S6-hmN"/>
+                        <outlet property="pharmaCellDeletionInfoLabel" destination="WrE-Bx-12n" id="iWf-Xo-xvE"/>
+                        <outlet property="pharmaSubtitleLabel" destination="Elx-2T-PDp" id="EzZ-jh-xFq"/>
+                        <outlet property="pharmaTableViewCell" destination="6h7-jM-I6v" id="5MD-A2-fMB"/>
+                        <outlet property="pharmaTitleLabel" destination="f1q-zj-iy1" id="9Yh-oZ-QdM"/>
+                        <outlet property="pharmaUpdateButton" destination="air-ul-AnG" id="CzX-00-kK3"/>
+                        <outlet property="pharmaWifiAutoUpdateLabel" destination="RnA-u6-x5S" id="tkk-Fe-eZN"/>
+                        <outlet property="pharmaWifiAutoUpdateSwitch" destination="lcP-Fv-mhQ" id="pIW-uZ-fIM"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hUU-ae-ztJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-337.5" y="1.056338028169014"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

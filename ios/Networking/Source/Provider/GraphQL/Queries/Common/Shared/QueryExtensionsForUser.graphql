@@ -1,0 +1,21 @@
+query ExtensionsForUser($userId: EncodedId!, $first: Int!, $after: String) {
+  userParticleExtensions(userId: $userId, first: $first, after: $after) {
+    edges {
+      node {
+        eid
+        text
+        particleEid
+        updatedAt
+        particle {
+          article  {
+            eid
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

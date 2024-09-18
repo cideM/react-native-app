@@ -1,0 +1,10 @@
+query MobileDeprecationList{
+  mobileDeprecationList{
+    minVersion
+    maxVersion
+    deprecationType
+    mobilePlatform
+    mobileIdentifier
+    deprecationExplanationUrl
+  }
+}

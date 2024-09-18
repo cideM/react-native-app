@@ -1,0 +1,12 @@
+mutation UploadIosIapReceipt($uploadFile: Upload!, $appIdentifier: String!, $countryCode: String) {
+  uploadIosIapReceipt(iosReceipt: $uploadFile, appIdentifier: $appIdentifier, countryCode: $countryCode) {
+    ... on IosSubscription{
+      startDate
+      renewalDate
+      appleProductId
+    }
+    ... on IosSubscriptionError{
+      code
+    }
+  }
+}

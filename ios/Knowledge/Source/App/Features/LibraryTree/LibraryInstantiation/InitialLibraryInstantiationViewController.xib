@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InitialLibraryInstantiationViewController" customModule="Knowledge_DE" customModuleProvider="target">
+            <connections>
+                <outlet property="initializationTextLabel" destination="fDU-Be-DcB" id="MFu-H1-TpK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="library-installation-art" translatesAutoresizingMaskIntoConstraints="NO" id="OTp-de-leV">
+                    <rect key="frame" x="24" y="92" width="366" height="448"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="584" id="gGd-Kz-n3h"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="gGd-Kz-n3h"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=regular">
+                        <mask key="constraints">
+                            <include reference="gGd-Kz-n3h"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fDU-Be-DcB">
+                    <rect key="frame" x="8" y="807.33333333333337" width="398" height="40.666666666666629"/>
+                    <string key="text">Initializing the Library. This can take some time.
+We will greatly reduce this time before the release.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DfX-PC-QaT">
+                    <rect key="frame" x="197" y="755.33333333333337" width="20" height="20"/>
+                </activityIndicatorView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="OTp-de-leV" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.5" id="8YK-KX-FUU"/>
+                <constraint firstItem="fDU-Be-DcB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="Aor-Od-UYN"/>
+                <constraint firstItem="OTp-de-leV" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.5" id="Hj2-V4-bTv"/>
+                <constraint firstItem="DfX-PC-QaT" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="J87-JT-zbH"/>
+                <constraint firstItem="OTp-de-leV" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="QNw-Bm-My0"/>
+                <constraint firstItem="OTp-de-leV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="SYn-4X-b53"/>
+                <constraint firstAttribute="bottom" secondItem="fDU-Be-DcB" secondAttribute="bottom" constant="48" id="Td4-9V-2Il"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OTp-de-leV" secondAttribute="trailing" constant="24" id="Ttj-67-zJq"/>
+                <constraint firstItem="fDU-Be-DcB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="XDn-XO-I75"/>
+                <constraint firstItem="DfX-PC-QaT" firstAttribute="top" secondItem="fDU-Be-DcB" secondAttribute="bottom" constant="-40" id="ZCc-ue-XfN">
+                    <variation key="widthClass=compact" constant="-32"/>
+                </constraint>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fDU-Be-DcB" secondAttribute="trailing" constant="8" id="d8v-FU-erh"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fDU-Be-DcB" secondAttribute="bottom" constant="96" id="eBK-z7-PAF"/>
+                <constraint firstItem="OTp-de-leV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="96" id="gp1-Bx-F8G"/>
+                <constraint firstItem="fDU-Be-DcB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="220" id="n73-Ey-t2t"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fDU-Be-DcB" secondAttribute="trailing" constant="220" id="nrw-0N-nyH"/>
+                <constraint firstItem="OTp-de-leV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="48" id="u7H-io-MUJ"/>
+                <constraint firstItem="fDU-Be-DcB" firstAttribute="top" secondItem="DfX-PC-QaT" secondAttribute="bottom" constant="32" id="ubw-eH-Wd6"/>
+                <constraint firstItem="fDU-Be-DcB" firstAttribute="top" secondItem="DfX-PC-QaT" secondAttribute="bottom" constant="64" id="yJe-bU-Y6r"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Ttj-67-zJq"/>
+                    <exclude reference="d8v-FU-erh"/>
+                    <exclude reference="eBK-z7-PAF"/>
+                    <exclude reference="nrw-0N-nyH"/>
+                    <exclude reference="8YK-KX-FUU"/>
+                    <exclude reference="Hj2-V4-bTv"/>
+                    <exclude reference="QNw-Bm-My0"/>
+                    <exclude reference="SYn-4X-b53"/>
+                    <exclude reference="gp1-Bx-F8G"/>
+                    <exclude reference="u7H-io-MUJ"/>
+                    <exclude reference="ZCc-ue-XfN"/>
+                    <exclude reference="Aor-Od-UYN"/>
+                    <exclude reference="Td4-9V-2Il"/>
+                    <exclude reference="n73-Ey-t2t"/>
+                    <exclude reference="ubw-eH-Wd6"/>
+                    <exclude reference="yJe-bU-Y6r"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="constraints">
+                    <include reference="Ttj-67-zJq"/>
+                    <include reference="d8v-FU-erh"/>
+                    <include reference="Hj2-V4-bTv"/>
+                    <include reference="SYn-4X-b53"/>
+                    <include reference="u7H-io-MUJ"/>
+                    <exclude reference="ZCc-ue-XfN"/>
+                    <include reference="Aor-Od-UYN"/>
+                    <include reference="Td4-9V-2Il"/>
+                    <include reference="ubw-eH-Wd6"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=regular">
+                <mask key="constraints">
+                    <include reference="eBK-z7-PAF"/>
+                    <include reference="nrw-0N-nyH"/>
+                    <include reference="8YK-KX-FUU"/>
+                    <include reference="QNw-Bm-My0"/>
+                    <include reference="gp1-Bx-F8G"/>
+                    <include reference="n73-Ey-t2t"/>
+                    <include reference="yJe-bU-Y6r"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="132" y="154"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="library-installation-art" width="584" height="584"/>
+    </resources>
+</document>

@@ -1,0 +1,16 @@
+[
+{
+    "id": 1,
+    "parent": 0,
+    "title": "Basic Sciences (Step 1)",
+    "xid": 0,
+    "children_count": 1568
+},
+{
+    "id": 2,
+    "parent": 1,
+    "title": "By Discipline",
+    "xid": 0,
+    "children_count": 1076
+}
+]

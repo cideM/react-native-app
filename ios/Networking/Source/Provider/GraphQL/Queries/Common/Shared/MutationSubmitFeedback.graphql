@@ -1,0 +1,5 @@
+mutation SubmitFeedback($input: FeedbackInput!){
+  submitFeedback(feedback: $input){
+    success
+  }
+}
